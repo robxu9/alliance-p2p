@@ -6,6 +6,7 @@ import org.alliance.ui.T;
 import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import org.alliance.core.comm.rpc.ShareBaseList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,7 +27,7 @@ public class ViewShareRootNode extends ViewShareTreeNode {
         shareBases.clear();
         for (int i = 0; i < shareBaseNames.length; i++) {
             //TODO: Maybe Translate
-            if (!shareBaseNames[i].equals("cache") && !shareBaseNames[i].equals("You are using old version of Alliance")) { //For hiding unique empty folders
+            if (!shareBaseNames[i].equals("cache") && !shareBaseNames[i].equals(ShareBaseList.HIDDEN_FOLDERS_MESSAGE)) { //For hiding unique empty folders
                 shareBases.add(new ViewShareShareBaseNode(shareBaseNames[i], this, i));
             }
         }

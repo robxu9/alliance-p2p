@@ -17,6 +17,8 @@ import java.util.Collection;
  */
 public class ShareBaseList extends RPC {
 
+    public static final String HIDDEN_FOLDERS_MESSAGE = "You are using old version of Alliance";
+
     public ShareBaseList() {
     }
 
@@ -72,7 +74,7 @@ public class ShareBaseList extends RPC {
             if (positive == true) {
                 p.writeUTF(sb.getName());
             } else {
-                p.writeUTF("You are using old version of Alliance"); //unique name for hidden folders
+                p.writeUTF(HIDDEN_FOLDERS_MESSAGE); //unique name for hidden folders
             }
         }
         return p;
