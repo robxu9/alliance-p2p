@@ -196,7 +196,7 @@ public class Console {
         } else {
             boolean success = false;
             for (ConsolePlugInExtension ext : extensions) {
-                if (ext != null && ext.handleLine(command, printer)) {
+                if (ext != null && ext.handleLine(line, printer)) {
                     success = true;
                     break;
                 }
