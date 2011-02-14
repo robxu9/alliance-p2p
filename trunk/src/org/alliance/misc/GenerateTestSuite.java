@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import org.alliance.launchers.testsuite.Main;
 
 
 /**
@@ -31,7 +32,7 @@ import java.util.Random;
  */
 public class GenerateTestSuite {
 
-    public static final String DEFAULT_TEST_SHARE_DIR = "testsuite-share";
+    public static final String DEFAULT_TEST_SHARE_DIR = Main.TEST_SUITE_DIRNAME + "-share";
 
     private ArrayList<Friend> users = new ArrayList<Friend>();
     private HashMap<Friend, Settings> settings = new HashMap<Friend, Settings>();
@@ -50,9 +51,9 @@ public class GenerateTestSuite {
         }
 
         System.out.println("Cleaning up old testsuite...");
-        File settingsFile = new File("testsuite/settings");
+        File settingsFile = new File(Main.TEST_SUITE_DIRNAME + File.separator + "settings");
         settingsFile.mkdirs();
-        new File("testsuite/logs").mkdirs();
+        new File(Main.TEST_SUITE_DIRNAME + File.separator + "logs").mkdirs();
 
         for (File f : settingsFile.listFiles()) {
             f.delete();
@@ -94,12 +95,12 @@ public class GenerateTestSuite {
             }
         }
 
-        saveSettings("settings/", maciekSettings);
+        saveSettings("settings" + File.separator, maciekSettings);
 
         int n = 0;
         System.out.println("Saving settings...");
         for (Friend f : usedFriends) {
-            saveSettings("settings/", settings.get(f));
+            saveSettings("settings" + File.separator, settings.get(f));
             n++;
         }
         System.out.println("Saved " + n + " users excl maciek.");
@@ -187,7 +188,7 @@ public class GenerateTestSuite {
     private void saveSettings(String path, Settings settings) throws Exception {
         XMLSerializer s = new XMLSerializer();
         Document doc = s.serialize(settings);
-        FileOutputStream out = new FileOutputStream(new File("testsuite/" + path + settings.getMy().getNickname() + ".xml"));
+        FileOutputStream out = new FileOutputStream(new File(Main.TEST_SUITE_DIRNAME + File.separator + "" + path + settings.getMy().getNickname() + ".xml"));
         out.write(SXML.toString(doc).getBytes());
         out.flush();
         out.close();
@@ -198,7 +199,7 @@ public class GenerateTestSuite {
         s.setInternal(new Internal(120));
         s.setMy(new My(user.getGuid(), user.getNickname()));
         s.setServer(new Server(user.getPort()));
-        String path = "testsuite/data/" + user.getNickname() + "/";
+        String path = Main.TEST_SUITE_DIRNAME + File.separator + "data" + File.separator + user.getNickname() + File.separator;
         s.getInternal().setDatabasefile(path + "alliancedb");
         s.getInternal().setDownloadquefile(path + "downloads.dat");
         s.getInternal().setCorestatefile(path + "core.dat");

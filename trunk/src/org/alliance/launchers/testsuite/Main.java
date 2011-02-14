@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static final boolean LOG_TO_FILES = false;
+    public static final String TEST_SUITE_DIRNAME = "testsuite";
     private static HashMap<String, Main> users = new HashMap<String, Main>();
     private CoreSubsystem core;
     private UISubsystem ui;
@@ -53,7 +54,7 @@ public class Main {
 
         System.setProperty("testsuite", "true");
 
-        for (File f : new File("testsuite/logs").listFiles()) {
+        for (File f : new File(Main.TEST_SUITE_DIRNAME + File.separator + "logs").listFiles()) {
             f.delete();
         }
 
@@ -78,7 +79,7 @@ public class Main {
                             if (logs.containsKey(name)) {
                                 out = logs.get(name);
                             } else {
-                                out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("testsuite/logs/" + name + ".log")));
+                                out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Main.TEST_SUITE_DIRNAME + File.separator + "logs"+ File.separator + name + ".log")));
                                 logs.put(name, out);
                             }
                             out.write(message + "\r\n");
@@ -106,7 +107,7 @@ public class Main {
             };
         }
 
-        XUIFrame frame = new XUIFrame("testsuite/testsuite.xui.xml");
+        XUIFrame frame = new XUIFrame(Main.TEST_SUITE_DIRNAME + File.separator + "testsuite.xui.xml");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getXUI().setEventHandler(new Main());
         list = new JList(new DefaultListModel());
@@ -135,7 +136,7 @@ public class Main {
             }
         });
 
-        File settings[] = new File("testsuite/settings").listFiles();
+        File settings[] = new File(Main.TEST_SUITE_DIRNAME + File.separator + "settings").listFiles();
         for (File f : settings) {
             if (f.toString().endsWith("xml")) {
                 final Main m = new Main(f.toString());
