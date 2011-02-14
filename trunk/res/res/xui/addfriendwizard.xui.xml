@@ -29,7 +29,7 @@
                 <strut height="5"/>
             </step>
             <step text="%stepinvitation%">
-                <mlabel id="inviationlimit" html="yes">%text%
+                <mlabel id="invitationlimit" html="yes">%text%
                 </mlabel>
                 <strut height="5"/>
                 <panel axis="x" border="0" expand="horiz">
