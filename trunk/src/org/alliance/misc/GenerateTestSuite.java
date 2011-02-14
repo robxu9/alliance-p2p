@@ -12,12 +12,15 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,6 +30,8 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class GenerateTestSuite {
+
+    public static final String DEFAULT_TEST_SHARE_DIR = "testsuite-share";
 
     private ArrayList<Friend> users = new ArrayList<Friend>();
     private HashMap<Friend, Settings> settings = new HashMap<Friend, Settings>();
@@ -38,8 +43,9 @@ public class GenerateTestSuite {
 
     public GenerateTestSuite(String shareDirectory) throws Exception {
         this.shareDirectory = shareDirectory;
+        File shareDir = new File(shareDirectory);
         if (!new File(shareDirectory).exists()) {
-            System.out.println("Directory with fake share test data does not exist: " + shareDirectory + ".");
+            System.err.println("Directory with fake share test data does not exist: " + shareDirectory + ".");
             System.exit(1);
         }
 
@@ -215,13 +221,74 @@ public class GenerateTestSuite {
         return new Share(files[((int) (Math.random() * files.length))].getPath());
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     * @param args #1 is the share file directory, which will be created with test files if it doesn't already exist;
+     * if no arguments are supplied, it will use/create the DEFAULT_TEST_SHARE_DIR
+     *
+     * @see GenerateTestSuite#DEFAULT_TEST_SHARE_DIR
+     */
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.out.println("First argument must be path to files used for shares for test users.");
-            return;
+        String testShareDirName = null;
+        // check for the given directory, or use the default
+        if (args.length > 0) {
+            testShareDirName = args[0];
+        } else {
+            testShareDirName = DEFAULT_TEST_SHARE_DIR;
+            System.out.println("No testing share directory name supplied.  Will use '" + testShareDirName + "'.");
         }
-        new GenerateTestSuite(args[0]);
+        // create that directory and some random files if it doesn't exist
+        File testShareDir = new File(testShareDirName);
+        if (!testShareDir.exists()) {
+            System.out.println("Test share directory not found.  Will create it with random files and directories.");
+            if (!testShareDir.mkdir()) {
+                throw new IOException("Unable to create test share directory " + testShareDirName + ".");
+            }
+            for (int i = 0; i < 20; i++) {
+                createRandomFileTree(testShareDir, i);
+            }
+        }
+
+        new GenerateTestSuite(testShareDirName);
     }
+
+    /**
+     * Create a random file under some random number of directories (all with fileNum in the name)
+     * @param dir directory under which to create the file
+     * @param fileNum any number, used to create the file and directory name(s)
+     */
+    private static void createRandomFileTree(File dir, int fileNum) throws java.io.IOException {
+        int depth = dir.getPath().split(File.separator).length;
+        if (Math.random() * 15 < depth) {
+            File thisFile = new File(dir.getPath() + File.separator +  fileNum + ".txt");
+            thisFile.createNewFile();
+            FileWriter writer = new FileWriter(thisFile);
+            for (int i = 0; i < fileNum; i++) {
+                writer.write(65 + i);
+            }
+            writer.close();
+        } else {
+            File subDir = new File(dir.getPath() + File.separator + fileNum + File.separator);
+            subDir.mkdir();
+            createRandomFileTree(subDir, fileNum);
+        }
+    }
+
+
     private String[] usernames = {
         "Abacuss", "Abbe", "Abbis", "Abbo", "Abbot", "Abby", "Absa", "Absy", "Ace", "Acka", "Acke", "Actra",
         "Addie", "Adian", "Adelie", "Adina", "Adonis", "Affa", "Affe", "Affi", "Africa", "Afrodite",
