@@ -6,7 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import org.alliance.core.plugins.PlugIn;
 
 /**
  * Created by IntelliJ IDEA. User: maciek Date: 2008-jun-05 Time: 19:03:00 To
@@ -63,7 +68,30 @@ public class Plugin {
                 return true;
 
             } else {
-                throw new FileNotFoundException();
+                ClassLoader jarLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() });
+                //ClassLoader jarLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() }, getClass().getClassLoader());
+                for (Enumeration<JarEntry> e = jarfile.entries(); e.hasMoreElements();) {
+                    JarEntry entry = e.nextElement();
+                    if (!entry.isDirectory()
+                        && entry.getName().endsWith(".class")) {
+                        String className = entry.getName().substring(0, entry.getName().length() - ".class".length());
+                        className = className.replace("/", ".");
+                        try {
+                            Class fileClass = Class.forName(className, false, jarLoader);
+                            if (PlugIn.class.isAssignableFrom(fileClass)) {
+                                this.jar = file.getCanonicalPath();
+                                this.pluginclass = fileClass.getCanonicalName();
+                                return true;
+                            }
+                        } catch (ClassNotFoundException ee) {
+                            // This shouldn't happen.  If it does, let's abort.
+                            System.err.println("Something went wrong trying to load " + className + " from " + file.getAbsolutePath() + ".  Will abort trying to load PlugIn classes from that jar.");
+                            ee.printStackTrace();
+                            break;
+                        }
+                    }
+                }
+                throw new FileNotFoundException(); // Why not just return false?
             }
         }
         return false;
