@@ -68,8 +68,9 @@ public class Plugin {
                 return true;
 
             } else {
+
+                // Grab the first implementation of PlugIn found inside the jar.
                 ClassLoader jarLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() });
-                //ClassLoader jarLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() }, getClass().getClassLoader());
                 for (Enumeration<JarEntry> e = jarfile.entries(); e.hasMoreElements();) {
                     JarEntry entry = e.nextElement();
                     if (!entry.isDirectory()
