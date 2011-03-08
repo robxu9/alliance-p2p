@@ -29,6 +29,8 @@ public class Main {
         System.out.println("Welcome to alliance " + manager.getSettings().getMy().getNickname() + "!\n");
 
         Console c = new Console(core, null);
+        // Why not this?
+        //Console c = new Console(core, core.getPluginManager().getPluginConsoleExtensions());
 
         while (true) {
             System.out.print("> ");

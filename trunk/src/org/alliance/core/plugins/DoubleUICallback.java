@@ -26,6 +26,14 @@ public class DoubleUICallback implements UICallback {
         this.second = second;
     }
 
+    public UICallback getFirst() {
+        return first;
+    }
+
+    public UICallback getSecond() {
+        return second;
+    }
+
     @Override
     public void nodeOrSubnodesUpdated(Node node) {
         first.nodeOrSubnodesUpdated(node);

@@ -25,6 +25,8 @@ import java.util.Enumeration;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+import org.alliance.core.UICallback;
+import org.alliance.core.plugins.DoubleUICallback;
 
 /**
  * Created by IntelliJ IDEA.
@@ -130,7 +132,23 @@ public class UISubsystem implements UINexus, Subsystem {
             handleErrorInEventLoop(e);
         }
 
-        core.setUICallback(new UIBridge(this, core.getUICallback()));
+        // add a UIBridge if none exist already in the chain
+        if (!hasUIBridge(core.getUICallback())) {
+            core.addUICallback(new UIBridge(this, core.getUICallback()));
+        }
+    }
+
+    private boolean hasUIBridge(UICallback callback) {
+        if (callback == null) {
+            return false;
+        } else if (callback instanceof UIBridge) {
+            return true;
+        } else if (callback instanceof DoubleUICallback) {
+            DoubleUICallback dback = (DoubleUICallback) callback;
+            return hasUIBridge(dback.getFirst()) || hasUIBridge(dback.getSecond());
+        } else {
+            return false;
+        }
     }
 
     private void setGlobalFont(String fontName, int size) {
@@ -180,7 +198,6 @@ public class UISubsystem implements UINexus, Subsystem {
     @Override
     public void shutdown() {
         mainWindow.shutdown();
-        core.setUICallback(null);
         Thread.setDefaultUncaughtExceptionHandler(null);
     }
 

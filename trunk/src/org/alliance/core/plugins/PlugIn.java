@@ -22,5 +22,13 @@ public interface PlugIn {
     
     abstract ConsolePlugInExtension getConsoleExtensions();
 
+    /**
+     * Note: if any UICallbacks are added, this should disable them.
+     * This overlaps with the CoreSubsystem.resetUICallback, but there
+     * are some system callbacks, which is why UICallbacks aren't 100%
+     * managed by the PlugIn system.  (But maybe we can refactor this situation.)
+     *
+     * @throws Exception
+     */
     abstract void shutdown() throws Exception;
 }
