@@ -28,7 +28,7 @@ public interface UICallback {
      * browse the share of a friend this "share base list" is first requested. When the list is received this method
      * is called. The RPC GetShareBaseList is used to get the share base list for a friend.
      * @param friend The friend which this share base list belongs to
-     * @param shareBaseNames A list of the root folder names that this user is sharing
+     * @param shareBaseNames A list of the root folder names that this user is sharing, each at the index of it's shareBaseIndex
      */
     void receivedShareBaseList(Friend friend, String[] shareBaseNames);
 
