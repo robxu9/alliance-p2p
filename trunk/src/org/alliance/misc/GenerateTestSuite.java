@@ -5,9 +5,11 @@ import com.stendahls.nif.util.xmlserializer.XMLSerializer;
 import org.alliance.core.settings.Friend;
 import org.alliance.core.settings.Internal;
 import org.alliance.core.settings.My;
+import org.alliance.core.settings.Plugin;
 import org.alliance.core.settings.Server;
 import org.alliance.core.settings.Settings;
 import org.alliance.core.settings.Share;
+import org.alliance.launchers.testsuite.Main;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -20,15 +22,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import org.alliance.launchers.testsuite.Main;
 
 
 /**
+ * Use this to generate settings for the testsuite Main class.
+ * For even more useful tests, generate the plugin tests with: ant plugin-test-jar
+ *
  * Created by IntelliJ IDEA.
  * User: maciek
  * Date: 2006-jan-05
  * Time: 10:10:40
- * To change this template use File | Settings | File Templates.
  */
 public class GenerateTestSuite {
 
@@ -208,6 +211,20 @@ public class GenerateTestSuite {
         s.getInternal().setCachefolder(path + "cache");
         s.getInternal().setKeystorefilename(path + "me.ks");
 
+        // if available, add the test plugin
+        File testJar = new File("../build/testsuite/alliance-test-plugin.jar");
+        if (testJar.exists()) {
+            Plugin testPlugin = new Plugin();
+            try {
+                testPlugin.init(testJar);
+                s.getPluginlist().add(testPlugin);
+            } catch (IOException e) {
+                // complain, but continue without it
+                System.err.println("A test plugin jar exists, but got the following error while loading, so we'll ignore it.");
+                e.printStackTrace();
+            }
+        }
+
         if (Math.random() > 0.5) {
             s.getMy().createChecksumAndSetInvitations((int) (4 * Math.random()));
         } else {
@@ -268,11 +285,21 @@ public class GenerateTestSuite {
     }
 
     /**
-     * Create a random file under some random number of directories (all with fileNum in the name)
+     * Create a random file under some random number of directories (all with fileNum in the name).
+     *
+     * Note that it will create at least one directory, because the share paths
+     * in these settings are assumed to be directories within the main testsuite
+     * share directory.
+     *
      * @param dir directory under which to create the file
      * @param fileNum any number, used to create the file and directory name(s)
      */
     private static void createRandomFileTree(File dir, int fileNum) throws java.io.IOException {
+        // make a directory
+        File subDir = new File(dir.getPath() + File.separator + fileNum + File.separator);
+        subDir.mkdir();
+        
+        // now either make a file here or recurse
         int depth = dir.getPath().split(File.separator).length;
         if (Math.random() * 15 < depth) {
             File thisFile = new File(dir.getPath() + File.separator +  fileNum + ".txt");
@@ -283,8 +310,6 @@ public class GenerateTestSuite {
             }
             writer.close();
         } else {
-            File subDir = new File(dir.getPath() + File.separator + fileNum + File.separator);
-            subDir.mkdir();
             createRandomFileTree(subDir, fileNum);
         }
     }

@@ -4,9 +4,11 @@ import com.stendahls.XUI.XUIFrame;
 import org.alliance.T;
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.ResourceSingelton;
-import org.alliance.ui.UISubsystem;
+import org.alliance.core.settings.Plugin;
 import org.alliance.core.trace.Trace;
 import org.alliance.core.trace.TraceHandler;
+import org.alliance.misc.TestPlugIn;
+import org.alliance.ui.UISubsystem;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -24,11 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 /**
+ * Use GenerateTestSuite to generate test data for this class.
+ *
  * Created by IntelliJ IDEA.
  * User: maciek
  * Date: 2006-jan-05
  * Time: 10:03:57
- * To change this template use File | Settings | File Templates.
  */
 public class Main {
 
@@ -174,6 +177,12 @@ public class Main {
             ui.shutdown();
         }
         if (core != null) {
+            // check that the plugin system got initialized correctly
+            for (Plugin plugin : core.getSettings().getPluginlist()) {
+                if (plugin.retrievePluginClass().endsWith("TestPlugIn")) {
+                    TestPlugIn.checkInitialized();
+                }
+            }
             core.shutdown();
         }
         ui = null;
