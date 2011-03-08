@@ -46,7 +46,7 @@ public class Java6TrayIconSubsystem implements Subsystem, Runnable {
         this.rl = rl;
         core = (CoreSubsystem) params[0];
         initTray();
-        core.setUICallback(new UICallback() {
+        core.addUICallback(new UICallback() {
 
             @Override
             public void firstDownloadEverFinished() {

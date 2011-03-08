@@ -67,7 +67,7 @@ public class Console {
         this.core = core;
         manager = core.getFriendManager();
         if (extensions == null) {
-            extensions = new ArrayList<ConsolePlugInExtension>();//Create empty list
+            this.extensions = new ArrayList<ConsolePlugInExtension>();//Create empty list
         } else {
             this.extensions = extensions;
         }
