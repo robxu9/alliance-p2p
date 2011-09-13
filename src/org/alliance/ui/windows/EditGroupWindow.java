@@ -22,8 +22,9 @@ import javax.swing.ListSelectionModel;
  * @author Bastvera
  */
 public class EditGroupWindow extends XUIDialog {
-
-    public String groupString;
+	private static final long serialVersionUID = 6892321004598815613L;
+	
+	public String groupString;
     private DefaultListModel groupListModel;
     private JList groupList;
     private UISubsystem ui;
@@ -89,8 +90,9 @@ public class EditGroupWindow extends XUIDialog {
         groupList.setModel(groupListModel);
         groupList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         groupList.setSelectionModel(new DefaultListSelectionModel() {
+			private static final long serialVersionUID = 2386686822611115769L;
 
-            @Override
+			@Override
             public void setSelectionInterval(int index0, int index1) {
                 if (isSelectedIndex(index0)) {
                     super.removeSelectionInterval(index0, index1);

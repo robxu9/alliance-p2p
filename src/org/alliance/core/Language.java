@@ -95,7 +95,7 @@ public class Language {
         }
     }
 
-    public static void translateXUIElements(Class<?> c, Collection coll) {
+    public static void translateXUIElements(Class<?> c, Collection<?> coll) {
         for (Object o : coll) {
             XUIElement element = (XUIElement) o;
             JComponent comp = (JComponent) element.getComponent();

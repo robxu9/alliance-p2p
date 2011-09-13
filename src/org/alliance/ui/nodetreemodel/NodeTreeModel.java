@@ -14,8 +14,9 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class NodeTreeModel extends DefaultTreeModel {
-
-    private HashMap<Integer, NodeTreeNode> cache = new HashMap<Integer, NodeTreeNode>();
+	private static final long serialVersionUID = 59586163208909211L;
+	
+	private HashMap<Integer, NodeTreeNode> cache = new HashMap<Integer, NodeTreeNode>();
 
     public NodeTreeModel() {
         super(null);

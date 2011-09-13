@@ -48,7 +48,7 @@ public class SubstanceThemeHelper {
         setColorization(comp, new Double(0.0));
     }
 
-    public static void setPanelsToFooterArea(Collection c) {
+    public static void setPanelsToFooterArea(Collection<?> c) {
         if (!SUBSTANCE_IN_USE) {
             return;
         }
@@ -64,7 +64,7 @@ public class SubstanceThemeHelper {
         }
     }
 
-    public static void setButtonsToGeneralArea(Collection c) {
+    public static void setButtonsToGeneralArea(Collection<?> c) {
         if (!SUBSTANCE_IN_USE) {
             return;
         }

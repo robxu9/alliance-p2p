@@ -18,8 +18,9 @@ import javax.swing.SwingUtilities;
  * Time: 19:50:47
  */
 public class FriendListModel extends DefaultListModel {
-
-    private boolean ignoreFires;
+	private static final long serialVersionUID = 2341832448515812151L;
+	
+	private boolean ignoreFires;
     private CoreSubsystem core;
     private UISubsystem ui;
     private PacedRunner pacedRunner;

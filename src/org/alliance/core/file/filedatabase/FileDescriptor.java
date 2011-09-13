@@ -30,8 +30,9 @@ import java.util.ArrayList;
 public class FileDescriptor {
 
     public static class FileModifiedWhileHashingException extends IOException {
+		private static final long serialVersionUID = 2225622631256349239L;
 
-        public FileModifiedWhileHashingException() {
+		public FileModifiedWhileHashingException() {
         }
 
         public FileModifiedWhileHashingException(String s) {

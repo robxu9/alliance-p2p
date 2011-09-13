@@ -14,8 +14,9 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 public class ViewFoundVia extends XUIDialog {
-
-    private DefaultListModel fofListModel;
+	private static final long serialVersionUID = -4161485447039975341L;
+	
+	private DefaultListModel fofListModel;
     private JList fofList;
 
     public ViewFoundVia(UISubsystem ui, Friend f) throws Exception {

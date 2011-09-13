@@ -22,8 +22,9 @@ import javax.swing.JTable;
  * To change this template use File | Settings | File Templates.
  */
 public class ConnectionsMDIWindow extends AllianceMDIWindow {
-
-    private JTable table;
+	private static final long serialVersionUID = 7377147452552273110L;
+	
+	private JTable table;
     private ConnectionsTableModel model;
     private ArrayList<ConnectionWrapper> rows = new ArrayList<ConnectionWrapper>();
 
@@ -119,8 +120,9 @@ public class ConnectionsMDIWindow extends AllianceMDIWindow {
     }
 
     private class ConnectionsTableModel extends AbstractTableModel {
+		private static final long serialVersionUID = 8299070750459981566L;
 
-        @Override
+		@Override
         public int getRowCount() {
             return rows.size();
         }

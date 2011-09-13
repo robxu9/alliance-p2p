@@ -15,8 +15,9 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
+	private static final long serialVersionUID = 5514523640925257976L;
 
-    public PublicChatMessageMDIWindow(UISubsystem ui) throws Exception {
+	public PublicChatMessageMDIWindow(UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "publicchat", ui);
         Language.translateXUIElements(getClass(), xui.getXUIComponents());
         setTitle(Language.getLocalizedString(getClass(), "title"));

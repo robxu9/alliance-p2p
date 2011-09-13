@@ -15,8 +15,9 @@ import java.io.IOException;
  * Time: 18:42:48
  */
 public class PlugInCommunication extends PersistantRPC {
-
-    private String data;
+	private static final long serialVersionUID = 1267581750443534428L;
+	
+	private String data;
 
     public PlugInCommunication() {
     }

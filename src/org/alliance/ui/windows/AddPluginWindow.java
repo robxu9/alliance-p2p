@@ -17,8 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AddPluginWindow extends XUIDialog {
-
-    private Settings settings;
+	private static final long serialVersionUID = -8426363032666905367L;
+	
+	private Settings settings;
     private DefaultListModel pluginListModel;
     private JList pluginList;
     private boolean addedOrRemovedSomething = false;

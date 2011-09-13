@@ -17,8 +17,9 @@ import javax.swing.JPanel;
  * To change this template use File | Settings | File Templates.
  */
 public class TraceMDIWindow extends AllianceMDIWindow {
-
-    private TraceWindow tw;
+	private static final long serialVersionUID = -8071866951581925853L;
+	
+	private TraceWindow tw;
 
     public TraceMDIWindow(UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "trace", ui);

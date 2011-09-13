@@ -12,8 +12,8 @@ import javax.swing.tree.TreePath;
 public class JTreeFoldStateManager {
 
     public static Set<Object> saveState(JTree jTree) {
-        HashSet expandedNodes = new HashSet();
-        Enumeration tpaths = jTree.getExpandedDescendants(new TreePath(jTree.getModel().getRoot()));
+        HashSet<Object> expandedNodes = new HashSet<Object>();
+        Enumeration<?> tpaths = jTree.getExpandedDescendants(new TreePath(jTree.getModel().getRoot()));
         while ((tpaths != null) && (tpaths.hasMoreElements())) {
             TreePath tp = (TreePath) tpaths.nextElement();
             expandedNodes.add(extractIdentifier((TreeNode) tp.getLastPathComponent()));
@@ -33,7 +33,7 @@ public class JTreeFoldStateManager {
             TreeNode gn = (TreeNode) o;
             if (expandedNodes.contains(extractIdentifier(gn))) {
                 jTree.expandPath(new TreePath(o));
-                List path = new ArrayList();
+                List<Object> path = new ArrayList<Object>();
                 path.add(o);
                 restorePath(jTree, path, expandedNodes, gn.children());
             }
@@ -47,9 +47,9 @@ public class JTreeFoldStateManager {
         return n.toString();
     }
 
-    private static void restorePath(JTree jTree, List path, Set<Object> expandedNodes, Enumeration children) {
+    private static void restorePath(JTree jTree, List<Object> path, Set<Object> expandedNodes, Enumeration<?> children) {
         while (children.hasMoreElements()) {
-            List changeable = new ArrayList(path);
+            List<Object> changeable = new ArrayList<Object>(path);
             TreeNode genericNode = (TreeNode) children.nextElement();
             changeable.add(genericNode);
             if (expandedNodes.contains(extractIdentifier(genericNode))) {
@@ -71,18 +71,18 @@ public class JTreeFoldStateManager {
         for (Object o : objects) {
             TreeNode gn = (TreeNode) o;
             jTree.expandPath(new TreePath(o));
-            List path = new ArrayList();
+            List<Object> path = new ArrayList<Object>();
             path.add(o);
             openLevels(jTree, path, gn.children(), depth - 1);
         }
     }
 
-    private static void openLevels(JTree jTree, List path, Enumeration children, int depth) {
+    private static void openLevels(JTree jTree, List<Object> path, Enumeration<?> children, int depth) {
         if (depth == 0) {
             return;
         }
         while (children.hasMoreElements()) {
-            List changeable = new ArrayList(path);
+            List<Object> changeable = new ArrayList<Object>(path);
             TreeNode genericNode = (TreeNode) children.nextElement();
             changeable.add(genericNode);
             jTree.expandPath(new TreePath(changeable.toArray()));

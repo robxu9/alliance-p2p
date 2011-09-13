@@ -124,7 +124,6 @@ public abstract class PacketConnection extends Connection {
                 }
                 int receiveLen = receivePacket.getPos();
                 receivePacket.setPos(2); //packet begins just after the length info
-                int size = receivePacket.getSize();
                 receivePacket.setSize(2 + len);
                 Connection c = netMan.getConnection(getKey());
                 if (c == null) {

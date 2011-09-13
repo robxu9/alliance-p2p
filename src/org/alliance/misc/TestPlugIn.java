@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.alliance.T;
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.NeedsUserInteraction;
 import org.alliance.core.NonWindowUICallback;

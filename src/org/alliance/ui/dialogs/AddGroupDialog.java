@@ -14,8 +14,9 @@ import javax.swing.JTextField;
  * @author Bastvera
  */
 public class AddGroupDialog extends XUIDialog {
-
-    private String groupName;
+	private static final long serialVersionUID = -383243390141921857L;
+	
+	private String groupName;
 
     public AddGroupDialog(UISubsystem ui, JFrame f) throws Exception {
         super(ui.getRl(), ui.getRl().getResourceStream("xui/groupdialog.xui.xml"), ui.getMainWindow(), true);

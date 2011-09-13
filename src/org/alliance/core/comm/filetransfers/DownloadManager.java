@@ -246,8 +246,8 @@ public class DownloadManager extends Manager implements Runnable {
     }
 
     public void removeCompleteDownloads() {
-        for (Iterator i = downloadQue.iterator(); i.hasNext();) {
-            Download d = ((Download) i.next());
+        for (Iterator<Download> i = downloadQue.iterator(); i.hasNext();) {
+            Download d = i.next();
             if (d.isComplete()) {
                 i.remove();
                 downloads.remove(d.getRoot());

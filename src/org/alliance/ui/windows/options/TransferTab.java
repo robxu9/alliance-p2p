@@ -18,8 +18,9 @@ import javax.swing.JTextField;
  * @author Bastvera
  */
 public class TransferTab extends XUIDialog implements TabHelper {
-
-    private JPanel tab;
+	private static final long serialVersionUID = -5332217085103160946L;
+	
+	private JPanel tab;
     private UISubsystem ui;
     private final static String[] OPTIONS = new String[]{
         "internal.downloadfolder", "internal.uploadthrottle"};

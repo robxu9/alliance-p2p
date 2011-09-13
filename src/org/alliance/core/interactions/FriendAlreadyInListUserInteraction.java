@@ -9,8 +9,9 @@ import org.alliance.core.SynchronizedNeedsUserInteraction;
  * Time: 16:58:19
  */
 public class FriendAlreadyInListUserInteraction extends SynchronizedNeedsUserInteraction {
-
-    private int guid;
+	private static final long serialVersionUID = -381083287991567055L;
+	
+	private int guid;
 
     public FriendAlreadyInListUserInteraction() {
     }

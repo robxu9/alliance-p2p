@@ -29,8 +29,9 @@ import javax.swing.UIManager;
  * To change this template use File | Settings | File Templates.
  */
 public class ForwardInvitationNodesList extends JList {
-
-    private UISubsystem ui;
+	private static final long serialVersionUID = -4914675777833182428L;
+	
+	private UISubsystem ui;
     private AddFriendWizard addFriendWizard;
 
     public ForwardInvitationNodesList(UISubsystem ui, final AddFriendWizard addFriendWizard) {
@@ -88,8 +89,9 @@ public class ForwardInvitationNodesList extends JList {
     }
 
     private static class CheckListRenderer extends JCheckBox implements ListCellRenderer {
+		private static final long serialVersionUID = -7762107889732215752L;
 
-        public CheckListRenderer() {
+		public CheckListRenderer() {
             setBackground(UIManager.getColor("List.textBackground"));
             setForeground(UIManager.getColor("List.textForeground"));
         }
@@ -128,8 +130,9 @@ public class ForwardInvitationNodesList extends JList {
     }
 
     public static class ForwardInvitationListModel extends DefaultListModel {
-
-        private CoreSubsystem core;
+		private static final long serialVersionUID = 5760292187327809976L;
+		
+		private CoreSubsystem core;
 
         public ForwardInvitationListModel(final CoreSubsystem core) {
             this.core = core;

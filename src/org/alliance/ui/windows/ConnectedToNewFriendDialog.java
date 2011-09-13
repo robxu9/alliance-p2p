@@ -18,8 +18,9 @@ import javax.swing.JFrame;
  * To change this template use File | Settings | File Templates.
  */
 public class ConnectedToNewFriendDialog extends XUIDialog {
+	private static final long serialVersionUID = -3832093361810321474L;
 
-    public ConnectedToNewFriendDialog(UISubsystem ui, JFrame f, String name) throws Exception {
+	public ConnectedToNewFriendDialog(UISubsystem ui, JFrame f, String name) throws Exception {
         super(ui.getRl(), ui.getRl().getResourceStream("xui/newfriendconnection.xui.xml"), f, true);
         Language.translateXUIElements(getClass(), xui.getXUIComponents());
         SubstanceThemeHelper.setButtonsToGeneralArea(xui.getXUIComponents());

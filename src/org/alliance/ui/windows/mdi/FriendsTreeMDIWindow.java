@@ -28,8 +28,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  * Time: 16:22:07
  */
 public class FriendsTreeMDIWindow extends AllianceMDIWindow {
-
-    private UISubsystem ui;
+	private static final long serialVersionUID = 1687760495831791627L;
+	
+	private UISubsystem ui;
     private JTree tree;
     private ImageIcon iconMe, iconFriend, iconNode, iconFriendDimmed, iconNodeDimmed, iconRecursion;
 
@@ -100,8 +101,9 @@ public class FriendsTreeMDIWindow extends AllianceMDIWindow {
     }
 
     private class FriendCellRenderer extends DefaultTreeCellRenderer {
+		private static final long serialVersionUID = -8523814220862745440L;
 
-        @Override
+		@Override
         public Component getTreeCellRendererComponent(
                 JTree tree,
                 Object value,

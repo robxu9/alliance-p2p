@@ -19,8 +19,9 @@ import javax.swing.JTextField;
  * @author Bastvera
  */
 public class SoundTab extends XUIDialog implements TabHelper {
-
-    private JPanel tab;
+	private static final long serialVersionUID = -2640916798251523599L;
+	
+	private JPanel tab;
     private UISubsystem ui;
     private final static String[] OPTIONS = new String[]{
         "internal.pmsound", "internal.downloadsound", "internal.publicsound"};

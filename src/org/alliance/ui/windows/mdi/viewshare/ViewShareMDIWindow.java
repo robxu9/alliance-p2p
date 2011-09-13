@@ -54,8 +54,9 @@ import javax.swing.ToolTipManager;
  * To change this template use File | Settings | File Templates.
  */
 public class ViewShareMDIWindow extends AllianceMDIWindow {
-
-    private Node remote;
+	private static final long serialVersionUID = 7219858323327738397L;
+	
+	private Node remote;
     private JTree tree;
     private ViewShareTreeModel model;
     private JPopupMenu popup;
@@ -449,8 +450,9 @@ public class ViewShareMDIWindow extends AllianceMDIWindow {
     }
 
     private class ViewShareTreeRenderer extends DefaultTreeCellRenderer {
+		private static final long serialVersionUID = -6799569542099609536L;
 
-        @Override
+		@Override
         public Component getTreeCellRendererComponent(
                 JTree tree,
                 Object value,

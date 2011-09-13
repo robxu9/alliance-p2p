@@ -30,8 +30,9 @@ public abstract class AllianceListCellRenderer {
             boolean isSelected, boolean cellHasFocus);
 
     private class AllianceSubstanceListCellRenderer extends SubstanceDefaultListCellRenderer {
+		private static final long serialVersionUID = -2918000133587619925L;
 
-        @Override
+		@Override
         public Component getListCellRendererComponent(JList list, Object value, int index,
                 boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -41,8 +42,9 @@ public abstract class AllianceListCellRenderer {
     }
 
     private class AllianceDefaultListCellRenderer extends DefaultListCellRenderer {
+		private static final long serialVersionUID = 6172447762875671910L;
 
-        @Override
+		@Override
         public Component getListCellRendererComponent(JList list, Object value, int index,
                 boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

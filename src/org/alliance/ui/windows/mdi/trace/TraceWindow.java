@@ -33,11 +33,12 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TraceWindow extends XUIFrame implements TraceHandler {
-
-    private JTable table;
+	private static final long serialVersionUID = 7062049074066085487L;
+	
+	private JTable table;
     private TraceTableModel model;
     private JScrollPane scrollPane;
-    private Hashtable channels;
+    private Hashtable<String, JCheckBox> channels;
     private JPanel channelPanel;
     private JCheckBox trace;
     private JCheckBox info;
@@ -52,7 +53,7 @@ public class TraceWindow extends XUIFrame implements TraceHandler {
     }
 
     public TraceWindow(boolean hookTrace) {
-        this.channels = new Hashtable();
+        this.channels = new Hashtable<String, JCheckBox>();
         try {
             init(rl, rl.getResourceStream("res/xui/template/tracemdi.xui.xml"));
             SubstanceThemeHelper.setButtonsToGeneralArea(xui.getXUIComponents());
@@ -227,8 +228,9 @@ public class TraceWindow extends XUIFrame implements TraceHandler {
     }
 
     private class ColoredRenderer extends DefaultTableCellRenderer {
-
-        private final Color[] LEVELS_BG = {new Color(16777215), new Color(16316927), new Color(15400931), new Color(16777145), new Color(16770019)};
+		private static final long serialVersionUID = 2279409657773997718L;
+		
+		private final Color[] LEVELS_BG = {new Color(16777215), new Color(16316927), new Color(15400931), new Color(16777145), new Color(16770019)};
         private final Color[] LEVELS_FG = {new Color(10592673), new Color(5592405), new Color(0), new Color(0), new Color(0)};
         private TraceWindow.TraceTableModel model;
 
@@ -250,11 +252,11 @@ public class TraceWindow extends XUIFrame implements TraceHandler {
     }
 
     private class TraceTableModel extends AbstractTableModel {
-
-        private transient ArrayList lines = new ArrayList(4096);
-        private HashSet filteredChannels = new HashSet(10);
+		private static final long serialVersionUID = -7844533228788303L;
+		
+		private transient ArrayList<TraceLine> lines = new ArrayList<TraceLine>(4096);
+        private HashSet<String> filteredChannels = new HashSet<String>(10);
         private boolean[] filteredLevels = {false, false, false, false, false};
-        private static final int MAX_N_LINES = 5000;
 
         public TraceTableModel() {
             Thread t = new Thread(new Runnable() {
@@ -340,7 +342,7 @@ public class TraceWindow extends XUIFrame implements TraceHandler {
         public void print(int level, String channel, String message, Exception e) {
             this.lines.add(new TraceWindow.TraceLine(message, channel, level, this.lines.size(), e));
             if (this.lines.size() > 5000) {
-                this.lines = new ArrayList(this.lines.subList(this.lines.size() / 4, this.lines.size() - 1));
+                this.lines = new ArrayList<TraceLine>(this.lines.subList(this.lines.size() / 4, this.lines.size() - 1));
                 fireTableDataChanged();
                 SwingUtilities.invokeLater(new Runnable() {
 
@@ -416,10 +418,10 @@ public class TraceWindow extends XUIFrame implements TraceHandler {
         }
 
         public void load(ObjectInputStream in) throws IOException, ClassNotFoundException {
-            this.filteredChannels = ((HashSet) in.readObject());
+            this.filteredChannels = ((HashSet<String>) in.readObject());
             this.filteredLevels = ((boolean[]) in.readObject());
 
-            for (Iterator i = this.filteredChannels.iterator(); i.hasNext();) {
+            for (Iterator<String> i = this.filteredChannels.iterator(); i.hasNext();) {
                 String s = (String) i.next();
                 TraceWindow.this.addNewChannel(s);
                 ((JCheckBox) TraceWindow.this.channels.get(s)).setSelected(!(this.filteredChannels.contains(s)));

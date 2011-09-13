@@ -21,8 +21,9 @@ import java.awt.image.BufferedImage;
  * Time: 10:49:44
  */
 public class SplashWindow extends Window implements Runnable, StartupProgressListener {
-
-    private Image image;
+	private static final long serialVersionUID = 2638737002887038528L;
+	
+	private Image image;
     private BufferedImage bufferedImage;
     private String statusMessage = "";
     private Color borderColor = new Color(0f, 0f, 0f, 0.5f);

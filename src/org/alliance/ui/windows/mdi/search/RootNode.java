@@ -126,11 +126,6 @@ public class RootNode extends SearchTreeNode {
     }
 
     private void resortTable() {
-        for(SearchTreeNode t : children ){
-
-   
-        }
-
         if (secondaryComparator != null) {
             Collections.sort(children, secondaryComparator);
         }

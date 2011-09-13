@@ -51,8 +51,9 @@ import javax.swing.tree.TreePath;
  * To change this template use File | Settings | File Templates.
  */
 public class SearchMDIWindow extends AllianceMDIWindow {
-
-    private JXTreeTable table;
+	private static final long serialVersionUID = 327451975739712776L;
+	
+	private JXTreeTable table;
     private SearchTreeTableModel model;
     private JComboBox type;
     private JPopupMenu popup;
@@ -424,8 +425,9 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public class NameCellRenderer extends DefaultTreeCellRenderer {
+		private static final long serialVersionUID = 6868290504010574493L;
 
-        @Override
+		@Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
             if (value instanceof FileNode) {
@@ -449,8 +451,9 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public class BytesizeCellRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 1215936842757257676L;
 
-        @Override
+		@Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, rowIndex, vColIndex);
@@ -477,8 +480,9 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public class DaysOldCellRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 2523851970624324107L;
 
-        @Override
+		@Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, rowIndex, vColIndex);
@@ -509,8 +513,9 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public class SourcesCellRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = -7492092394119241390L;
 
-        @Override
+		@Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, rowIndex, vColIndex);
@@ -550,8 +555,9 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public class SpeedCellRenderer extends JProgressBar implements TableCellRenderer {
+		private static final long serialVersionUID = 1424786310794166771L;
 
-        public SpeedCellRenderer() {
+		public SpeedCellRenderer() {
             super(0, 100);
             setStringPainted(false);
             setOpaque(true);

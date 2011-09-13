@@ -49,8 +49,9 @@ import javax.swing.JFileChooser;
  * To change this template use File | Settings | File Templates.
  */
 public class DownloadsMDIWindow extends AllianceMDIWindow {
-
-    private DownloadsTableModel model;
+	private static final long serialVersionUID = -1444332931132106987L;
+	
+	private DownloadsTableModel model;
     private JDownloadGrid downloadGrid;
     private JTable table;
     private JPopupMenu popup;
@@ -238,8 +239,8 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
             dw.update();
         }
 
-        for (Iterator i = rows.iterator(); i.hasNext();) {
-            DownloadWrapper w = (DownloadWrapper) i.next();
+        for (Iterator<DownloadWrapper> i = rows.iterator(); i.hasNext();) {
+            DownloadWrapper w = i.next();
             if (!ui.getCore().getNetworkManager().getDownloadManager().contains(w.download)) {
                 structureChanged = true;
                 i.remove();
@@ -362,8 +363,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
     }
 
     private class DownloadsTableModel extends AbstractTableModel {
+		private static final long serialVersionUID = -1667336782988549379L;
 
-        @Override
+		@Override
         public int getRowCount() {
             return rows.size();
         }
@@ -707,8 +709,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
     }
 
     public class ProgressBarCellRenderer extends JProgressBar implements TableCellRenderer {
+		private static final long serialVersionUID = -7371823511399509056L;
 
-        public ProgressBarCellRenderer() {
+		public ProgressBarCellRenderer() {
             super(0, 100);
             setOpaque(true);
         }

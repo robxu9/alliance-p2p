@@ -10,4 +10,5 @@ import org.alliance.core.SynchronizedNeedsUserInteraction;
  * To change this template use File | Settings | File Templates.
  */
 public class NeedsToRestartBecauseOfUpgradeInteraction extends SynchronizedNeedsUserInteraction {
+	private static final long serialVersionUID = 221210448122222866L;
 }
