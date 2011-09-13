@@ -16,8 +16,9 @@ import java.io.IOException;
  * Time: 18:42:48
  */
 public class ChatMessage extends PersistantRPC {
-
-    private String message;
+	private static final long serialVersionUID = -3696738944299393779L;
+	
+	private String message;
     private boolean messageToAll;
     private long sentAtTick;
 

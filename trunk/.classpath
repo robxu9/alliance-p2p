@@ -12,5 +12,5 @@
 	<classpathentry kind="lib" path="lib/substance-lite.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/trident.jar"/>
-	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

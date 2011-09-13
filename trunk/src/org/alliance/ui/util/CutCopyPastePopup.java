@@ -19,8 +19,9 @@ import javax.swing.text.JTextComponent;
  * To change this template use File | Settings | File Templates.
  */
 public class CutCopyPastePopup extends JPopupMenu implements ActionListener {
-
-    private JTextComponent target;
+	private static final long serialVersionUID = 282909199346620508L;
+	
+	private JTextComponent target;
 
     public CutCopyPastePopup(JTextComponent target) {
         this.target = target;

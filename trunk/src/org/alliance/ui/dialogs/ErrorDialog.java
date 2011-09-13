@@ -34,8 +34,9 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 public class ErrorDialog extends XUIDialog {
-
-    private static String errorReportUrl = "";
+	private static final long serialVersionUID = -9073066175099840283L;
+	
+	private static String errorReportUrl = "";
     private Throwable error;
     private Throwable innerError;
     private String errorReport;
@@ -175,7 +176,7 @@ public class ErrorDialog extends XUIDialog {
         sw.write("\n\n");
         sw.write("System properties: \n\n");
         Properties p = System.getProperties();
-        for (Enumeration e = p.keys(); e.hasMoreElements();) {
+        for (Enumeration<?> e = p.keys(); e.hasMoreElements();) {
             String key = e.nextElement().toString();
             sw.write(key + ":\n");
             sw.write(p.getProperty(key) + "\n\n");

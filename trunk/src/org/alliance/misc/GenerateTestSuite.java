@@ -47,7 +47,6 @@ public class GenerateTestSuite {
 
     public GenerateTestSuite(String shareDirectory) throws Exception {
         this.shareDirectory = shareDirectory;
-        File shareDir = new File(shareDirectory);
         if (!new File(shareDirectory).exists()) {
             System.err.println("Directory with fake share test data does not exist: " + shareDirectory + ".");
             System.exit(1);

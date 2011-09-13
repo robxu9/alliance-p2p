@@ -91,8 +91,9 @@ import org.alliance.ui.windows.mdi.InvitationsMDIWindow;
  * Time: 16:25:12
  */
 public class MainWindow extends XUIFrame implements MenuItemDescriptionListener, MDIManagerEventListener, Runnable {
-
-    private UISubsystem ui;
+	private static final long serialVersionUID = 5966451329188131962L;
+	
+	private UISubsystem ui;
     private JLabel statusMessage, shareMessage;
     private JProgressBar bandwidthIn, bandwidthOut;
     private ToolbarActionManager toolbarActionManager;

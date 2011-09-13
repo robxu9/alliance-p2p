@@ -13,13 +13,13 @@ import java.lang.reflect.Method;
 public class SettingClass {
 
     public Object getValue(String k) throws Exception {
-        Class c = getClass();
+        Class<? extends SettingClass> c = getClass();
         Method m = c.getMethod("get" + TextUtils.upperCaseFirstLetter(k));
         return m.invoke(this);
     }
 
     public void setValue(String name, Object val) throws Exception {
-        Class c = getClass();
+        Class<? extends SettingClass> c = getClass();
         Method m;
         try {
             m = c.getMethod("set" + TextUtils.upperCaseFirstLetter(name), val.getClass());

@@ -19,8 +19,9 @@ import javax.swing.filechooser.FileFilter;
  * @author Bastvera
  */
 public class DatabaseTab extends XUIDialog implements TabHelper {
-
-    private JPanel tab;
+	private static final long serialVersionUID = 2661923410953944962L;
+	
+	private JPanel tab;
     private UISubsystem ui;
     private final static String[] OPTIONS = new String[]{"internal.hashspeedinmbpersecond",
         "internal.politehashingintervalingigabytes", "internal.politehashingwaittimeinminutes",

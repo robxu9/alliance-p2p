@@ -1,7 +1,6 @@
 package org.alliance.core.comm.upnp;
 
 import org.alliance.core.comm.AuthenticatedConnection;
-import org.alliance.core.comm.Connection.Direction;
 import org.alliance.core.comm.HandshakeConnection;
 import org.alliance.core.comm.NetworkManager;
 import org.alliance.core.comm.Packet;

@@ -39,8 +39,9 @@ import java.net.URLConnection;
  * Time: 14:54:04
  */
 public class AddFriendWizard extends JWizard {
-
-    public static final int STEP_INTRO = 0;
+	private static final long serialVersionUID = -4806867854155340280L;
+	
+	public static final int STEP_INTRO = 0;
     public static final int STEP_INVITATION_LIMIT = 1;
     public static final int STEP_ENTER_INVITATION = 2;
     public static final int STEP_INCORRECT_INVITATION_CODE = 3;

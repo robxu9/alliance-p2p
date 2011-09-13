@@ -23,8 +23,9 @@ import javax.swing.JToolBar;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AllianceMDIWindow extends MDIWindow {
-
-    protected XUI xui;
+	private static final long serialVersionUID = -6643181705731510183L;
+	
+	protected XUI xui;
     protected String mdiWindowIdentifier;
     protected UISubsystem ui;
     protected JToolBar toolbar;

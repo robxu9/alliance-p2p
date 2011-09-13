@@ -21,8 +21,9 @@ import javax.swing.SwingUtilities;
  * To change this template use File | Settings | File Templates.
  */
 public class ConsoleMDIWindow extends AllianceMDIWindow implements Console.Printer {
-
-    private JTextArea textarea;
+	private static final long serialVersionUID = -5633229186869294522L;
+	
+	private JTextArea textarea;
     private JTextField chat;
     private Console console;
 

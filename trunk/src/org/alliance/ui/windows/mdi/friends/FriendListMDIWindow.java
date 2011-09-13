@@ -41,8 +41,9 @@ import javax.swing.event.ListSelectionListener;
  * Time: 16:22:07
  */
 public class FriendListMDIWindow extends AllianceMDIWindow {
-
-    private UISubsystem ui;
+	private static final long serialVersionUID = 4537714871606605344L;
+	
+	private UISubsystem ui;
     private JList list;
     private JLabel statusright;
     private JPopupMenu popup;

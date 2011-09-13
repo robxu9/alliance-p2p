@@ -11,12 +11,14 @@ import java.util.Collection;
  * Time: 15:24:52
  */
 public class PublicChatHistory implements Serializable {
-
-    private static final int NUMBERS_OF_MESSAGES_IN_HISTORY = 500;
+	private static final long serialVersionUID = 3573220861823618270L;
+	
+	private static final int NUMBERS_OF_MESSAGES_IN_HISTORY = 50;
 
     public static class Entry implements Serializable {
-
-        public long tick;
+		private static final long serialVersionUID = -5500094852266772045L;
+		
+		public long tick;
         public int fromGuid;
         public String message;
 

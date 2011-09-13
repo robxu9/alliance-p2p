@@ -26,8 +26,9 @@ import javax.swing.table.DefaultTableCellRenderer;
  * To change this template use File | Settings | File Templates.
  */
 public class DuplicatesMDIWindow extends AllianceMDIWindow {
-
-    private JTable table;
+	private static final long serialVersionUID = 2508278896330460348L;
+	
+	private JTable table;
     private ArrayList<Dup> dups = new ArrayList<Dup>();
 
     public DuplicatesMDIWindow(UISubsystem ui) throws Exception {
@@ -117,8 +118,9 @@ public class DuplicatesMDIWindow extends AllianceMDIWindow {
     }
 
     private class TableModel extends AbstractTableModel {
+		private static final long serialVersionUID = 8006179591776259545L;
 
-        @Override
+		@Override
         public int getRowCount() {
             return dups.size();
         }
@@ -163,8 +165,9 @@ public class DuplicatesMDIWindow extends AllianceMDIWindow {
     }
 
     private class MyCellRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 2079184082654506505L;
 
-        @Override
+		@Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             String s = String.valueOf(value);

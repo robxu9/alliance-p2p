@@ -25,8 +25,9 @@ import javax.swing.table.AbstractTableModel;
  * To change this template use File | Settings | File Templates.
  */
 public class UploadsMDIWindow extends AllianceMDIWindow {
-
-    private UploadsMDIWindow.UploadsTableModel model;
+	private static final long serialVersionUID = -761411168249457332L;
+	
+	private UploadsMDIWindow.UploadsTableModel model;
     private JTable table;
     private ArrayList<UploadWrapper> rows = new ArrayList<UploadsMDIWindow.UploadWrapper>();
 
@@ -136,8 +137,9 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
     }
 
     private class UploadsTableModel extends AbstractTableModel {
+		private static final long serialVersionUID = -4440907637702707612L;
 
-        @Override
+		@Override
         public int getRowCount() {
             return rows.size();
         }

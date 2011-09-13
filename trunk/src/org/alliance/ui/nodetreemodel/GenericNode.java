@@ -4,8 +4,9 @@ import javax.swing.Icon;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class GenericNode extends DefaultMutableTreeNode implements IdentifiableTreeNode {
-
-    private String text;
+	private static final long serialVersionUID = 7891715455619120619L;
+	
+	private String text;
     private Icon image;
 
     public GenericNode() {

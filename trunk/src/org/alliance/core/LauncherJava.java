@@ -60,8 +60,6 @@ public class LauncherJava {
         command[allArguments.length + 3] = "\"" + strClasspath + "\"";
         command[allArguments.length + 4] = mainClass;
 
-        String[] env = {};
-
         //combine to printable string for debugging
         StringBuffer wholeCommand = new StringBuffer();
         for (int i = 0; i < command.length; i++) {

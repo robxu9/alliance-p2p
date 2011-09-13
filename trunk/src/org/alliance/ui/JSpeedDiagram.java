@@ -16,8 +16,9 @@ import javax.swing.SwingUtilities;
  * @author Bastvera
  */
 public class JSpeedDiagram extends JPanel implements Runnable {
-
-    private int maxValue;
+	private static final long serialVersionUID = -1906623554197761717L;
+	
+	private int maxValue;
     private int panelHeight;
     private int panelWidth;
     private ArrayList<Integer> valuesDownload = new ArrayList<Integer>();

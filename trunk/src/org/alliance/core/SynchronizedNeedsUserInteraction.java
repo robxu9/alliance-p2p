@@ -7,8 +7,9 @@ package org.alliance.core;
  * Time: 14:25:51
  */
 public abstract class SynchronizedNeedsUserInteraction implements NeedsUserInteraction {
+	private static final long serialVersionUID = 9093459328431178801L;
 
-    @Override
+	@Override
     public boolean canRunInParallelWithOtherInteractions() {
         return false;
     }

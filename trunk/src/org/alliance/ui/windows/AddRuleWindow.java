@@ -15,8 +15,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class AddRuleWindow extends XUIDialog {
-
-    private UISubsystem ui;
+	private static final long serialVersionUID = 2567650738177013298L;
+	
+	private UISubsystem ui;
     private ArrayList<JRadioButton> radioButtons = new ArrayList<JRadioButton>();
     private final static String[] OPTIONS = new String[]{"ip_addr1",
         "ip_addr2", "ip_addr3", "ip_addr4", "ip_addr_mask"};

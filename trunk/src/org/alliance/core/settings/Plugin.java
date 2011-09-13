@@ -78,7 +78,7 @@ public class Plugin {
                         String className = entry.getName().substring(0, entry.getName().length() - ".class".length());
                         className = className.replace("/", ".");
                         try {
-                            Class fileClass = Class.forName(className, false, jarLoader);
+                            Class<?> fileClass = Class.forName(className, false, jarLoader);
                             if (PlugIn.class.isAssignableFrom(fileClass)) {
                                 this.jar = file.getCanonicalPath();
                                 this.pluginclass = fileClass.getCanonicalName();

@@ -30,9 +30,10 @@ import javax.swing.JPanel;
 import org.alliance.core.Language;
 
 public class OptionDialog extends JDialog implements ActionListener {
-
-    public static final int BORDER = 5;
-    private Map<Character, String> eventKeyMap = new HashMap();
+	private static final long serialVersionUID = 5005980892820123640L;
+	
+	public static final int BORDER = 5;
+    private Map<Character, String> eventKeyMap = new HashMap<Character, String>();
     private KeyListener keyListener;
     public static final int INFORMATION_DIALOG = 0;
     public static final int QUESTION_DIALOG = 1;
@@ -99,8 +100,9 @@ public class OptionDialog extends JDialog implements ActionListener {
         }
 
         JHtmlLabel l = new JHtmlLabel() {
+			private static final long serialVersionUID = 2628164148964457786L;
 
-            @Override
+			@Override
             public Dimension getPreferredSize() {
                 return new Dimension(400, super.getPreferredSize().height);
             }

@@ -18,8 +18,9 @@ import javax.swing.JCheckBox;
  * To change this template use File | Settings | File Templates.
  */
 public class ForwardInvitationDialog extends XUIDialog {
-
-    private JCheckBox alwaysAllowInvite;
+	private static final long serialVersionUID = -2890549693521953103L;
+	
+	private JCheckBox alwaysAllowInvite;
     private boolean pressedYes = false;
 
     public ForwardInvitationDialog(UISubsystem ui, PleaseForwardInvitationInteraction pmi) throws Exception {

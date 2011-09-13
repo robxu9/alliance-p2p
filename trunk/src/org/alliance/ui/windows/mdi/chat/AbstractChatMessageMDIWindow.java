@@ -39,8 +39,9 @@ import javax.swing.event.HyperlinkListener;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
-
-    private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 100;
+	private static final long serialVersionUID = -562921870993210155L;
+	
+	private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 50;
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color COLORS[] = {
@@ -245,7 +246,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile, boolean saveToHistory) {
         if (chatLines != null && chatLines.size() > 0) {
-            ChatLine l = chatLines.last();
             if (!messageHasBeenQueuedAwayForAWhile) {
                 //A message gets queued away when a user is offline and cannot receive the message.
                 //If this message has NOT been queued then it should always be displayed as the last message received 

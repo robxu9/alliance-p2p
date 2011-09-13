@@ -22,8 +22,9 @@ import javax.swing.SwingUtilities;
  * To change this template use File | Settings | File Templates.
  */
 public class NodeTreeNode extends GenericNode {
-
-    private ArrayList<NodeTreeNode> children;
+	private static final long serialVersionUID = 8755833885129854835L;
+	
+	private ArrayList<NodeTreeNode> children;
     private NodeTreeNode parent;
     private Node node;
     private UISubsystem ui;

@@ -8,8 +8,9 @@ package org.alliance.core.file.filedatabase;
  * To change this template use File | Settings | File Templates.
  */
 public class FileHasBeenRemovedOrChanged extends Exception {
-
-    private FileDescriptor fd;
+	private static final long serialVersionUID = 1050247596070657837L;
+	
+	private FileDescriptor fd;
 
     public FileHasBeenRemovedOrChanged(FileDescriptor fd) {
         this.fd = fd;

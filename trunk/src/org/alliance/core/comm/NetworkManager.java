@@ -498,8 +498,8 @@ public class NetworkManager extends Manager {
     public void load(ObjectInputStream in) throws IOException {
         try {
             queuedPersistantRPCs = (ArrayList<PersistantRPC>) in.readObject();
-            for (Iterator i = queuedPersistantRPCs.iterator(); i.hasNext();) {
-                PersistantRPC r = (PersistantRPC) i.next();
+            for (Iterator<PersistantRPC> i = queuedPersistantRPCs.iterator(); i.hasNext();) {
+                PersistantRPC r = i.next();
                 if (r.hasExpired()) {
                     if (T.t) {
                         T.trace("Removing expired PersistantRPC " + r);
@@ -516,8 +516,8 @@ public class NetworkManager extends Manager {
         if (T.t) {
             T.debug("SignalFriendConnected: " + friend);
         }
-        for (Iterator i = queuedPersistantRPCs.iterator(); i.hasNext();) {
-            PersistantRPC r = (PersistantRPC) i.next();
+        for (Iterator<PersistantRPC> i = queuedPersistantRPCs.iterator(); i.hasNext();) {
+            PersistantRPC r = i.next();
             if (r.getDestinationGuid() == friend.getGuid()) {
                 try {
                     if (T.t) {

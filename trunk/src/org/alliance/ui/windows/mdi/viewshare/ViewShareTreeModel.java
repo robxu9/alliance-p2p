@@ -19,8 +19,9 @@ import java.util.ArrayList;
  * Time: 18:14:33
  */
 public class ViewShareTreeModel extends DefaultTreeModel {
-
-    private Node node;
+	private static final long serialVersionUID = 5971954477323166170L;
+	
+	private Node node;
     private CoreSubsystem core;
     private UISubsystem ui;
     private ViewShareMDIWindow win;

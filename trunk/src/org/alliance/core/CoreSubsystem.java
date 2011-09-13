@@ -328,7 +328,7 @@ public class CoreSubsystem implements Subsystem {
             networkManager.load(in);
             userInternactionQue = (ArrayList<NeedsUserInteraction>) in.readObject();
             publicChatHistory = (PublicChatHistory) in.readObject();
-            for (Iterator i = userInternactionQue.iterator(); i.hasNext();) {
+            for (Iterator<NeedsUserInteraction> i = userInternactionQue.iterator(); i.hasNext();) {
                 Object o = i.next();
                 if (o instanceof NeedsToRestartBecauseOfUpgradeInteraction) {
                     i.remove(); //we don't need to restart if it's a interaction from the last time we ran alliance
