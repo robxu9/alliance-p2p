@@ -14,7 +14,7 @@ public class Server extends SettingClass {
     private Integer bindtoall = 1;
     private Integer staticip = 0;
     private Integer dnsmode = 0;
-    private Integer lanmode = 0;
+    private Integer lanmode = 1;
     private Integer ipv6 = 0;
     private String dnsname = "";
     private String bindnic = "";

@@ -70,7 +70,7 @@ public class Internal extends SettingClass {
     private Integer hastriedtoinviteafriend;
     private Integer hasneverdownloadedafile = 1;
     private Integer enablesupportfornonenglishcharacters = 1;
-    private Integer alwaysautomaticallyconnecttoallfriendsoffriend = 0;
+    private Integer alwaysautomaticallyconnecttoallfriendsoffriend = 1;
     private Integer alwaysdenyuntrustedinvitations = 1;
     private Integer alwaysallowfriendsoftrustedfriendstoconnecttome = 1;
     private Integer disablenewuserpopup = 0;
@@ -90,14 +90,14 @@ public class Internal extends SettingClass {
     /** Be polite when running on XP sp2 wich only allows 10 pending tcp/ip connections
      * before stopping the network stack. Set to 8 to be on the safe side. */
     private Integer maxpendingconnections = 8;
-    private Integer hashspeedinmbpersecond = 20; //when in background mode //Bastvera DeathfireD request
+    private Integer hashspeedinmbpersecond = 0; //when in background mode //Bastvera DeathfireD request
     private Integer sosendbuf = -1, soreceivebuf = -1;
     private Integer discwritebuffer = 256 * KB, //one instance of this one per download
             socketsendbuffer = 256 * KB; //one instance per download
     private Integer socketreadbuffer = 256 * KB; //only one instance of this one - at the network layer
     private Integer maximumAlliancePacketSize = 32 * KB;
-    private Integer politehashingwaittimeinminutes = 10;
-    private Integer politehashingintervalingigabytes = 50;
+    private Integer politehashingwaittimeinminutes = 0;
+    private Integer politehashingintervalingigabytes = 0;
     private Integer maxfileexpandinblocks = 50; //don't exceed file system size of file we're downloading to by more than this number
     //This is here because if we download the last block of a 4Gb file we seek to 4Gb into
     //an empry file. This makes XP grind to a halt. 100 means expand 100mb per block at most
