@@ -40,7 +40,7 @@ import javax.swing.event.HyperlinkListener;
  */
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
 
-    private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 50;
+    private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 100;
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color COLORS[] = {
