@@ -28,8 +28,8 @@ import java.security.MessageDigest;
 public class SiteUpdate implements Runnable {
 
     private final CoreSubsystem core;
-    private static final String JAR_URL = "http://alliancep2pbeta.googlecode.com/svn/updater/version/alliance.new";
-    private static final String INFO_URL = "http://alliancep2pbeta.googlecode.com/svn/updater/version/build.info";
+    private static final String JAR_URL = "http://alliance-p2p.googlecode.com/svn/updater/version/alliance.new";
+    private static final String INFO_URL = "http://alliance-p2p.googlecode.com/svn/updater/version/build.info";
     private boolean alive = true;
     private String updateFilePath;
     private String orginalFilePath;

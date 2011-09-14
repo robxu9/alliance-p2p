@@ -425,8 +425,9 @@ public class FriendManager extends Manager {
             }
         }
         friends.remove(f.getGuid());
-        for (Iterator i = settings.getFriendlist().iterator(); i.hasNext();) {
-            if (((org.alliance.core.settings.Friend) i.next()).getGuid() == f.getGuid()) {
+        for (Iterator<org.alliance.core.settings.Friend> i =
+        	settings.getFriendlist().iterator(); i.hasNext();) {
+            if (i.next().getGuid() == f.getGuid()) {
                 i.remove();
             }
         }

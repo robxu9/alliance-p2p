@@ -50,15 +50,10 @@ public class EditGroupWindow extends XUIDialog {
 
         groupListModel = new DefaultListModel();
 
-        groupsTree = new TreeSet<String>(new Comparator() {
+        groupsTree = new TreeSet<String>(new Comparator<String>() {
 
             @Override
-            public int compare(Object o1, Object o2) {
-                if (o1 == null || o2 == null) {
-                    return 0;
-                }
-                String s1 = o1.toString();
-                String s2 = o2.toString();
+            public int compare(String s1, String s2) {
                 return s1.compareToIgnoreCase(s2);
             }
         });

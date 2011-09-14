@@ -56,12 +56,6 @@ public class Java6TrayIconSubsystem implements Subsystem, Runnable {
             public void callbackRemoved() {
             }
 
-            public void signalFileDatabaseFlushStarting() {
-            }
-
-            public void signalFileDatabaseFlushComplete() {
-            }
-
             @Override
             public void nodeOrSubnodesUpdated(Node node) {
             }

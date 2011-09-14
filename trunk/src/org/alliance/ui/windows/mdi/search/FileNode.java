@@ -15,7 +15,7 @@ import java.util.Enumeration;
  * Date: 2006-apr-24
  * Time: 14:20:28
  */
-public class FileNode extends SearchTreeNode implements Comparable {
+public class FileNode extends SearchTreeNode implements Comparable<FileNode> {
 
     private SearchTreeNode parent;
     private String filename;
@@ -106,7 +106,7 @@ public class FileNode extends SearchTreeNode implements Comparable {
     }
 
     @Override
-    public Enumeration children() {
+    public Enumeration<FileNode> children() {
         return null;
     }
 
@@ -137,8 +137,7 @@ public class FileNode extends SearchTreeNode implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        FileNode n = (FileNode) o;
+    public int compareTo(FileNode n) {
         return getName().compareToIgnoreCase(n.getName());
     }
 

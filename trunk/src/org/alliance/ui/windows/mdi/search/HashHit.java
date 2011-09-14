@@ -2,7 +2,6 @@ package org.alliance.ui.windows.mdi.search;
 
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.file.hash.Hash;
-import org.alliance.ui.T;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ import com.stendahls.util.TextUtils;
  * Time: 19:54:53
  * To change this template use File | Settings | File Templates.
  */
-public class HashHit implements Comparable {
+public class HashHit implements Comparable<HashHit> {
 
     Hash hash;
     int hits;
@@ -49,11 +48,7 @@ public class HashHit implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (T.t) {
-            T.ass(o instanceof HashHit, "");
-        }
-        HashHit h = (HashHit) o;
+    public int compareTo(HashHit h) {
         return hits - h.hits;
     }
 
