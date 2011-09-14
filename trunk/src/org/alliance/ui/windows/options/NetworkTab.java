@@ -223,7 +223,7 @@ public class NetworkTab extends XUIDialog implements TabHelper {
                 return;
             }
             if (isLanMode) {
-                //ipv6.setSelected(!isLanMode);
+               // ipv6.setSelected(!isLanMode);
                 externalField.setText(Language.getLocalizedString(getClass(), "unused"));
                 return;
             } else {
@@ -357,6 +357,7 @@ public class NetworkTab extends XUIDialog implements TabHelper {
         rdnsMode.setEnabled(false); // Disabled    
         changeDnsState();
         changeBinsState();
-        fillIp(lanMode.isSelected());
+        lanMode.setEnabled(false);
+        //fillIp(lanMode.isSelected()); disabled
     }
 }
