@@ -397,7 +397,7 @@ public class SharesWindow extends XUIDialog {
             ui.getCore().getSettings().getSharelist().add(share);
         }
         if (autoSort.isSelected()) {
-            List list = ui.getCore().getSettings().getSharelist();
+            List<Share> list = ui.getCore().getSettings().getSharelist();
             Comparator<Share> comparator = new Comparator<Share>() {
 
                 @Override

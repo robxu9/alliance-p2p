@@ -256,7 +256,8 @@ public class UPnPManager extends ControlPoint implements DeviceChangeListener {
      */
     private void discoverService() {
 
-        for (Iterator iter = _router.getDeviceList().iterator(); iter.hasNext();) {
+        for (Iterator iter = _router.getDeviceList().iterator();
+        		iter.hasNext();) {
             Device current = (Device) iter.next();
             if (!current.getDeviceType().equals(WAN_DEVICE)) {
                 continue;
@@ -507,15 +508,15 @@ public class UPnPManager extends ControlPoint implements DeviceChangeListener {
         }
 
         try {
-            Enumeration interfaces =
+            Enumeration<NetworkInterface> interfaces =
                     NetworkInterface.getNetworkInterfaces();
 
             if (interfaces != null) {
                 while (interfaces.hasMoreElements()) {
-                    Enumeration addresses =
-                            ((NetworkInterface) interfaces.nextElement()).getInetAddresses();
+                    Enumeration<InetAddress> addresses =
+                            interfaces.nextElement().getInetAddresses();
                     while (addresses.hasMoreElements()) {
-                        addr = (InetAddress) addresses.nextElement();
+                        addr = addresses.nextElement();
                         if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
                             return addr;
                         }
@@ -600,10 +601,10 @@ public class UPnPManager extends ControlPoint implements DeviceChangeListener {
     private class StaleCleaner implements Runnable {
 
         // TODO: remove
-        private String list(java.util.List l) {
+        private String list(java.util.List<Argument> l) {
             String s = "";
-            for (Iterator i = l.iterator(); i.hasNext();) {
-                Argument next = (Argument) i.next();
+            for (Iterator<Argument> i = l.iterator(); i.hasNext();) {
+                Argument next = i.next();
                 s += next.getName() + "->" + next.getValue() + ", ";
             }
             return s;
@@ -634,7 +635,9 @@ public class UPnPManager extends ControlPoint implements DeviceChangeListener {
                 for (int i = 0;; i++) {
                     getGeneric.setArgumentValue("NewPortMappingIndex", i);
                     if (T.t) {
-                        T.debug("Stale Iteration: " + i + ", generic.input: " + list(getGeneric.getInputArgumentList()) + ", generic.output: " + list(getGeneric.getOutputArgumentList()));
+                        T.debug("Stale Iteration: " + i +
+                        		", generic.input: " + list(getGeneric.getInputArgumentList()) +
+                        		", generic.output: " + list(getGeneric.getOutputArgumentList()));
                     }
 
                     if (!getGeneric.postControlAction()) {
@@ -664,8 +667,8 @@ public class UPnPManager extends ControlPoint implements DeviceChangeListener {
             }
 
             // iterate and clean up
-            for (Iterator iter = mappings.iterator(); iter.hasNext();) {
-                Mapping current = (Mapping) iter.next();
+            for (Iterator<Mapping> iter = mappings.iterator(); iter.hasNext();) {
+                Mapping current = iter.next();
                 if (T.t) {
                     T.debug("Analyzing: " + current);
                 }

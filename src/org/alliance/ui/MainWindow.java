@@ -791,7 +791,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
                                     @Override
                                     public void hyperlinkUpdate(HyperlinkEvent e) {
                                         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                                            ui.openURL("http://code.google.com/p/alliancep2pbeta/wiki/Info");
+                                            ui.openURL("http://code.google.com/p/alliance-p2p/");
                                         }
                                     }
                                 });

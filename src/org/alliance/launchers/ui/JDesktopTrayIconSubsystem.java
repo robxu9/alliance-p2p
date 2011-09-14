@@ -67,12 +67,6 @@ public class JDesktopTrayIconSubsystem implements Subsystem, Runnable {
             public void callbackRemoved() {
             }
 
-            public void signalFileDatabaseFlushStarting() {
-            }
-
-            public void signalFileDatabaseFlushComplete() {
-            }
-
             @Override
             public void nodeOrSubnodesUpdated(Node node) {
             }

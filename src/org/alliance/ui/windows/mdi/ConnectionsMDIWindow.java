@@ -55,8 +55,8 @@ public class ConnectionsMDIWindow extends AllianceMDIWindow {
             cw.update();
         }
 
-        for (Iterator i = rows.iterator(); i.hasNext();) {
-            ConnectionWrapper w = (ConnectionWrapper) i.next();
+        for (Iterator<ConnectionWrapper> i = rows.iterator(); i.hasNext();) {
+            ConnectionWrapper w = i.next();
             if (!ui.getCore().getFriendManager().getNetMan().contains(w.connection.getKey())) {
                 structureChanged = true;
                 i.remove();

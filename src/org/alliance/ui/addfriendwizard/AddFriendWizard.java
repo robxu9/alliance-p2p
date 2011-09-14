@@ -98,8 +98,6 @@ public class AddFriendWizard extends JWizard {
         dayLimit = (JTextField) innerXUI.getComponent("daylimit");
         dayLimit.addKeyListener(new KeyAdapter() {
 
-            String lastText;
-
             @Override
             public void keyReleased(KeyEvent e) {
                 if (dayLimit.getText().isEmpty()) {
