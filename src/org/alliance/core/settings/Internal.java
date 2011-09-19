@@ -53,6 +53,7 @@ public class Internal extends SettingClass {
     private String pmsound = "sounds/chatpm.wav";
     private String publicsound = "sounds/chatpublic.wav";
     private String downloadsound = "sounds/download.wav";
+    private String openingsound = "sounds/openingsound.mid";
     private String downloadfolder = CURRENT_DIRECTORY + "downloads";
     private String cachefolder = USER_DIRECTORY + "cache";
     private String keystorefilename = CURRENT_DIRECTORY + "me.ks";
@@ -349,6 +350,13 @@ public class Internal extends SettingClass {
 
     public void setPublicsound(String publicsound) {
         this.publicsound = publicsound;
+    }
+    public String getOpeningsound(){
+    	return openingsound;
+    }
+                                    
+    public void setOpeningsound(String openingsound){
+    	this.openingsound = openingsound;
     }
 
     public Integer getMaxpendingconnections() {

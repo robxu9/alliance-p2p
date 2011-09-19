@@ -5,11 +5,13 @@ import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import com.stendahls.nif.ui.mdi.infonodemdi.InfoNodeMDIManager;
 import org.alliance.core.Language;
+import org.alliance.ui.UIOpeningSound;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.themes.util.SubstanceThemeHelper;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import javax.swing.ImageIcon;
@@ -24,7 +26,7 @@ import javax.swing.JToolBar;
  */
 public abstract class AllianceMDIWindow extends MDIWindow {
 	private static final long serialVersionUID = -6643181705731510183L;
-	
+	private static int openingsoundvariable;
 	protected XUI xui;
     protected String mdiWindowIdentifier;
     protected UISubsystem ui;
@@ -56,6 +58,13 @@ public abstract class AllianceMDIWindow extends MDIWindow {
 
         this.mdiWindowIdentifier = mdiWindowIdentifier;
         this.ui = ui;
+      //Opening Sound
+        UIOpeningSound sound = new UIOpeningSound(new File(ui.getCore().getSettings().getInternal().getOpeningsound()));
+        if (openingsoundvariable == 0)
+        {
+        	  sound.playOpeningSound();
+        }
+        openingsoundvariable++; //Only play when 0, this keeps it from repeating
         this.toolbarName = toolbarName;
 
         this.xui = new XUI();

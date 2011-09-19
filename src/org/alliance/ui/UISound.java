@@ -19,7 +19,6 @@ public class UISound extends Thread {
 
     private final int EXTERNAL_BUFFER_SIZE = 262144;
     private File soundFile;
-
     public UISound(File wavfile) {
         this.soundFile = wavfile;
     }
