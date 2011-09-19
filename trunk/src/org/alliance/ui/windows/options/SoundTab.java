@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import org.alliance.core.Language;
+import org.alliance.core.settings.Internal;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.themes.util.SubstanceThemeHelper;
 
@@ -19,12 +20,12 @@ import javax.swing.JTextField;
  * @author Bastvera
  */
 public class SoundTab extends XUIDialog implements TabHelper {
-	private static final long serialVersionUID = -2640916798251523599L;
 	
+	private static final long serialVersionUID = -2640916798251523599L;
 	private JPanel tab;
     private UISubsystem ui;
     private final static String[] OPTIONS = new String[]{
-        "internal.pmsound", "internal.downloadsound", "internal.publicsound"};
+        "internal.pmsound", "internal.downloadsound", "internal.publicsound", "internal.openingsound"};
 
     public SoundTab(String loading) {
         tab = new JPanel();
@@ -65,11 +66,44 @@ public class SoundTab extends XUIDialog implements TabHelper {
                 return ("Wave files");
             }
         });
+        
 
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getPath();
             ((JTextField) xui.getComponent(s)).setText(path);
+        }
+    }
+    
+    private void browseOpSound(String s) {
+        JFileChooser fc = new JFileChooser(((JTextField) xui.getComponent(s)).getText());
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+
+        fc.addChoosableFileFilter(new FileFilter() {
+
+            @Override
+            public boolean accept(File pathname) {
+                if (pathname.toString().endsWith("mid") || pathname.isDirectory()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return ("Midi files");
+            }
+        });
+        
+
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String path = fc.getSelectedFile().getPath();
+           // Internal.setOpeningsound(path);
+            ((JTextField) xui.getComponent(s)).setText(path);
+        
         }
     }
 
@@ -84,17 +118,23 @@ public class SoundTab extends XUIDialog implements TabHelper {
     public void EVENT_browsepublic(ActionEvent e) {
         browseSound("internal.publicsound");
     }
+    public void EVENT_browseopening(ActionEvent e) {
+    	browseOpSound("internal.openingsound");
+    }
 
     public void EVENT_sounddefault(ActionEvent e) {
         ((JTextField) xui.getComponent("internal.pmsound")).setText("sounds/chatpm.wav");
         ((JTextField) xui.getComponent("internal.downloadsound")).setText("sounds/download.wav");
         ((JTextField) xui.getComponent("internal.publicsound")).setText("sounds/chatpublic.wav");
+        ((JTextField) xui.getComponent("internal.openingsound")).setText("sounds/openingsound.mid");
     }
+    
 
     public void EVENT_soundmute(ActionEvent e) {
         ((JTextField) xui.getComponent("internal.pmsound")).setText("");
         ((JTextField) xui.getComponent("internal.downloadsound")).setText("");
         ((JTextField) xui.getComponent("internal.publicsound")).setText("");
+        ((JTextField) xui.getComponent("internal.openingsound")).setText("");
     }
 
     @Override
@@ -114,7 +154,7 @@ public class SoundTab extends XUIDialog implements TabHelper {
 
     @Override
     public boolean isAllowedEmpty(String option) {
-        if (option.equals("internal.pmsound") || option.equals("internal.downloadsound") || option.equals("internal.publicsound")) {
+        if (option.equals("internal.pmsound") || option.equals("internal.downloadsound") || option.equals("internal.publicsound") || option.equals("internal.openingsound")) {
             return true;
         }
         return false;
@@ -138,4 +178,6 @@ public class SoundTab extends XUIDialog implements TabHelper {
     @Override
     public void postOperation() {
     }
+    
+    
 }
