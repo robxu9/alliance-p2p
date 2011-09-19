@@ -1,0 +1,11 @@
+To build a runnable Mac OSX app bundle:
+
+1. Export Runnable Jar using Eclispe
+2. Open JarBundler (part of Apple SDK)
+3. Select .jar and Main class
+4. Check all three boxes: "Use Menu Bar", "Anti-alias Text", "Anti-alias Graphics"
+5. JVM Version should be 1.5+
+6. Under properties you MUST check "Set working directory to inside application package"
+7. Create Application
+8. Move language, skins, and sound folders to "Alliance.app/Contents/Resources/Java/"
+9. Run.

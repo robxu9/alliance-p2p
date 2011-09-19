@@ -77,7 +77,7 @@ public class CoreSubsystem implements Subsystem {
     public final static int MB = 1024 * KB;
     public final static long GB = 1024 * MB;
     public final static int BLOCK_SIZE = MB;
-    public final static String ERROR_URL = "http://maciek.tv/alliance/errorreporter/";
+    public final static String ERROR_URL = "http://random.remyoukaour.com/alliance.php";
     private ResourceLoader rl;
     private FriendManager friendManager;
     private FileManager fileManager;
