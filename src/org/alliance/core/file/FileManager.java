@@ -47,7 +47,7 @@ public class FileManager extends Manager {
     private Settings settings;
     private SiteUpdate siteUpdater;
     public static final String INCOMPLETE_FOLDER_NAME = "_incomplete_";
-    public static final String UPDATE_FILE_NAME = "alliance.update";
+    public static final String UPDATE_FILE_NAME = "alliance.zip";
     public static final int MAKE_BACKUP = 0;
     public static final int RESTORE_BACKUP = 1;
 

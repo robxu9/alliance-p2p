@@ -5,6 +5,7 @@ import org.alliance.core.CoreSubsystem;
 import org.alliance.core.file.FileManager;
 import org.alliance.core.Language;
 import org.alliance.core.comm.T;
+import org.alliance.ui.util.*;
 import org.alliance.launchers.OSInfo;
 import static org.alliance.core.CoreSubsystem.KB;
 import static org.alliance.launchers.ui.DirectoryCheck.STARTED_JAR_NAME;
@@ -169,7 +170,8 @@ public class SiteUpdate implements Runnable {
                 }
             }
             updateAttemptHasBeenMade = true;
-            core.runUpdater(updateFilePath, orginalFilePath, siteVersion, siteBuild);
+            UnZipTool.unZip(updateFilePath, updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME)));
+            core.runUpdater(updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME))+"updates/", orginalFilePath, siteVersion, siteBuild);
         } catch (Exception e) {
             core.getUICallback().statusMessage(Language.getLocalizedString(getClass(), "updatefailed"), true);
             if (!OSInfo.isWindows()) {
