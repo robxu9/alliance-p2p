@@ -660,94 +660,95 @@ public class CoreSubsystem implements Subsystem {
     public void runUpdater(String srcDir, String targetDir, String version, int build) throws Exception {
         
     	targetDir = targetDir.substring(0,targetDir.lastIndexOf('/'))+"/";
-    	String targetJar = targetDir+"updater.jar";
+    	String targetJar;
+    	String updaterJar;
     	
     	if (OSInfo.isWindows()) {
-            if (!new File("alliance.exe").exists()) {
-                throw new Exception("Can't find updater.exe");
-            }
-            shutdown();
-            String s = "cmd /c ." + System.getProperty("file.separator") + "alliance.exe \""
-                    + srcDir + "\" \"" + targetDir + "\" \"" + version + "\" \"" + build + "\"";
-            Runtime.getRuntime().exec(s);
-            System.exit(0);
-        
-    	} else { 
+    		targetJar = targetDir+"updater.dat";
+    		updaterJar = "alliance.dat";
+        } 
+    	
+    	else {     		
+    		targetJar = targetDir+"updater.jar";
+    		updaterJar = "alliance.jar";
+    	}
     		
-    		if (!new File(srcDir, "alliance.jar").exists()) {
+    	if (!new File(srcDir, updaterJar).exists()) {
                 System.err.println("******CAN'T FIND UPDATE JAR*******");
             	throw new Exception("Can't find updater.jar");
             }
             
-            else{
-            	//File to be moved
-            	File newJar = new File(srcDir, "alliance.jar");
-            	//File destination
-            	File newDir = new File(targetJar);
-            	//Move file
-            	FileReader in = new FileReader(newJar);
-            	FileWriter out = new FileWriter(newDir);
-            	int c;
-            	
-            	while ((c = in.read()) != -1)
-            	      out.write(c);
-            	
-            	in.close();
-        	    out.close();
-        	    
-        	    System.err.println("Copied: " + newJar + " to " + newDir + "\n");
-            	      
-            	
-            if(!new File(targetJar).exists()){
-            	System.err.println("*****CANT FIND NEWLY INSTALLED JAR******");	
-            	System.err.println("Looked in: " + new File(targetJar, "updater.jar"));
+       else{
+           	//File to be moved
+           	File newJar = new File(srcDir, updaterJar);
+           	//File destination
+           	File newDir = new File(targetJar);
+           	//Move file
+           	FileReader in = new FileReader(newJar);
+           	FileWriter out = new FileWriter(newDir);
+           	int c;
+           	
+           	while ((c = in.read()) != -1)
+           	      out.write(c);
+           	
+           	in.close();
+       	    out.close();
+       	    
+       	    System.err.println("Copied: " + newJar + " to " + newDir + "\n");            	      
+            
+           if(!new File(targetJar).exists()){
+        	   	System.err.println("*****CANT FIND NEWLY INSTALLED JAR******");	
+            	System.err.println("Looked in: " + new File(targetJar));
             	throw new Exception("Updated Failed");
             	}
             
-            else{
+           else{
             	           	
-            	/**
-            	 * Copy Language Files
-            	 */
-            	//Get list of all files
-            	String [] fileList = new File(srcDir).list();
-            	FileReader in2 = null;
-            	FileWriter out2 = null;
-            	for(int i = 0; i<fileList.length; i++ )
-            	{
-            		//Checks for language file
-            		if(fileList[i].contains(".properties")){
-            			//File to be moved
-                    	File currentFile = new File(srcDir, fileList[i]);
-                    	//File destination
-                    	File lanDir = new File(targetDir + "language/" + fileList[i]);
-                    	//Move file
-                    	in2 = new FileReader(currentFile);
-                    	out2 = new FileWriter(lanDir);
-                       	int b;
+           	/**
+           	 * Copy Language Files
+           	 */
+           	//Get list of all files
+           	String [] fileList = new File(srcDir).list();
+           	FileReader in2 = null;
+           	FileWriter out2 = null;
+           	for(int i = 0; i<fileList.length; i++ )
+           	{
+           		//Checks for language file
+           		if(fileList[i].contains(".properties")){
+           			//File to be moved
+                   	File currentFile = new File(srcDir, fileList[i]);
+                   	//File destination
+                   	File lanDir = new File(targetDir + "language/" + fileList[i]);
+                   	//Move file
+                   	in2 = new FileReader(currentFile);
+                   	out2 = new FileWriter(lanDir);
+                     	int b;
                     	
-                    	while ((b = in2.read()) != -1)
-                    	      out2.write(b);
-                    	
-                    	System.out.println("Copied " + srcDir+fileList[i] + " to " + lanDir+fileList[i]);
-
-            		}
-            		else{
-            			System.err.println("----Intentionally Skipped" + srcDir+fileList[i]);
-            		}
+                   	while ((b = in2.read()) != -1)
+                   	      out2.write(b);
+                   	
+                   	System.out.println("Copied " + srcDir+fileList[i] + " to " + lanDir+fileList[i]);
             	}
+            	
+           		else{
+            		System.err.println("----Intentionally Skipped" + srcDir+fileList[i]);
+           		}
+            		
+           			//Delete Updater Files after they've been copied/ignored
+            		new File(srcDir, fileList[i]).delete();
+            }
             	
             	in2.close();
         	    out2.close();
             	           	
-            }
-            }
-            
+           }
+       }
+           //Rename updated file to new file, deleting old file. 
             File f = new File(targetJar);
-        	f.renameTo(new File("alliance.jar"));
+        	f.renameTo(new File(updaterJar));
         	System.out.println("***UPDATED JAR FILE SUCCESSFULLY***");
         	System.exit(0);
-        }
+        
     }
 
     public void uiToFront() {
