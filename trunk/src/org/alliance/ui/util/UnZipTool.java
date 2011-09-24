@@ -17,8 +17,7 @@ in.close();
 out.close();
 }
 
-public static void unZip(String zipFileName,
-   String directoryToExtractTo) {
+public static void unZip(String zipFileName, String directoryToExtractTo, boolean delete) {
 Enumeration entriesEnum;
 ZipFile zipFile;
 File newDir;
@@ -74,10 +73,13 @@ try {
        catch (Exception e) {
            e.printStackTrace();
        }
+       
+       if(delete){
        //Delete Zip
        boolean zipFileDelete = new File(zipFileName).delete();
        if(zipFileDelete)
        System.out.println("********DELETED ZIP FILE*******");
+       }
    }
 
    zipFile.close();

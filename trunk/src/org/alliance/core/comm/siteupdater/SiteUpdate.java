@@ -170,7 +170,7 @@ public class SiteUpdate implements Runnable {
                 }
             }
             updateAttemptHasBeenMade = true;
-            UnZipTool.unZip(updateFilePath, updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME)));
+            UnZipTool.unZip(updateFilePath, updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME)), true);
             core.runUpdater(updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME))+"updates/", orginalFilePath, siteVersion, siteBuild);
         } catch (Exception e) {
             core.getUICallback().statusMessage(Language.getLocalizedString(getClass(), "updatefailed"), true);
