@@ -1,0 +1,53 @@
+#summary Feature requests.
+
+Issues with the most recent Alliance beta: http://code.google.com/p/alliancep2pbeta/issues/list
+We can get feature ideas and bug reports from this.
+
+If you're working on a feature, say so here so we don't duplicate work. Once you're done, cross the item out. After we release a version with that feature included, the item can just be deleted.
+
+= Feature requests =
+
+Things on this list are pretty major features, so no need to add them all in one update.
+
+  * Admin users who can chat-silence or totally ban other users, and can send mass PMs
+     * I want to keep the source code generic rather than tied to SBU's own Alliance network, so how about this: the user who's invited the most people (in our case Spiderman) is the admin, and maybe they can also appoint moderators
+     * Since there isn't a central hub, nothing really identifies a certain collection of users as being "the sbushare network," but since almost everyone connects using Spiderman's code on sbushare.com, we can treat that as an identifier
+     * Theres an issue with this -- if we sign off, others will be admins and have those abilities. We _don't_ want that.
+  * A managed banlist that we can update from our Google Code page
+     * We could also propagate bans by admins to any users that connect to the admins
+  * Integrate SSL and basic encryption
+     * Do you mean allowing people to connect even if they aren't using the same encryption? I don't even know if that's possible, plus wouldn't it defeat the purpose of a secure connection? If the "experimental" AES option already works, we could get everyone to switch to it and set it as default.
+  * Fix the LAN option, so only on-campus people can connect
+     * Didn't we already do this by locking the LAN checkbox to "on"?
+  * Mass PMs (for admins only)
+     * There's something already coded in about mass PM, look for something called MessageBoard.java or something like that
+  * Change ranking to be based off share size, or manually set ranks ourselves (as admins), instead of it being based on number of invited users
+     * What would be the use case for admin-set rankings? I suggested basing them on share size because it's convenient to see around how much someone is sharing. Color coding idea for the user stars: 0GB=white, 1=yellow, 5=orange, 10=green, 50=blue, 100=purple, 500=red, 1000=1TB=black, 5TB=silver, 10TB=gold
+  * When you start up Alliance, try connecting to previously-online users first, "dead" ones last (so time isn't wasted trying to connect to someone who's been gone for weeks)
+  * Monitor selected users for new files
+     * There's a plugin being developed for that: http://code.google.com/p/alliancep2pbeta/issues/detail?id=36
+
+= Minor features =
+
+These are things that could probably be implemented quickly.
+
+  * Update users' nicknames when refreshing the user list
+  * Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex)
+  * User status messages like on DC++ (maybe viewable as a tooltip on each user)
+  * Allow user list to be sorted by name or by share size, not by ranking
+
+= User interface changes =
+
+Most of these are (probably) minor/quick updates.
+
+  * Add a "check for updates" menu item
+     * How about a Help menu, with items About (links to Google Code page) and Check for updates
+  * In search results, show which users are sharing the files (as a tooltip?)
+  * Make chat history length a user setting
+  * I found two more %Missing translation!%s -- open the View -> Invitations tab and hover over the buttons
+  * Fix the "invite a friend" message to mention sbushare.com, not alliancep2p.com
+  * More chat colors
+  * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
+  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
+  * Assign aliases to shared folders like DC++
+  * Change the Debug console shortcut to Ctrl+K, since Ctrl+D is used for Duplicate files
