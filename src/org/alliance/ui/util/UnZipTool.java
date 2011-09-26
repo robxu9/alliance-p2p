@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
+import org.alliance.launchers.OSInfo;
+
 public class UnZipTool {
    public static final void writeFile(InputStream in, OutputStream out)
    throws IOException {
@@ -21,7 +23,15 @@ public static void unZip(String zipFileName, String directoryToExtractTo, boolea
 Enumeration entriesEnum;
 ZipFile zipFile;
 File newDir;
-directoryToExtractTo += "updates/";
+String slash = "";
+if(OSInfo.isWindows()){
+	slash = "\\";
+	directoryToExtractTo += "updates"+slash;
+}
+else{
+	slash = "/";
+	directoryToExtractTo += "updates"+slash;
+}
 try {
    zipFile = new ZipFile(zipFileName);
    entriesEnum = zipFile.entries();
@@ -47,7 +57,7 @@ try {
               // @ToDo Does nothing at the moment.
            } 
            else if(!entry.getName().contains("svn")) {
-
+        	   
                System.out.println("Extracting file: "
                        + entry.getName());
                /**
@@ -56,7 +66,7 @@ try {
                 */
                int index = 0;
                String name = entry.getName();
-               index = entry.getName().lastIndexOf("/");
+               index = entry.getName().lastIndexOf('/');
                if (index > 0 && index != name.length())
                    name = entry.getName().substring(index + 1);
 
