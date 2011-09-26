@@ -44,7 +44,7 @@ Most of these are (probably) minor/quick updates.
      * How about a Help menu, with items About (links to Google Code page) and Check for updates
   * In search results, show which users are sharing the files (as a tooltip?)
   * Make chat history length a user setting
-  * I found two more %Missing translation!%s -- open the View -> Invitations tab and hover over the buttons
+  * I found two more _%Missing translation!%s_ -- open the View -> Invitations tab and hover over the buttons
   * Fix the "invite a friend" message to mention sbushare.com, not alliancep2p.com
   * More chat colors
   * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
