@@ -2,6 +2,7 @@ package org.alliance.core.node;
 
 import org.alliance.core.T;
 import org.alliance.core.CoreSubsystem;
+import org.alliance.core.interactions.NewFriendConnectedUserInteraction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,6 +114,8 @@ public class FriendConnector extends Thread {
                 } catch (InterruptedException e) {
                 }
                 manager.connect(f);
+                //Should act as if a friend is a new friend each time you connect.
+                manager.getCore().queNeedsUserInteraction(new NewFriendConnectedUserInteraction(f.getGuid()));
             } catch (IOException e) {
                 if (T.t) {
                     T.trace("Friend unreachable: " + e);
