@@ -267,7 +267,8 @@ public class Friend extends Node {
     public void reconnect() throws IOException {
         disconnect(GracefulClose.RECONNECT);
         Thread t = new Thread(new Runnable() {
-
+//TODO Have this method also check for new friends connected to the friend we're reconnecting to
+      //Maybe just check for new friends every time we connect to a friend?
             @Override
             public void run() {
                 try {

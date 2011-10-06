@@ -49,6 +49,9 @@ public class UserInfo extends RPC {
         f.setNumberOfFilesShared(in.readInt());
         f.setNumberOfInvitedFriends(in.readInt());
         String dnsName = in.readUTF();
+        String nick = in.readUTF();
+        f.setNickname(nick);
+        f.setNicknameToShowInUI(nick);
         f.updateLastKnownHostInfo(host, port, dnsName);
 
         //now that we have a good connection to friend: verify that we only have ONE connection
@@ -91,6 +94,7 @@ public class UserInfo extends RPC {
         p.writeInt(core.getFileManager().getFileDatabase().getNumberOfShares());
         p.writeInt(core.getSettings().getMy().getInvitations());
         p.writeUTF(core.getSettings().getServer().getDnsname());
+        p.writeUTF(core.getSettings().getMy().getNickname());
         return p;
     }
 }

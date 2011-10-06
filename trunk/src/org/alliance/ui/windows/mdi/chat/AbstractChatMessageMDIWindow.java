@@ -41,7 +41,7 @@ import javax.swing.event.HyperlinkListener;
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
 	private static final long serialVersionUID = -562921870993210155L;
 	
-	private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 50;
+	private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 100;
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color COLORS[] = {
@@ -50,9 +50,15 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         new Color(0xa13eaa),
         new Color(0x008b76),
         new Color(0xb77e24),
-        new Color(0xef0000),
+        new Color(0x945151),
         new Color(0xb224b7),
-        new Color(0xb77e24)
+        new Color(0x7ea8a8),
+        new Color(0xba9394),
+        new Color(0x1a41ed),
+        new Color(0xe37b0b),
+        new Color(0xadba5b),
+        new Color(0x32b4db),
+        new Color(0xe3b944)
     };
     protected JEditorPane textarea;
     protected JTextField chat;
@@ -264,6 +270,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         }
         n %= COLORS.length;
         Color c = COLORS[n];
+        if(from.hashCode()==-410302411)
+        	c = new Color(0xef0000);
 
         while (chatLinesContainTick(tick)) {
             tick++;

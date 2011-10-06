@@ -194,6 +194,7 @@ public class CoreSubsystem implements Subsystem {
         System.setProperty("alliance.share.size", "" + fileManager.getFileDatabase().getShareSize());
         System.setProperty("alliance.network.nfriends", "" + friendManager.getNFriends());
         System.setProperty("alliance.invites", "" + getSettings().getMy().getInvitations());
+        System.setProperty("alliance.nickname", "" + getSettings().getMy().getNickname());
 
         if (T.t) {
             T.info("CoreSubsystem stated.");
