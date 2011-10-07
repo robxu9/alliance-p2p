@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.settings.SettingClass;
 import org.alliance.ui.dialogs.OptionDialog;
 
@@ -211,8 +213,15 @@ public class OptionsWindow extends XUIDialog {
             dispose();
         }
     }
+    public void EVENT_update(ActionEvent a) throws Exception {
+    	checkForUpdate();
+    }
 
-    public void EVENT_cancel(ActionEvent a) throws Exception {
+   public void checkForUpdate() {
+		ui.getCore().siteUpdateAvailable();
+	}
+
+	public void EVENT_cancel(ActionEvent a) throws Exception {
         dispose();
     }
 
