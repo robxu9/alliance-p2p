@@ -492,7 +492,7 @@ public class AddFriendWizard extends JWizard {
                             invitationCode.append("\n\n");
                             invitationCode.append(Language.getLocalizedString(getClass(), "invline2"));
                             invitationCode.append("\n");
-                            invitationCode.append("http://www.alliancep2p.com/download\n\n");
+                            invitationCode.append("http://www.SBUSHARE.com\n\n");
                             invitationCode.append(Language.getLocalizedString(getClass(), "invline3"));
                             invitationCode.append("\n");
                             invitationCode.append(i.getCompleteInvitaitonString());
