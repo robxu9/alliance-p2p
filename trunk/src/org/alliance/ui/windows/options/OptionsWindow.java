@@ -18,7 +18,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.settings.SettingClass;
 import org.alliance.ui.dialogs.OptionDialog;
 
