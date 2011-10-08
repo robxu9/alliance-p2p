@@ -34,7 +34,7 @@ Things on this list are pretty major features, so no need to add them all in one
 
 These are things that could probably be implemented quickly.
 
-  *~~ Update users' nicknames when refreshing the user list~~
+  * ~~Update users' nicknames when refreshing the user list~~
   * Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex)
   * User status messages like on DC++ (maybe viewable as a tooltip on each user)
   * Allow user list to be sorted by name or by share size, not by ranking
@@ -50,8 +50,8 @@ Most of these are (probably) minor/quick updates.
      * Also make the default chat length 100, not 50; the chat history length of 500 is fine, since it already takes a second or so to load.
   * ~~I found two more _%Missing translation!%s_ -- open the View -> Invitations tab and hover over the buttons~~
      * And some more when you right-click a friend to "Edit hostname."
-  *~~ Fix the "invite a friend" message to mention sbushare.com, not alliancep2p.com~~
-  *~~ More chat colors~~
+  * ~~Fix the "invite a friend" message to mention sbushare.com, not alliancep2p.com~~
+  * ~~More chat colors~~
   * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
   * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
   * Assign aliases to shared folders like DC++
