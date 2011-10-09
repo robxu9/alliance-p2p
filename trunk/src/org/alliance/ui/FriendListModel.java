@@ -1,11 +1,13 @@
 package org.alliance.ui;
 
+
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.PacedRunner;
 import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 import javax.swing.DefaultListModel;
@@ -89,6 +91,7 @@ public class FriendListModel extends DefaultListModel {
         }
         friends.clear();
         sortByRank();
+
         friendsSorted.clear();
 
         clear();
@@ -126,7 +129,7 @@ public class FriendListModel extends DefaultListModel {
         }
         add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
     }
-
+//TODO
     private void sortByRank() {
         int expEnd = 0;
         int rookieEnd = 0;
@@ -162,6 +165,44 @@ public class FriendListModel extends DefaultListModel {
                 friends.add(f);
             }
         }
+    }
+    
+	private void sortBySize() {
+    	ArrayList<Friend> friendsList = new ArrayList();
+    	int k = 0, w = 0;
+    	for(Friend f : friendsSorted)
+    	{
+    		friendsList.add(f);
+    	}
+    	int j = (friendsList.size()-1);
+    	while(j != 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(friendsList.get(i).getShareSize() > friendsList.get(i-1).getShareSize())
+    				{
+    					Friend temp = friendsList.get(i);
+    					friendsList.set(i, friendsList.get(i-1));
+    					friendsList.set(i-1, temp);
+    				}
+    			}
+    			j--;
+    		}
+    	for(Friend f : friendsList)
+    	{
+    		if(f.isConnected())
+    		{
+    		friends.add(k, f);
+    		k++;
+    		w++;
+    		}
+    		else
+    		{
+    		friends.add(w, f);
+    		w++;
+    		}
+    		
+    	}
     }
 
     public void signalFriendChanged() {
