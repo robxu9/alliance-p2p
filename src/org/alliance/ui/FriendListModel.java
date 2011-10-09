@@ -7,7 +7,6 @@ import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 import javax.swing.DefaultListModel;
@@ -91,7 +90,6 @@ public class FriendListModel extends DefaultListModel {
         }
         friends.clear();
         sortByRank();
-
         friendsSorted.clear();
 
         clear();
@@ -129,7 +127,6 @@ public class FriendListModel extends DefaultListModel {
         }
         add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
     }
-//TODO
     private void sortByRank() {
         int expEnd = 0;
         int rookieEnd = 0;
