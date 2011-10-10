@@ -211,7 +211,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             ui.getCore().getPublicChatHistory().clearHistory();
             return;
         }
-        send(chat.getText().replace("<", "&lt;")); //unHTML
+        send(chat.getText()
+        	// Escape HTML tags, but allow HTML entities (&whatever;)
+        	.replace("<", "&lt;")
+        	.replace(">", "&gt;")
+        );
     }
 
     private String checkLinks(String text, String pString) {
