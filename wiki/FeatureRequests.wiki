@@ -35,7 +35,7 @@ Things on this list are pretty major features, so no need to add them all in one
 These are things that could probably be implemented quickly.
 
   * ~~Update users' nicknames when refreshing the user list~~
-  * Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex)
+  * ~~Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex)~~
   * User status messages like on DC++ (maybe viewable as a tooltip on each user)
   * Allow user list to be sorted by name or by share size, not by ranking
 
@@ -55,4 +55,4 @@ Most of these are (probably) minor/quick updates.
   * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
   * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
   * Assign aliases to shared folders like DC++
-  * Change the Debug console shortcut to Ctrl+K, since Ctrl+D is used for Duplicate files
+  * ~~Change the Debug console shortcut to Ctrl+K, since Ctrl+D is used for Duplicate files~~
