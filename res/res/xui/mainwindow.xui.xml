@@ -21,7 +21,7 @@
         </menu>
         <menu id="debugmenu" text="%text%" mnemonic="d">
             <menuitem eventid="trace" mnemonic="t" accelerator="ctrl-t" text="%text%"/>
-            <menuitem eventid="console" mnemonic="d" accelerator="ctrl-d" text="%text%"/>
+            <menuitem eventid="console" mnemonic="d" accelerator="ctrl-k" text="%text%"/>
             <menuitem eventid="connections" mnemonic="c" accelerator="ctrl-c" text="%text%"/>
             <menuitem eventid="friendtree" mnemonic="n" accelerator="ctrl-n"  text="%text%"/>
         </menu>
