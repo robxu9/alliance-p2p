@@ -142,7 +142,14 @@ public class DatabaseShares {
             StringBuilder statement = new StringBuilder();
             statement.append("SELECT filename FROM shares GROUP BY filename HAVING LOWER(filename) LIKE ? LIMIT ?;");
             PreparedStatement ps = conn.prepareStatement(statement.toString());
-            ps.setString(1, "%" + query.toLowerCase() + "%");
+            query = query.toLowerCase()
+            	.replace("\\", "\\\\") // escape backslashes
+            	.replace("_", "\\_") // escape _
+            	.replace("?", "_") // use ? as any single character
+            	.replace("%", "\\%") // escape %
+            	.replace("*", "%") // use * as any characters
+            	.replaceAll("\\s+", "%"); // use whitespace as any characters
+            ps.setString(1, "%" + query + "%");
             ps.setInt(2, limit);
             return ps.executeQuery();
         } catch (SQLException ex) {
