@@ -22,9 +22,9 @@ public class SharesListCellRenderer extends AllianceListCellRenderer {
     public SharesListCellRenderer(boolean showDetails) {
         super(SubstanceThemeHelper.isSubstanceInUse());
         this.showDetails = showDetails;
-        GROUP_TEXT = " --> " + Language.getLocalizedString(getClass(), "group") + " ";
-        PATH_TEXT = " --> " + Language.getLocalizedString(getClass(), "path") + " ";
-        INFO_TEXT = " --> " + Language.getLocalizedString(getClass(), "info") + " ";
+        GROUP_TEXT = " &bull; " + Language.getLocalizedString(getClass(), "group") + " ";
+        PATH_TEXT = " &bull; " + Language.getLocalizedString(getClass(), "path") + " ";
+        INFO_TEXT = " &bull; " + Language.getLocalizedString(getClass(), "info") + " ";
     }
 
     @Override
