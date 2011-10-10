@@ -45,20 +45,28 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color COLORS[] = {
-        new Color(0x0068a7),
-        new Color(0x009606),
-        new Color(0xa13eaa),
-        new Color(0x008b76),
-        new Color(0xb77e24),
-        new Color(0x945151),
-        new Color(0xb224b7),
-        new Color(0x7ea8a8),
-        new Color(0xba9394),
-        new Color(0x1a41ed),
-        new Color(0xe37b0b),
-        new Color(0xadba5b),
-        new Color(0x32b4db),
-        new Color(0xe3b944)
+    	new Color(0xD81818), // red
+    	new Color(0x980808), // dark red/maroon
+    	new Color(0xD87818), // orange
+    	new Color(0x984808), // dark orange/brown
+    	new Color(0xB88828), // tan
+    	new Color(0x784818), // dark tan
+    	new Color(0xD8D818), // yellow
+    	new Color(0x989808), // dark yellow/olive
+    	new Color(0x18D818), // green/lime
+    	new Color(0x089808), // dark green
+    	new Color(0x18D8D8), // cyan
+    	new Color(0x089898), // dark cyan/teal
+    	new Color(0x1868F8), // bright blue
+    	new Color(0x083898), // deep blue
+    	new Color(0x1818D8), // blue
+    	new Color(0x080898), // dark blue/navy
+    	new Color(0x8818F8), // grape
+    	new Color(0x480898), // dark grape
+    	new Color(0xD818D8), // fuchsia
+    	new Color(0x980898), // purple
+    	new Color(0x888888), // gray
+    	new Color(0x484848) // dark gray
     };
     protected JEditorPane textarea;
     protected JTextField chat;
