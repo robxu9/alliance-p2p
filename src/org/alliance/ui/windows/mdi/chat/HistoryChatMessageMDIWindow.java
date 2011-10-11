@@ -4,14 +4,17 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import org.alliance.core.Language;
+import org.alliance.core.T;
 import org.alliance.ui.UISubsystem;
 
 /**
@@ -125,14 +128,29 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
 
     @Override
     public void EVENT_cleanup(ActionEvent a) throws Exception {
-        /*
-        @ToDo: fix this to clear chat history, not public chat 
-    	chatLines.clear();
-        regenerateHtml();
-        needToUpdateHtml = true;
-        chat.setText("");
-        ui.getCore().getPublicChatHistory().clearHistory();
-        */
+    	FileOutputStream out = null;
+        try {
+            if (T.t) {
+                T.info("Clearing history.");
+            }
+            File file = new File(ui.getCore().getSettings().getInternal().getHistoryfile());
+            out = new FileOutputStream(file, true);
+            out.write(new byte[] {});
+            out.flush();
+            out.close();
+        }
+        catch (IOException ex) {
+            if (T.t) {
+                T.error("Could not clear history: " + ex);
+            }
+        }
+        finally {
+            try {
+                out.close();
+            }
+            catch (IOException ex) {}
+        }
+        chatClear();
     }
 
     @Override
