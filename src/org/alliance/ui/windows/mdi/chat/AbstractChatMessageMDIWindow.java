@@ -259,6 +259,24 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         text = text.trim();
         return text;
     }
+    
+    protected ChatLine createChatLine(String from, String message, long tick) {
+        Color c = null;
+        int n = from.hashCode();
+        for (int i = 0; i < ADMIN_USERS.length; i++) {
+        	if (n == ADMIN_USERS[i]) {
+        		c = ADMIN_COLOR;
+        		break;
+        	}
+        }
+        if (c == null) {
+        	if (n < 0) {
+        		n = -n;
+        	}
+        	c = COLORS[n % COLORS.length];
+        }
+        return new ChatLine(from, message, tick, c);
+    }
 
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
         addMessage(from, message, tick, messageHasBeenQueuedAwayForAWhile, true);
@@ -278,28 +296,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             tick = System.currentTimeMillis();
         }
         
-        // Assign color to message
-        Color c = null;
-        int n = from.hashCode();
-        for (int i = 0; i < ADMIN_USERS.length; i++) {
-        	if (n == ADMIN_USERS[i]) {
-        		c = ADMIN_COLOR;
-        		break;
-        	}
-        }
-        if (c == null) {
-        	if (n < 0) {
-        		n = -n;
-        	}
-        	c = COLORS[n % COLORS.length];
-        }
-
-        while (chatLinesContainTick(tick)) {
-            tick++;
-        }
-
-        ChatLine cl = new ChatLine(from, message, tick, c);
+        ChatLine cl = createChatLine(from, message, tick);
+    	while (chatLinesContainTick(tick)) {
+    		tick++;
+    	}
         chatLines.add(cl);
+        
         int maxLines = ui.getCore().getSettings().getInternal().getChatmaxlines();
         boolean removeFirstLine = maxLines > 0 && chatLines.size() > maxLines;
         if (removeFirstLine) {
