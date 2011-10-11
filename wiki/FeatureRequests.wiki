@@ -10,6 +10,8 @@ If you're working on a feature, say so here so we don't duplicate work. Once you
 
 Things on this list are pretty major features, so no need to add them all in one update.
 
+  * Replace the chat system with IRC
+     * http://www.jibble.org/pircbot.php
   * Admin users who can chat-silence or totally ban other users, and can send mass PMs
      * I want to keep the source code generic rather than tied to SBU's own Alliance network, so how about this: the user who's invited the most people (in our case Spiderman) is the admin, and maybe they can also appoint moderators
      * Since there isn't a central hub, nothing really identifies a certain collection of users as being "the sbushare network," but since almost everyone connects using Spiderman's code on sbushare.com, we can treat that as an identifier
@@ -54,5 +56,7 @@ Most of these are (probably) minor/quick updates.
   * ~~More chat colors~~
   * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
   * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
+     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
+     * http://www.jguru.com/faq/view.jsp?EID=16674
   * Assign aliases to shared folders like DC++
   * ~~Change the Debug console shortcut to Ctrl+K, since Ctrl+D is used for Duplicate files~~
