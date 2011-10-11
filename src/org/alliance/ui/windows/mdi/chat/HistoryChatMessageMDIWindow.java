@@ -125,7 +125,14 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
 
     @Override
     public void EVENT_cleanup(ActionEvent a) throws Exception {
-        return;
+        /*
+        @ToDo: fix this to clear chat history, not public chat 
+    	chatLines.clear();
+        regenerateHtml();
+        needToUpdateHtml = true;
+        chat.setText("");
+        ui.getCore().getPublicChatHistory().clearHistory();
+        */
     }
 
     @Override
