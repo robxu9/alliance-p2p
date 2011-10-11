@@ -71,6 +71,8 @@ public class Internal extends SettingClass {
     private Integer hastriedtoinviteafriend;
     private Integer hasneverdownloadedafile = 1;
     private Integer enablesupportfornonenglishcharacters = 1;
+    private Integer chatmaxlines = 100;
+    private Integer chathistorymaxlines = 500;
     private Integer alwaysautomaticallyconnecttoallfriendsoffriend = 1;
     private Integer alwaysdenyuntrustedinvitations = 1;
     private Integer alwaysallowfriendsoftrustedfriendstoconnecttome = 0;
@@ -565,6 +567,22 @@ public class Internal extends SettingClass {
 
     public void setEnablesupportfornonenglishcharacters(Integer enablesupportfornonenglishcharacters) {
         this.enablesupportfornonenglishcharacters = enablesupportfornonenglishcharacters;
+    }
+    
+    public Integer getChatmaxlines() {
+    	return chatmaxlines;
+    }
+    
+    public void setChatmaxlines(Integer chatmaxlines) {
+    	this.chatmaxlines = chatmaxlines;
+    }
+    
+    public Integer getChathistorymaxlines() {
+    	return chathistorymaxlines;
+    }
+    
+    public void setChathistorymaxlines(Integer chathistorymaxlines) {
+    	this.chathistorymaxlines = chathistorymaxlines;
     }
 
     public Integer getAlwaysautomaticallyconnecttoallfriendsoffriend() {

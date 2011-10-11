@@ -531,7 +531,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
                 Sound.start();
             }
             publicChat.addMessage(ui.getCore().getFriendManager().nickname(guid), message, tick, messageHasBeenQueuedAwayForAWhile);
-            ui.getCore().getPublicChatHistory().addMessage(tick, guid, message);
+            ui.getCore().getPublicChatHistory().addMessage(tick, guid, message, ui.getCore());
         }
     }
 

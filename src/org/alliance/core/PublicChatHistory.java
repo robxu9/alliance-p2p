@@ -12,8 +12,6 @@ import java.util.Collection;
  */
 public class PublicChatHistory implements Serializable {
 	private static final long serialVersionUID = 3573220861823618270L;
-	
-	private static final int NUMBERS_OF_MESSAGES_IN_HISTORY = 500;
 
     public static class Entry implements Serializable {
 		private static final long serialVersionUID = -5500094852266772045L;
@@ -30,9 +28,10 @@ public class PublicChatHistory implements Serializable {
     }
     private ArrayList<Entry> chatMessages = new ArrayList<Entry>();
 
-    public void addMessage(long tick, int fromGuid, String message) {
+    public void addMessage(long tick, int fromGuid, String message, CoreSubsystem core) {
         chatMessages.add(new Entry(tick, fromGuid, message));
-        if (chatMessages.size() > NUMBERS_OF_MESSAGES_IN_HISTORY) {
+        int maxLines = core.getSettings().getInternal().getChathistorymaxlines();
+        if (maxLines > 0 && chatMessages.size() > maxLines) {
             chatMessages.remove(0);
         }
     }
