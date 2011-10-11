@@ -45,8 +45,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color COLORS[] = {
-    	new Color(0xD81818), // red
-    	new Color(0x980808), // dark red/maroon
+    	// red is admin-only
+    	//new Color(0xD81818), // red
+    	//new Color(0x980808), // dark red/maroon
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
     	new Color(0xB88828), // tan
