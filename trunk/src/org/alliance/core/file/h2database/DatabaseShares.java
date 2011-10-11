@@ -232,6 +232,7 @@ public class DatabaseShares {
     }
     
     private String searchQuery(String query) {
+    	//System.out.println("Original query: " + query);
     	query = query.toLowerCase() // case-insensitive search
     		.trim().replaceAll("\\s+", " "); // collapse whitespace
         String search = "";
@@ -284,6 +285,7 @@ public class DatabaseShares {
         if (!search.endsWith("%")) {
         	search += "%"; // allow anything after search terms
         }
+        //System.out.println("Search query: " + search);
         return search;
     }
 }
