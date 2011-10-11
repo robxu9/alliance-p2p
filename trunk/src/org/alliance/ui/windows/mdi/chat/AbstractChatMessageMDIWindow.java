@@ -44,10 +44,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 100;
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
+    protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static Color COLORS[] = {
-    	// red is admin-only
-    	//new Color(0xD81818), // red
-    	//new Color(0x980808), // dark red/maroon
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
     	new Color(0xB88828), // tan
@@ -56,6 +54,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	new Color(0x989808), // dark yellow/olive
     	new Color(0x18D818), // green/lime
     	new Color(0x089808), // dark green
+    	new Color(0x98D818), // yellow-green
+    	new Color(0x589808), // dark yellow-green
     	new Color(0x18D8D8), // cyan
     	new Color(0x089898), // dark cyan/teal
     	new Color(0x1868F8), // bright blue
@@ -213,7 +213,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             return;
         }
         send(chat.getText()
-        	// Escape HTML tags, but allow HTML entities (&whatever;)
+        	// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
         	.replace("<", "&lt;")
         	.replace(">", "&gt;")
         );
@@ -276,15 +276,21 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             //this can happen when another user has an incorrectly set clock. We dont't allow timestamps in the future.
             tick = System.currentTimeMillis();
         }
-
-        int n = from.hashCode();
-        if (n < 0) {
-            n = -n;
+        
+        // Assign color to message
+        Color c = null;
+        // @ToDo: we need a better way to designate admins
+        // anyone can choose these usernames
+        if (from.equals("Rangi") || from.equals("Spiderman") || from.equals("s3nd3r5")) {
+        	c = ADMIN_COLOR;
         }
-        n %= COLORS.length;
-        Color c = COLORS[n];
-        if(from.hashCode()==-410302411)
-        	c = new Color(0xef0000);
+        else {
+        	int n = from.hashCode();
+        	if (n < 0) {
+        		n = -n;
+        	}
+        	c = COLORS[n % COLORS.length];
+        }
 
         while (chatLinesContainTick(tick)) {
             tick++;

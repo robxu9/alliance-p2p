@@ -142,7 +142,7 @@ public class DatabaseShares {
             StringBuilder statement = new StringBuilder();
             statement.append("SELECT filename FROM shares GROUP BY filename HAVING LOWER(filename) LIKE ? LIMIT ?;");
             PreparedStatement ps = conn.prepareStatement(statement.toString());
-            query = query.toLowerCase()
+            query = query.trim().toLowerCase()
             	.replace("\\", "\\\\") // escape backslashes
             	.replace("_", "\\_") // escape _
             	.replace("?", "_") // use ? as any single character
