@@ -33,7 +33,8 @@ public class GeneralTab extends XUIDialog implements TabHelper {
         "my.nickname", "internal.guiskin", "internal.language",
         "internal.enablesupportfornonenglishcharacters", "internal.showpublicchatmessagesintray",
         "internal.showprivatechatmessagesintray", "internal.showsystemmessagesintray",
-        "internal.globalfont", "internal.chatfont", "internal.globalsize", "internal.chatsize"};
+        "internal.globalfont", "internal.chatfont", "internal.globalsize", "internal.chatsize",
+        "internal.chatmaxlines", "internal.chathistorymaxlines"};
 
     public GeneralTab(String loading) {
         tab = new JPanel();

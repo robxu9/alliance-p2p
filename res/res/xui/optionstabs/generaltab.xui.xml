@@ -145,12 +145,6 @@
                             <filler/>
                         </panel>
                     </panel>
-                    <panel id="utf" axis="y" bordertype="etched" bordertitle="%text%">
-                        <panel border="0" axis="x" expand="horiz">
-                            <checkbox id="internal.enablesupportfornonenglishcharacters" text="%text%"/>
-                            <filler/>
-                        </panel>
-                    </panel>
                     <panel id="chat" axis="y" bordertype="etched" bordertitle="%text%">
                     	<form expand="horiz" border="5">
                             <row>
@@ -162,7 +156,9 @@
                                 </cell>
                                 <cell>
                                     <panel border="0" axis="x">
-                                        <textfield width="50" minwidth="50" maxwidth="50" id="internal.chatmaxlines"/>
+                                    	<filler axis="x"/>
+                                        <textfield width="50" minwidth="50" maxwidth="50"
+                                        	id="internal.chatmaxlines"/>
                                     </panel>
                                 </cell>
                             </row>
@@ -175,11 +171,19 @@
                                 </cell>
                                 <cell>
                                     <panel border="0" axis="x">
-                                        <textfield width="50" minwidth="50" maxwidth="50" id="internal.chathistorymaxlines"/>
+                                    	<filler axis="x"/>
+                                        <textfield width="50" minwidth="50" maxwidth="50"
+                                        	id="internal.chathistorymaxlines"/>
                                     </panel>
                                 </cell>
                             </row>
                     	</form>
+                    </panel>
+                    <panel id="utf" axis="y" bordertype="etched" bordertitle="%text%">
+                        <panel border="0" axis="x" expand="horiz">
+                            <checkbox id="internal.enablesupportfornonenglishcharacters" text="%text%"/>
+                            <filler/>
+                        </panel>
                     </panel>
                 </panel>
             </scrollpanel>
