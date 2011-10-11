@@ -38,10 +38,7 @@ public class PublicChatHistory implements Serializable {
 
     public void clearHistory() {
         while (chatMessages.size() > 0) {
-            for(int i = 0; i < chatMessages.size(); i++)
-            {
-            	chatMessages.remove(i);
-            }
+           chatMessages.remove(0);
         }
     }
 
