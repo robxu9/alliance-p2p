@@ -52,14 +52,7 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     }
 
     private void addMessage(String from, String message, long tick) {
-        int n = from.hashCode();
-        if (n < 0) {
-            n = -n;
-        }
-        n %= COLORS.length;
-        Color c = COLORS[n];
-
-        ChatLine cl = new ChatLine(from, message, tick, c);
+        ChatLine cl = createChatLine(from, message, tick);
         chatLines.add(cl);
     }
 
