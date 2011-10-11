@@ -193,7 +193,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         chatMessage();
     }
 
-    private void chatClear() {
+    protected void chatClear() {
         chatLines.clear();
         regenerateHtml();
         needToUpdateHtml = true;
