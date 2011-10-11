@@ -48,10 +48,10 @@ Most of these are (probably) minor/quick updates.
   * ~~Add a "check for updates" menu item~~
      * How about a Help menu, with items About (links to Google Code page) and Check for updates
   * In search results, show which users are sharing the files (as a tooltip?)
-  * Make chat history length a user setting
-     * Also make the default chat length 100, not 50; the chat history length of 500 is fine, since it already takes a second or so to load.
+  * ~~Make chat history length a user setting~~
+     * ~~Also make the default chat length 100, not 50; the chat history length of 500 is fine, since it already takes a second or so to load.~~
   * ~~I found two more _%Missing translation!%s_ -- open the View -> Invitations tab and hover over the buttons~~
-     * And some more when you right-click a friend to "Edit hostname."
+     * ~~And some more when you right-click a friend to "Edit hostname."~~
   * ~~Fix the "invite a friend" message to mention sbushare.com, not alliancep2p.com~~
   * ~~More chat colors~~
   * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
