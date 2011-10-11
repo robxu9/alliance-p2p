@@ -42,8 +42,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	private static final long serialVersionUID = -562921870993210155L;
 	
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    protected final static int MAX_NAME_LENGTH = 20;
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
+    protected final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -278,13 +280,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         
         // Assign color to message
         Color c = null;
-        // @ToDo: we need a better way to designate admins
-        // anyone can choose these usernames
-        if (from.equals("Rangi") || from.equals("Spiderman") || from.equals("s3nd3r5")) {
-        	c = ADMIN_COLOR;
+        int n = from.hashCode();
+        for (int i = 0; i < ADMIN_USERS.length; i++) {
+        	if (n == ADMIN_USERS[i]) {
+        		c = ADMIN_COLOR;
+        		break;
+        	}
         }
-        else {
-        	int n = from.hashCode();
+        if (c == null) {
         	if (n < 0) {
         		n = -n;
         	}
@@ -365,7 +368,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         } else {
             s = "<b>[" + FORMAT.format(new Date(cl.tick)) + "]</b>";
         }
-        s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + cl.from + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
+        String name = cl.from;
+        if (name.length() > MAX_NAME_LENGTH) {
+        	name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
+        }
+        s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
 
         previousChatLine = cl;
         return s;
