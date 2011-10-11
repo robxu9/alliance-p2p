@@ -41,7 +41,6 @@ import javax.swing.event.HyperlinkListener;
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
 	private static final long serialVersionUID = -562921870993210155L;
 	
-	private static final int MAXIMUM_NUMBER_OF_CHAT_LINES = 100;
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
@@ -298,7 +297,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 
         ChatLine cl = new ChatLine(from, message, tick, c);
         chatLines.add(cl);
-        boolean removeFirstLine = chatLines.size() > MAXIMUM_NUMBER_OF_CHAT_LINES;
+        int maxLines = ui.getCore().getSettings().getInternal().getChatmaxlines();
+        boolean removeFirstLine = maxLines > 0 && chatLines.size() > maxLines;
         if (removeFirstLine) {
             chatLines.remove(chatLines.first());
         }

@@ -151,6 +151,36 @@
                             <filler/>
                         </panel>
                     </panel>
+                    <panel id="chat" axis="y" bordertype="etched" bordertitle="%text%">
+                    	<form expand="horiz" border="5">
+                            <row>
+                                <cell>
+                                    <panel border="0" axis="y">
+                                        <filler/>
+                                        <label id="chatmax" text="%text%"/>
+                                    </panel>
+                                </cell>
+                                <cell>
+                                    <panel border="0" axis="x">
+                                        <textfield width="50" minwidth="50" maxwidth="50" id="internal.chatmaxlines"/>
+                                    </panel>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell>
+                                    <panel border="0" axis="y">
+                                        <filler/>
+                                        <label id="chathistorymax" text="%text%"/>
+                                    </panel>
+                                </cell>
+                                <cell>
+                                    <panel border="0" axis="x">
+                                        <textfield width="50" minwidth="50" maxwidth="50" id="internal.chathistorymaxlines"/>
+                                    </panel>
+                                </cell>
+                            </row>
+                    	</form>
+                    </panel>
                 </panel>
             </scrollpanel>
         </panel>
