@@ -23,7 +23,7 @@ Things on this list are pretty major features, so no need to add them all in one
      * Do you mean allowing people to connect even if they aren't using the same encryption? I don't even know if that's possible, plus wouldn't it defeat the purpose of a secure connection? If the "experimental" AES option already works, we could get everyone to switch to it and set it as default.
   * Fix the LAN option, so only on-campus people can connect; somehow COner is still connecting despite being off-campus
   * Mass PMs (for admins only)
-     * There's something already coded in about mass PM, look for something called MessageBoard.java or something like that
+     * There's something already coded in about mass PM, look for something called !MessageBoard.java or something like that
   * Change ranking to be based off share size, or manually set ranks ourselves (as admins), instead of it being based on number of invited users
      * What would be the use case for admin-set rankings? I suggested basing them on share size because it's convenient to see around how much someone is sharing. Color coding idea for the user stars: 0GB=white, 1=yellow, 5=orange, 10=green, 50=blue, 100=purple, 500=red, 1000=1TB=black, 5TB=_silver_, 10TB=*_gold_*
         * Note that I'm talking about the star colors, which indicate ranking. Chat colors are right now chosen based on username or IP address or something. For those we could either keep the current system but add more colors, or let users choose their own colors.
