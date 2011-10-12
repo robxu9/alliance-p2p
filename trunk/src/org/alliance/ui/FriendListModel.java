@@ -29,6 +29,7 @@ public class FriendListModel extends DefaultListModel {
     private TreeSet<String> groupsSorted;
     private ArrayList<String> hiddenGroups;
     private ArrayList<Friend> friends;
+    private boolean sortSize = false;
 
     public FriendListModel(CoreSubsystem core, final UISubsystem ui) {
         this.core = core;
@@ -76,7 +77,7 @@ public class FriendListModel extends DefaultListModel {
         updateFriendList();
     }
 
-    private void updateFriendList() {
+    public void updateFriendList() {
         ignoreFires = true;
 
         friends = new ArrayList<Friend>(core.getFriendManager().friends());
@@ -89,7 +90,7 @@ public class FriendListModel extends DefaultListModel {
             }
         }
         friends.clear();
-        sortByRank();
+        runSort();
         friendsSorted.clear();
 
         clear();
@@ -127,6 +128,25 @@ public class FriendListModel extends DefaultListModel {
         }
         add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
     }
+   
+    public boolean getSort(){
+    	return sortSize;
+    }
+    
+    public void setSortSize(boolean type){
+    	sortSize = type;
+    }
+    
+    private void runSort(){
+    	if(getSort()){
+    		sortBySize();
+    	}
+    	else
+    	{
+    		sortByRank();
+    	}
+    }
+    
     private void sortByRank() {
         int expEnd = 0;
         int rookieEnd = 0;
