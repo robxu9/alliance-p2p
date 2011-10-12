@@ -8,7 +8,6 @@ import org.alliance.ui.themes.util.SubstanceThemeHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,7 +18,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.settings.SettingClass;
 import org.alliance.ui.dialogs.OptionDialog;
 
