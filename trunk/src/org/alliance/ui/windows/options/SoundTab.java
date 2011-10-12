@@ -8,7 +8,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import org.alliance.core.Language;
-import org.alliance.core.settings.Internal;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.themes.util.SubstanceThemeHelper;
 
