@@ -423,7 +423,7 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
      * @param e
      * @author jpluebbert
      */
-    public void EVENT_edithostname(ActionEvent e) {
+    public void EVENT_changesort(ActionEvent e) {
         boolean currentSort = ui.getFriendListModel().getSort();
     	ui.getFriendListModel().setSortSize(!currentSort);
     	ui.getFriendListModel().updateFriendList();
