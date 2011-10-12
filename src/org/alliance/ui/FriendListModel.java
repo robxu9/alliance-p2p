@@ -165,42 +165,37 @@ public class FriendListModel extends DefaultListModel {
     }
     
 	private void sortBySize() {
-    	ArrayList<Friend> friendsList = new ArrayList();
-    	int k = 0, w = 0;
-    	for(Friend f : friendsSorted)
-    	{
-    		friendsList.add(f);
-    	}
-    	int j = (friendsList.size()-1);
-    	while(j != 0)
-    		{
-    			for(int i = j; i > 0; i--)				
-    			{
-    				if(friendsList.get(i).getShareSize() > friendsList.get(i-1).getShareSize())
-    				{
-    					Friend temp = friendsList.get(i);
-    					friendsList.set(i, friendsList.get(i-1));
-    					friendsList.set(i-1, temp);
-    				}
-    			}
-    			j--;
-    		}
-    	for(Friend f : friendsList)
-    	{
-    		if(f.isConnected())
-    		{
-    		friends.add(k, f);
-    		k++;
-    		w++;
-    		}
-    		else
-    		{
-    		friends.add(w, f);
-    		w++;
-    		}
-    		
-    	}
-    }
+		ArrayList<Friend> friendsList = new ArrayList<Friend>();
+		int k = 0, w = 0;
+		for (Friend f : friendsSorted) {
+			friendsList.add(f);
+		}
+		// ...is this bubblesort?
+		// @ToDo: use Java's built-in array sorting functions
+		int j = friendsList.size() - 1;
+		while (j != 0) {
+			for (int i = j; i > 0; i--) {
+				Friend a = friendsList.get(i);
+				Friend b = friendsList.get(i - 1);
+				if (a.getShareSize() > b.getShareSize()) {
+					friendsList.set(i, b);
+					friendsList.set(i - 1, a);
+				}
+			}
+			j--;
+		}
+		for (Friend f : friendsList) {
+			if (f.isConnected()) {
+				friends.add(k, f);
+				k++;
+				w++;
+			} else {
+				friends.add(w, f);
+				w++;
+			}
+
+		}
+	}
 
     public void signalFriendChanged() {
         pacedRunner.invoke();
