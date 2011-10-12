@@ -39,7 +39,7 @@ These are things that could probably be implemented quickly.
   * ~~Update users' nicknames when refreshing the user list~~
   * ~~Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex)~~
   * User status messages like on DC++ (maybe viewable as a tooltip on each user)
-  * Allow user list to be sorted by name or by share size, not by ranking
+  * ~~Allow user list to be sorted by name or by share size, not by ranking~~
 
 = User interface changes =
 
