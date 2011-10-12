@@ -15,6 +15,7 @@ import org.alliance.core.NeedsUserInteraction;
 import org.alliance.core.PublicChatHistory;
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.comm.BandwidthAnalyzer;
+import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.Node;
 import org.alliance.core.interactions.ForwardedInvitationInteraction;
@@ -947,6 +948,16 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
 
     public void EVENT_plugins(ActionEvent e) throws Exception {
         new AddPluginWindow(ui);
+    }
+    
+    public void EVENT_updates(ActionEvent e) throws Exception{
+       	checkForUpdate();
+    }
+    public void checkForUpdate() throws IOException 
+    {
+    	SiteUpdate siteUpdater;
+    	siteUpdater = new SiteUpdate(ui.getCore());
+    	ui.getCore().getFileManager().runSiteUpdater(siteUpdater);
     }
 
     public void EVENT_chathistory(ActionEvent e) throws Exception {

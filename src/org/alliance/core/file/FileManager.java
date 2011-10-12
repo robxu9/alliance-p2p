@@ -64,7 +64,11 @@ public class FileManager extends Manager {
         downloads = new DownloadStorage(settings.getInternal().getDownloadfolder() + "/" + FileManager.INCOMPLETE_FOLDER_NAME, settings.getInternal().getDownloadfolder(), core);
         shareManager = new ShareManager(core, settings);
         siteUpdater = new SiteUpdate(core);
-        Thread siteUpdaterT = new Thread(siteUpdater);
+        runSiteUpdater(siteUpdater);
+    }
+    
+    public void runSiteUpdater(SiteUpdate updateChecker){
+        Thread siteUpdaterT = new Thread(updateChecker);
         siteUpdaterT.setName("Site Updater");
         siteUpdaterT.start();
     }

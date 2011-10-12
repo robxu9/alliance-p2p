@@ -49,9 +49,12 @@ public class UserInfo extends RPC {
         f.setNumberOfFilesShared(in.readInt());
         f.setNumberOfInvitedFriends(in.readInt());
         String dnsName = in.readUTF();
+        if(f.getAllianceBuildNumber() > 1357)
+        {
         String nick = in.readUTF();
         f.setNickname(nick);
         f.setNicknameToShowInUI(nick);
+        }
         f.updateLastKnownHostInfo(host, port, dnsName);
 
         //now that we have a good connection to friend: verify that we only have ONE connection
@@ -83,7 +86,7 @@ public class UserInfo extends RPC {
 
     @Override
     public Packet serializeTo(Packet p) {
-        p.writeInt(manager.getMyGUID());
+    	p.writeInt(manager.getMyGUID());
         p.writeInt(core.getSettings().getServer().getPort());
         p.writeLong(core.getFileManager().getFileDatabase().getShareSize());
         p.writeInt(Version.BUILD_NUMBER);
