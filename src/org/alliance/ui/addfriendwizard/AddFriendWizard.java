@@ -67,6 +67,7 @@ public class AddFriendWizard extends JWizard {
     private ForwardInvitationNodesList forwardInvitationNodesList;
     private Integer invitationFromGuid;
     private static final String PORT_OPEN_TEST_URL = "http://maciek.tv/porttest?port=";
+    private static final String ALLIANCE_DOWNLOAD_URL = "http://www.sbushare.com/";
 
     public AddFriendWizard() throws Exception {
         setSuperTitle(Language.getLocalizedString(getClass(), "windowheader"));
@@ -492,10 +493,11 @@ public class AddFriendWizard extends JWizard {
                             invitationCode.append("\n\n");
                             invitationCode.append(Language.getLocalizedString(getClass(), "invline2"));
                             invitationCode.append("\n");
-                            invitationCode.append("http://www.SBUSHARE.com\n\n");
+                            invitationCode.append(ALLIANCE_DOWNLOAD_URL);
+                            invitationCode.append("\n\n");
                             invitationCode.append(Language.getLocalizedString(getClass(), "invline3"));
                             invitationCode.append("\n");
-                            invitationCode.append(i.getCompleteInvitaitonString());
+                            invitationCode.append(i.getCompleteInvitationString());
                             invitationCode.requestFocus();
                             SwingUtilities.invokeLater(new Runnable() {
 

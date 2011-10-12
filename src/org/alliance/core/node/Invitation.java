@@ -81,7 +81,7 @@ public class Invitation implements Serializable {
         this.invitationPassKey = invitationPassKey;
     }
 
-    public String getCompleteInvitaitonString() {
+    public String getCompleteInvitationString() {
         return completeInvitaitonString;
     }
 

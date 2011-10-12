@@ -213,7 +213,7 @@ public class Console {
         Collection<Invitation> invitations = core.getInvitationManager().allInvitations();
         for (Invitation i : invitations.toArray(new Invitation[invitations.size()])) {
             count++;
-            printer.print(i.getCompleteInvitaitonString());
+            printer.print(i.getCompleteInvitationString());
             if (core.getInvitationManager().getInvitation(i.getInvitationPassKey()).isForwardedInvitation()) {
                 printer.println(" (Forwarded)  -  Valid next: " + Long.toString((i.getValidTime() - (System.currentTimeMillis() - i.getCreatedAt())) / (1000 * 60)) + " minutes.");
             } else {
