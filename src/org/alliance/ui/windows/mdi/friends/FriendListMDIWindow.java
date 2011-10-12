@@ -424,7 +424,13 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
      * @author jpluebbert
      */
     public void EVENT_edithostname(ActionEvent e) {
-        if (list.getSelectedValue() instanceof Friend) {
+        boolean currentSort = ui.getFriendListModel().getSort();
+    	ui.getFriendListModel().setSortSize(!currentSort);
+    	ui.getFriendListModel().updateFriendList();
+    	
+    	
+    	
+    	/** if (list.getSelectedValue() instanceof Friend) {
             Friend friend = (Friend) list.getSelectedValue();
             if (friend != null) {
                 String ip = friend.getLastKnownHost();
@@ -458,7 +464,7 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
             } else {
                 return;
             }
-        }
+        } */
     }
 
     public void EVENT_edittrusted(ActionEvent e) {
@@ -484,7 +490,7 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
             }
         } else {
             return;
-        }
+        } 
     }
 
     public void EVENT_editgroupname(ActionEvent e) throws Exception {

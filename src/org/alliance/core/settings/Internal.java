@@ -574,7 +574,12 @@ public class Internal extends SettingClass {
     }
     
     public void setChatmaxlines(Integer chatmaxlines) {
-    	this.chatmaxlines = chatmaxlines;
+    	if(chatmaxlines > 0 && chatmaxlines < 1000){
+    		this.chatmaxlines = chatmaxlines;
+    	}
+    	else{
+    		this.chatmaxlines = 100;
+    	}
     }
     
     public Integer getChathistorymaxlines() {
@@ -582,7 +587,12 @@ public class Internal extends SettingClass {
     }
     
     public void setChathistorymaxlines(Integer chathistorymaxlines) {
-    	this.chathistorymaxlines = chathistorymaxlines;
+    	if(chatmaxlines > 0 && chatmaxlines < 1000){
+    		this.chathistorymaxlines = chathistorymaxlines;
+    	}
+    	else{
+    		this.chathistorymaxlines = 500;
+    	}
     }
 
     public Integer getAlwaysautomaticallyconnecttoallfriendsoffriend() {
