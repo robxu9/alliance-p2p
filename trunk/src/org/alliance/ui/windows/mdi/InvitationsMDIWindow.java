@@ -124,7 +124,7 @@ public class InvitationsMDIWindow extends AllianceMDIWindow {
                 }
             }
             Date date = new Date(i.getCreatedAt());
-            Object[] o = {n++, i.getCompleteInvitaitonString(), type, middleman, destination,
+            Object[] o = {n++, i.getCompleteInvitationString(), type, middleman, destination,
                 time, dataformat.format(date), i.getInvitationPassKey()};
             model.addRow(o);
         }
