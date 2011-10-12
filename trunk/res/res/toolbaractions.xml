@@ -35,7 +35,7 @@
             toolbarimage="gfx/icons/reconnect.png"/>
         <action separator="yes"/>
         <action
-            id="edithostname"
+            id="changesort"
             name="%NAME%"
             description="%DES%"
             toolbarimage="gfx/icons/connections.png"/>
