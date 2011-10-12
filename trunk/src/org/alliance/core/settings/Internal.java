@@ -574,7 +574,7 @@ public class Internal extends SettingClass {
     }
     
     public void setChatmaxlines(Integer chatmaxlines) {
-    	if(chatmaxlines >= 0 && chatmaxlines < 1000){
+    	if (chatmaxlines >= 0) {
     		this.chatmaxlines = chatmaxlines;
     	}
     }
@@ -584,7 +584,7 @@ public class Internal extends SettingClass {
     }
     
     public void setChathistorymaxlines(Integer chathistorymaxlines) {
-    	if(chatmaxlines >= 0 && chatmaxlines < 1000){
+      if (chathistorymaxlines >= 0) {
     		this.chathistorymaxlines = chathistorymaxlines;
     	}
     }
