@@ -126,29 +126,15 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
 
     @Override
     public void EVENT_cleanup(ActionEvent a) throws Exception {
-    	FileOutputStream out = null;
-        try {
-            if (T.t) {
-                T.info("Clearing history.");
-            }
-            File file = new File(ui.getCore().getSettings().getInternal().getHistoryfile());
-            out = new FileOutputStream(file, true);
-            out.write(new byte[] {});
-            out.flush();
-            out.close();
+    	chatLines.clear();
+    	previousChatLine = null;
+        if (T.t) {
+            T.info("Clearing history.");
         }
-        catch (IOException ex) {
-            if (T.t) {
-                T.error("Could not clear history: " + ex);
-            }
-        }
-        finally {
-            try {
-                out.close();
-            }
-            catch (IOException ex) {}
-        }
-        chatClear();
+    	File history = new File(ui.getCore().getSettings().getInternal().getHistoryfile());
+    	history.delete();
+    	regenerateHtml();
+    	needToUpdateHtml = true;
     }
 
     @Override
