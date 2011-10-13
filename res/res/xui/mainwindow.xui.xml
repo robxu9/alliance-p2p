@@ -18,13 +18,18 @@
             <menuitem eventid="shares" mnemonic="s" accelerator="ctrl-s" text="%text%"/>
             <menuitem eventid="plugins" mnemonic="p" accelerator="ctrl-p" text="%text%"/>
             <menuitem eventid="options" mnemonic="o" accelerator="ctrl-o" text="%text%"/>
-            <menuitem eventid="updates" mnemonic="b" accelerator="ctrl-b" text="%text%"/>
+            
         </menu>
         <menu id="debugmenu" text="%text%" mnemonic="d">
             <menuitem eventid="trace" mnemonic="t" accelerator="ctrl-t" text="%text%"/>
             <menuitem eventid="console" mnemonic="d" accelerator="ctrl-k" text="%text%"/>
             <menuitem eventid="connections" mnemonic="c" accelerator="ctrl-c" text="%text%"/>
             <menuitem eventid="friendtree" mnemonic="n" accelerator="ctrl-n"  text="%text%"/>
+        </menu>
+        <menu id="helpmenu" text="%text%">
+        	<menuitem eventid="help" text="%text%"/>
+        	<menuitem eventid="about" text="%text%"/>
+        	<menuitem eventid="updates" mnemonic="b" accelerator="ctrl-b" text="%text%"/>
         </menu>
     </menubar>
     <body>
