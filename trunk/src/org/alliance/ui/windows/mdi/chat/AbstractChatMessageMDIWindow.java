@@ -47,7 +47,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static Color DATE_COLOR = new Color(0x9F9F9F); // light gray
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static Color OWN_TEXT_COLOR = new Color(0x000000); // black
-    protected final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -264,14 +263,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     
     protected ChatLine createChatLine(String from, String message, long tick) {
         Color c = null;
-        int n = from.hashCode();
-        for (int i = 0; i < ADMIN_USERS.length; i++) {
-        	if (n == ADMIN_USERS[i]) {
-        		c = ADMIN_COLOR;
-        		break;
-        	}
+        if (ui.getCore().getFriendManager().isAdmin(from)) {
+        	c = ADMIN_COLOR;
         }
-        if (c == null) {
+        else {
+        	int n = from.hashCode();
         	if (n < 0) {
         		n = -n;
         	}

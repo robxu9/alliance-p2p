@@ -49,7 +49,9 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     private JPopupMenu popup;
     private boolean reSelectIndices = false;
     private static String[] LEVEL_NAMES;
-    protected static final String[] LEVEL_ICONS = {"friend_lame", "friend", "friend_cool", "friend_king"};
+    protected static final String[] LEVEL_ICONS = {"friend_lame", "friend", "friend_cool", "friend_king", "friend_admin"};
+    private static final int INVITES_FOR_COOL = 3;
+    private static final int INVITES_FOR_KING = 10;
 
     public FriendListMDIWindow() {
     }
@@ -62,7 +64,8 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
         LEVEL_NAMES = new String[]{Language.getLocalizedString(getClass(), "rookie"),
                     Language.getLocalizedString(getClass(), "true"),
                     Language.getLocalizedString(getClass(), "exp"),
-                    Language.getLocalizedString(getClass(), "king")};
+                    Language.getLocalizedString(getClass(), "king"),
+                    Language.getLocalizedString(getClass(), "admin")};
 
         setWindowType(WINDOWTYPE_NAVIGATION);
 
@@ -216,25 +219,24 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     }
 
     public void updateMyLevelInformation() throws IOException {
-        ((JLabel) xui.getComponent("myname")).setText(ui.getCore().getFriendManager().getMe().getNickname());
+        ((JLabel) xui.getComponent("myname")).setText(getMyNickname());
         ((JLabel) xui.getComponent("mylevel")).setText(getLevelName(getMyLevel()));
         ((JLabel) xui.getComponent("myicon")).setIcon(new ImageIcon(ui.getRl().getResource(getLevelIcon(getMyLevel(), true))));
         String s = "";
-        switch (getMyNumberOfInvites()) {
-            case 0:
-                s = Language.getLocalizedString(getClass(), "invite1");
-                break;
-            case 1:
-                s = Language.getLocalizedString(getClass(), "invite2");
-                break;
-            case 2:
-                s = Language.getLocalizedString(getClass(), "invite1");
-                break;
-            default:
-                s = Language.getLocalizedString(getClass(), "invite", Integer.toString(ui.getCore().getFriendManager().getNumberOfInvitesNeededToBeKing() - getMyNumberOfInvites()));
-                break;
+        int invites = getMyNumberOfInvites();
+        if (invites == 0) {
+        	s = Language.getLocalizedString(getClass(), "invite1");
         }
-        if (getMyLevel() < LEVEL_NAMES.length - 1) {
+        else if (invites == INVITES_FOR_COOL - 1 || invites == INVITES_FOR_KING - 1) {
+        	s = Language.getLocalizedString(getClass(), "invite2");
+        }
+        else if (invites < INVITES_FOR_COOL) {
+        	s = Language.getLocalizedString(getClass(), "invite", Integer.toString(INVITES_FOR_COOL - invites));
+        }
+        else if (invites < INVITES_FOR_KING) {
+        	s = Language.getLocalizedString(getClass(), "invite", Integer.toString(INVITES_FOR_KING - invites));
+        }
+        if (getMyLevel() < LEVEL_NAMES.length - 2) { // king and admin have no next level
             s += " '" + getLevelName(getMyLevel() + 1) + "' (";
             ((JLabel) xui.getComponent("nextleveltext")).setText(s);
             ((JLabel) xui.getComponent("nextlevelicon")).setIcon(new ImageIcon(ui.getRl().getResource(getLevelIcon(getMyLevel() + 1, false))));
@@ -268,27 +270,29 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     }
 
     private int getMyLevel() {
-        return getLevel(getMyNumberOfInvites());
+        return getLevel(getMyNickname(), getMyNumberOfInvites());
     }
 
-    protected int getLevel(int numberOfInvites) {
-        switch (numberOfInvites) {
-            case 0:
-                return 0;
-            case 1:
-                return 1;
-            case 2:
-                return 1;
-            case 3:
-                return 2;
-            default:
-                if (numberOfInvites >= ui.getCore().getFriendManager().getNumberOfInvitesNeededToBeKing()) {
-                    return 3;
-                }
-                return 2;
-        }
+    protected int getLevel(String nickname, int numberOfInvites) {
+    	if (ui.getCore().getFriendManager().isAdmin(nickname)) {
+    		return 4;
+    	}
+    	else if (numberOfInvites == 0) {
+    		return 0;
+    	}
+    	else if (numberOfInvites < INVITES_FOR_COOL) {
+    		return 1;
+    	}
+    	else if (numberOfInvites < INVITES_FOR_KING) {
+    		return 2;
+    	}
+    	return 3;
     }
 
+    private String getMyNickname() {
+    	return ui.getCore().getFriendManager().getMe().getNickname();
+    }
+    
     private int getMyNumberOfInvites() {
         return ui.getCore().getSettings().getMy().getInvitations();
     }
