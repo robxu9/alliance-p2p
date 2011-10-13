@@ -370,15 +370,15 @@ public class SearchMDIWindow extends AllianceMDIWindow {
     }
 
     public void search(String text, final FileType ft) throws IOException {
-        final String t = text;
-
         String s;
-        if (t.trim().length() == 0) {
-
+        if (text.trim().length() == 0) {
             s = Language.getLocalizedString(getClass(), "searchall", ft.description());
-        } else {
-            s = Language.getLocalizedString(getClass(), "searchtype", t, ft.description());
         }
+        else {
+            s = Language.getLocalizedString(getClass(), "searchtype", text, ft.description());
+            text = searchQuery(text);
+        }
+        final String t = text;
         left.setText(s);
         table.setTreeTableModel(model = new SearchTreeTableModel(ui.getCore(), pacedRunner));
         ui.getCore().invokeLater(new Runnable() {
@@ -392,6 +392,65 @@ public class SearchMDIWindow extends AllianceMDIWindow {
                 }
             }
         });
+    }
+    
+    private String searchQuery(String query) {
+    	query = query.toLowerCase() // case-insensitive search
+    		.trim().replaceAll("\\s+", " "); // collapse whitespace
+        String search = "";
+        if (!query.startsWith("*")) {
+        	search += "%"; // allow anything before search terms
+        }
+        int n = query.length();
+        boolean escaped = false;
+        for (int i = 0; i < n; i++) {
+        	char c = query.charAt(i);
+        	if (escaped) {
+        		if (c == '*') {
+        			search += "*"; // \* matches literal *
+        		}
+        		else if (c == '?') {
+        			search += "?"; // \? matches literal ?
+        		}
+        		else if (c == '\\') {
+        			search += "\\"; // \\ matches literal \
+        		}
+        		else if (c == ' ') {
+        			search += " "; // \space  matches literal space
+        		}
+        		else {
+        			search += "\\" + c; // bad escape sequence; treat \ literally
+        		}
+        		escaped = false;
+        	}
+        	else {
+        		if (c == '*' || c == ' ') {
+        			search += "%"; // * and space match any characters
+        		}
+        		else if (c == '%') {
+        			search += "\\%"; // since SQL LIKE uses % instead of *
+        		}
+        		else if (c == '?') {
+        			search += "_"; // ? matches any single character
+        		}
+        		else if (c == '_') {
+        			search += "\\_"; // since SQL LIKE uses _ instead of ?
+        		}
+        		else if (c == '\\') {
+        			escaped = true; // \ escapes the next character
+        		}
+        		else {
+        			search += c; // literal character
+        		}
+        	}
+        }
+        if (escaped) {
+        	search += "\\"; // incomplete escape sequence; treat \ literally
+        }
+        if (!search.endsWith("%")) {
+        	search += "%"; // allow anything after search terms
+        }
+        return search;
     }
 
     @Override
