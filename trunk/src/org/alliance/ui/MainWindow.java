@@ -77,6 +77,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
@@ -577,7 +578,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             mdiManager.addWindow(w);
         }
     }
-
+ 
     public ConnectionsMDIWindow getConnectionsWindow() {
         return (ConnectionsMDIWindow) mdiManager.getWindow("connections");
     }
@@ -1118,4 +1119,23 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
     public PublicChatMessageMDIWindow getPublicChat() {
         return publicChat;
     }
+    
+    
+
+    /**
+     * r3dph1n3x's HELP EVENTS
+     */
+    public void EVENT_about(ActionEvent e) throws Exception {
+    	OptionDialog.showAboutDialog(this,Language.getLocalizedString(getClass(), "aboutText",ui.getCore().getFileManager().getSiteUpdater().getSiteVersion(),
+                Integer.toString(ui.getCore().getFileManager().getSiteUpdater().getSiteBuild())));
+    }
+    public void EVENT_help(ActionEvent e) throws Exception{
+    	OptionDialog.showInformationDialog(this, Language.getLocalizedString(getClass(), "helpText"));
+    	
+    	
+    }
+   
+    
+    
+    
 }

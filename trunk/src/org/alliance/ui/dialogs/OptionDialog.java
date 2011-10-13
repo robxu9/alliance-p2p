@@ -43,7 +43,7 @@ public class OptionDialog extends JDialog implements ActionListener {
     public static final int YES_NO_BUTTONS = 1;
     public static final int YES_NO_CANCEL_BUTTONS = 2;
     public static final int OK_CANCEL_BUTTONS = 3;
-    private static String[] imageForType = {"information", "question", "warning", "error"};
+    private static String[] imageForType = {"information", "question", "warning", "error","about","help"};
     private static String[] buttonTexts = {"ok", "yes_no", "yes_no_cancel", "ok_cancel"};
     private static ImageIcon[] imageIcons;
     private boolean result = false;
@@ -319,4 +319,23 @@ public class OptionDialog extends JDialog implements ActionListener {
             e.printStackTrace();
         }
     }
+    public static void showAboutDialog(JFrame parent, String message) {
+        OptionDialog od = null;
+        try {
+            od = new OptionDialog(parent, "About", message, 0, 0);
+            od.showAndGetResult();
+        } catch (Exception e) {
+            couldNotOpen(e);
+        }
+    }
+    public static void showHelpDialog(JFrame parent, String message) {
+        OptionDialog od = null;
+        try {
+            od = new OptionDialog(parent, "Help", message, 0, 0);
+            od.showAndGetResult();
+        } catch (Exception e) {
+            couldNotOpen(e);
+        }
+    }
+    
 }
