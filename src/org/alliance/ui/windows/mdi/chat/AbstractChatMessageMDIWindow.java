@@ -44,9 +44,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static int MAX_NAME_LENGTH = 20;
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
+    protected final static Color TIME_COLOR = new Color(0x9F9F9F); // light gray
+    protected final static Color OWN_COLOR = new Color(0x000000); // black
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
-    protected final String CURRENT_USER_NICKNAME = ui.getCore().getSettings().getMy().getNickname();
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -362,27 +363,39 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     }
 
     private String createHtmlChatLine(ChatLine cl) {
-        String s;
+        StringBuilder s = new StringBuilder();
+        // date
+        s.append("<font color=\"" + toHexColor(TIME_COLOR) + "\">");
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         if (previousChatLine != null
                 && f.format(new Date(cl.tick)).equals(
                 f.format(new Date(previousChatLine.tick)))) {
-            s = "[" + SHORT_FORMAT.format(new Date(cl.tick)) + "]";
-        } else {
-            s = "<b>[" + FORMAT.format(new Date(cl.tick)) + "]</b>";
+            s.append("[" + SHORT_FORMAT.format(new Date(cl.tick)) + "]");
         }
+        else {
+            s.append("<b>[" + FORMAT.format(new Date(cl.tick)) + "]</b>");
+        }
+        s.append("</font> ");
+        // name
         String name = cl.from;
+        boolean isOwnMessage = ui.getCore().getSettings().getMy().getNickname().equals(name);
         if (name.length() > MAX_NAME_LENGTH) {
         	name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
         }
-       if(cl.from.equals(CURRENT_USER_NICKNAME)){
-    	   s = "<font color=\"#9f9f9f\">" + s + "<font color=\"" + toHexColor(cl.color) + "\"> <b>" + name + ":</b></font> <font color=\"" + toHexColor(new Color(0x000000)) + "\">" + cl.message + "</font><br>";
-       }
-       else{
-    	   s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
-       }
+        s.append("<font color=\"" + toHexColor(cl.color) + "\">");
+        if (isOwnMessage) {
+        	s.append("<b>" + name + ":</b>");
+        	s.append("</font><font color=\"" + toHexColor(OWN_COLOR) + "\">");
+        }
+        else {
+        	s.append(name + ":");
+        	s.append("</font><font color=\"" + cl.color.darker() + "\">");
+        }
+        // message
+        s.append(cl.message);
+        s.append("</font><br>");
         previousChatLine = cl;
-        return s;
+        return s.toString();
     }
 
     protected String toHexColor(Color color) {
