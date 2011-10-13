@@ -1119,23 +1119,17 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
     public PublicChatMessageMDIWindow getPublicChat() {
         return publicChat;
     }
-    
-    
 
     /**
      * r3dph1n3x's HELP EVENTS
      */
     public void EVENT_about(ActionEvent e) throws Exception {
-    	OptionDialog.showAboutDialog(this,Language.getLocalizedString(getClass(), "aboutText",ui.getCore().getFileManager().getSiteUpdater().getSiteVersion(),
+    	OptionDialog.showAboutDialog(this, Language.getLocalizedString(getClass(), "aboutText",
+    			ui.getCore().getFileManager().getSiteUpdater().getSiteVersion(),
                 Integer.toString(ui.getCore().getFileManager().getSiteUpdater().getSiteBuild())));
     }
-    public void EVENT_help(ActionEvent e) throws Exception{
+    
+    public void EVENT_help(ActionEvent e) throws Exception {
     	OptionDialog.showHelpDialog(this, Language.getLocalizedString(getClass(), "helpText"));
-    	
-    	
-    }
-   
-    
-    
-    
+    }    
 }
