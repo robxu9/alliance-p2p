@@ -93,9 +93,10 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
                             }
                         }
                     }
-                    if(numReadLines >= MAX_HISTORY_LINES){
+                    if (numReadLines >= MAX_HISTORY_LINES) {
                     	keepReading = false;
-                    	addMessage("ALERT", "********YOUR CHAT HISTORY IS FULL - Clear the history to save more********", System.currentTimeMillis());
+                    	String fullMessage = "*** " + Language.getLocalizedString(getClass(), "fullwarning1") + " " + Language.getLocalizedString(getClass(), "fullwarning2") + " ***";
+                    	addMessage("ALERT", fullMessage, System.currentTimeMillis(), true);
                     }
                    numReadLines++;
                 }
