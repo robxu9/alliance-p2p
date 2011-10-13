@@ -33,7 +33,7 @@ public boolean matches(String s) {
 }
 }),
     CDDVD("cddvd", 3, new ExtensionFileType(new String[]{"iso", "img", "bin", "cue", "mdf", "mds", "dmg", "vcd"})),
-    DOCUMENT("document", 6, new ExtensionFileType(new String[]{"txt", "nfo", "doc", "docx", "rtf", "wpd", "wps", "pdf", "xlr", "xls", "xlsx"})),
+    DOCUMENT("document", 6, new ExtensionFileType(new String[]{"txt", "nfo", "doc", "docx", "rtf", "wpd", "wps", "pdf", "xlr", "xls", "xlsx", "mobi", "lit"})),
     IMAGE("image", 5, new ExtensionFileType(new String[]{"jpg", "jpeg", "gif", "png", "bmp", "tif", "tiff", "psd", "svg", "ai", "eps", "ps"})),
     PRESENTATION("presentation", 7, new ExtensionFileType(new String[]{"ppt", "pptx", "pps", "key"})),
     VIDEO("video", 2, new ExtensionFileType(new String[]{"avi", "mkv", "mpg", "mpeg", "mov", "mp4", "asf", "wmv", "divx", "xvid", "rmvb", "rm", "ogm", "flv", "vob"}));
