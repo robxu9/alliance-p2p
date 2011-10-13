@@ -48,7 +48,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static Color OWN_TEXT_COLOR = new Color(0x000000); // black
     protected final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
-    //protected final String CURRENT_USER_NICKNAME = ui.getCore().getSettings().getMy().getNickname();
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
