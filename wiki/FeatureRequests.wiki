@@ -71,5 +71,10 @@ These are things that could probably be implemented quickly.
 
 Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] might still not be fixed.
 
+ * People don't connect to everyone, at least not quickly.
  * !BufferUnderflowException when someone connects to you.
  * !NullPointerException when you try to connect to your own connection code.
+ * Chat history file never gets limited, and large ones can freeze Alliance.
+ * The automatic database compacting hangs the UI.
+ * I think files marked as 'external' still get unhashed.
+ * The About dialog displays an older version and build number.
