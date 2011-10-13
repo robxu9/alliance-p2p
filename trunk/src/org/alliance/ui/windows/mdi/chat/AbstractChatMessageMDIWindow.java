@@ -77,6 +77,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected boolean needToUpdateHtml;
     protected ChatLine previousChatLine = null;
     private boolean alive = true;
+    String CURRENT_USER_NICKNAME = ui.getCore().getSettings().getMy().getNickname();
 
     protected AbstractChatMessageMDIWindow(MDIManager manager, String mdiWindowIdentifier, UISubsystem ui) throws Exception {
         super(manager, mdiWindowIdentifier, ui);
@@ -374,8 +375,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         if (name.length() > MAX_NAME_LENGTH) {
         	name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
         }
-        s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
-
+       if(cl.from.equals(CURRENT_USER_NICKNAME)){
+    	   s = "<font color=\"#9f9f9f\">" + s + "<font color=\"" + toHexColor(cl.color) + "\"><b>" + name + ":</b></font> <font color=\"" + toHexColor(new Color(0x000000)) + "\">" + cl.message + "</font><br>";
+       }
+       else{
+    	   s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
+       }
         previousChatLine = cl;
         return s;
     }
