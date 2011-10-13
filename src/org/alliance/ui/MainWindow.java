@@ -11,6 +11,8 @@ import com.stendahls.nif.util.xmlserializer.SXML;
 import com.stendahls.ui.JHtmlLabel;
 import com.stendahls.util.TextUtils;
 import static org.alliance.core.CoreSubsystem.MB;
+
+import org.alliance.Version;
 import org.alliance.core.NeedsUserInteraction;
 import org.alliance.core.PublicChatHistory;
 import org.alliance.core.CoreSubsystem;
@@ -1125,8 +1127,8 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
      */
     public void EVENT_about(ActionEvent e) throws Exception {
     	OptionDialog.showAboutDialog(this, Language.getLocalizedString(getClass(), "aboutText",
-    			ui.getCore().getFileManager().getSiteUpdater().getSiteVersion(),
-                Integer.toString(ui.getCore().getFileManager().getSiteUpdater().getSiteBuild())));
+    			Version.VERSION,
+                Integer.toString(Version.BUILD_NUMBER)));
     }
     
     public void EVENT_help(ActionEvent e) throws Exception {
