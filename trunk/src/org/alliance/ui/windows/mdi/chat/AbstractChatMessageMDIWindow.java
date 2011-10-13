@@ -376,7 +376,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         	name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
         }
        if(cl.from.equals(CURRENT_USER_NICKNAME)){
-    	   s = "<font color=\"#9f9f9f\">" + s + "<font color=\"" + toHexColor(cl.color) + "\"><b>" + name + ":</b></font> <font color=\"" + toHexColor(new Color(0x000000)) + "\">" + cl.message + "</font><br>";
+    	   s = "<font color=\"#9f9f9f\">" + s + "<font color=\"" + toHexColor(cl.color) + "\"> <b>" + name + ":</b></font> <font color=\"" + toHexColor(new Color(0x000000)) + "\">" + cl.message + "</font><br>";
        }
        else{
     	   s = "<font color=\"#9f9f9f\">" + s + " <font color=\"" + toHexColor(cl.color) + "\">" + name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">" + cl.message + "</font><br>";
