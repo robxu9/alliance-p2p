@@ -1130,7 +1130,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
                 Integer.toString(ui.getCore().getFileManager().getSiteUpdater().getSiteBuild())));
     }
     public void EVENT_help(ActionEvent e) throws Exception{
-    	OptionDialog.showInformationDialog(this, Language.getLocalizedString(getClass(), "helpText"));
+    	OptionDialog.showHelpDialog(this, Language.getLocalizedString(getClass(), "helpText"));
     	
     	
     }
