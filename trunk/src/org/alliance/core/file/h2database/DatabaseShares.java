@@ -142,7 +142,7 @@ public class DatabaseShares {
             StringBuilder statement = new StringBuilder();
             statement.append("SELECT filename FROM shares GROUP BY filename HAVING LOWER(filename) LIKE ? LIMIT ?;");
             PreparedStatement ps = conn.prepareStatement(statement.toString());
-            ps.setString(1, searchQuery(query));
+            ps.setString(1, query); // the query is already formatted for LIKE comparison
             ps.setInt(2, limit);
             return ps.executeQuery();
         } catch (SQLException ex) {
@@ -229,63 +229,5 @@ public class DatabaseShares {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
-    
-    private String searchQuery(String query) {
-    	//System.out.println("Original query: " + query);
-    	query = query.toLowerCase() // case-insensitive search
-    		.trim().replaceAll("\\s+", " "); // collapse whitespace
-        String search = "";
-        if (!query.startsWith("*")) {
-        	search += "%"; // allow anything before search terms
-        }
-        int n = query.length();
-        boolean escaped = false;
-        for (int i = 0; i < n; i++) {
-        	char c = query.charAt(i);
-        	if (escaped) {
-        		if (c == '*') {
-        			search += "*"; // \* matches literal *
-        		}
-        		else if (c == '?') {
-        			search += "?"; // \? matches literal ?
-        		}
-        		else if (c == '\\') {
-        			search += "\\"; // \\ matches literal \
-        		}
-        		else if (c == ' ') {
-        			search += " "; // \space  matches literal space
-        		}
-        		else {
-        			search += "\\" + c; // bad escape sequence; treat \ literally
-        		}
-        		escaped = false;
-        	}
-        	else {
-        		if (c == '*' || c == ' ') {
-        			search += "%"; // * and space match any characters
-        		}
-        		else if (c == '%') {
-        			search += "\\%"; // since SQL LIKE uses % instead of *
-        		}
-        		else if (c == '?') {
-        			search += "_"; // ? matches any single character
-        		}
-        		else if (c == '_') {
-        			search += "\\_"; // since SQL LIKE uses _ instead of ?
-        		}
-        		else if (c == '\\') {
-        			escaped = true; // \ escapes the next character
-        		}
-        	}
-        }
-        if (escaped) {
-        	search += "\\"; // incomplete escape sequence; treat \ literally
-        }
-        if (!search.endsWith("%")) {
-        	search += "%"; // allow anything after search terms
-        }
-        //System.out.println("Search query: " + search);
-        return search;
     }
 }
