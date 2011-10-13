@@ -18,10 +18,10 @@ Things on this list are pretty major features, so no need to add them all in one
  * Fix the LAN option so only on-campus people can connect; somehow COner is still connecting despite being off-campus.
  * Monitor selected users for new files
     * There's a [http://code.google.com/p/alliancep2pbeta/issues/detail?id=36 plugin] being developed for that.
- * Do something more useful with the star-ranking system than just showing who invited the most users.
-    * I was thinking it could be based on share size, but with the "sort by share size" option that's redundant.
-    * How about like DC++? Different colors for dead, offline, regular, and admin users. (Admins would be red, to match their chat color.) And this way admins would appear on top.
-    * Let's keep the colors based on invite count, to give people an incentive to invite their friends. But add a red star for admins, and make the silver star easier to get, so there won't be just one. (Especially since Spiderman has the silver star, and he'd be red anyway.)
+ * ~~Do something more useful with the star-ranking system than just showing who invited the most users.~~
+    * ~~I was thinking it could be based on share size, but with the "sort by share size" option that's redundant.~~
+    * ~~How about like DC++? Different colors for dead, offline, regular, and admin users. (Admins would be red, to match their chat color.) And this way admins would appear on top.~~
+    * ~~Let's keep the colors based on invite count, to give people an incentive to invite their friends. But add a red star for admins, and make the silver star easier to get, so there won't be just one. (Especially since Spiderman has the silver star, and he'd be red anyway.)~~
  * ~~When you start up Alliance, try connecting to previously-online users first and "dead" ones last (so time isn't wasted trying to connect to someone who's been gone for weeks).~~
 
 = Minor features =
@@ -29,15 +29,9 @@ Things on this list are pretty major features, so no need to add them all in one
 These are things that could probably be implemented quickly.
 
  * Pause and resume downloads.
- * Add a Help menu. The items:
-    * Help: links to [http://www.sbushare.com/ sbushare.com] and this wiki.
-    * About: shows the current version and build number, and lists the program authors.
-    * Check for updates: move this here from the Tools menu.
  * User status messages like on DC++.
     * Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.
     * The "offline for N days" text could also go in this popup. Right now it makes the user list too wide and it scrolls horizontally.
- * ~~Highlight your own chat lines somehow; maybe make them bold, or italic, or black.~~
-    * ~~I think users like knowing their own color, though, so maybe keep their name colored and make their text black?~~
  * Assign aliases to shared folders like DC++.
  * In search results, show which users are sharing the files (as a tooltip?).
     * Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.
@@ -55,6 +49,12 @@ These are things that could probably be implemented quickly.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
+ * ~~Add a Help menu. The items:~~
+    * ~~Help: links to [http://www.sbushare.com/ sbushare.com] and this wiki.~~
+    * ~~About: shows the current version and build number, and lists the program authors.~~
+    * ~~Check for updates: move this here from the Tools menu.~~
+ * ~~Highlight your own chat lines somehow; maybe make them bold, or italic, or black.~~
+    * ~~I think users like knowing their own color, though, so maybe keep their name colored and make their text black?~~
  * ~~Update users' nicknames when refreshing the user list.~~
  * ~~Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex).~~
  * ~~Allow user list to be sorted by name or by share size, not by ranking.~~
