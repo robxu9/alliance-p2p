@@ -42,6 +42,9 @@ public class UnZipTool {
 						// and discard the directory
 						String name = entry.getName();
 						int index = name.lastIndexOf(System.getProperty("file.separator"));
+						if (index == -1){
+							index = entry.getName().lastIndexOf('/');
+						}
 						if (index > 0 && index != name.length()) {
 							name = entry.getName().substring(index + 1);
 						}
