@@ -42,7 +42,9 @@ import java.util.Random;
  * Time: 14:30:09
  */
 public class FriendManager extends Manager {
-
+	
+	private final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
+	
     private Settings settings;
     private FriendConnector friendConnector;
     private BroadcastManager broadcastManager = new BroadcastManager();
@@ -451,23 +453,14 @@ public class FriendManager extends Manager {
         }
         return nicknameWithoutLocalRename(guid);
     }
-
-    public int getNumberOfInvitesNeededToBeKing() {
-        int n = 0;
-
-        Friend fa[] = new Friend[friends.size()];
-        fa = friends.values().toArray(fa);
-        for (Friend f : fa) {
-            if (f.getNumberOfInvitedFriends() > n) {
-                n = f.getNumberOfInvitedFriends();
-            }
-        }
-        if (me.getNumberOfInvitedFriends() > n) {
-            n = me.getNumberOfInvitedFriends();
-        }
-        if (n <= 3) {
-            return 4; //three invities is "experienced" - if noone has more then 4 are needed to become king
-        }
-        return n;
-    }
+    
+	public boolean isAdmin(String nickname) {
+		int hash = nickname.hashCode();
+		for (int i = 0; i < ADMIN_USERS.length; i++) {
+			if (hash == ADMIN_USERS[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

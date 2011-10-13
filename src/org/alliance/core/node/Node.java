@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Time: 13:50:55
  */
 public abstract class Node {
-
+	
     protected String nickname;
     protected int guid;
     protected HashMap<Integer, UntrustedNode> friendsFriends;

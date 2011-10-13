@@ -98,9 +98,9 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
 
         if (n.isConnected()) {
             if (!n.isAway()) {
-                renderer.setIcon(friendIcons[friendWindow.getLevel(n.getNumberOfInvitedFriends())]);
+                renderer.setIcon(friendIcons[friendWindow.getLevel(n.getNickname(), n.getNumberOfInvitedFriends())]);
             } else {
-                renderer.setIcon(friendIconsAway[friendWindow.getLevel(n.getNumberOfInvitedFriends())]);
+                renderer.setIcon(friendIconsAway[friendWindow.getLevel(n.getNickname(), n.getNumberOfInvitedFriends())]);
             }
             if (isSelected) {
                 renderer.setForeground(Color.white);

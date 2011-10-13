@@ -25,7 +25,8 @@ public class FriendListModel extends DefaultListModel {
     private CoreSubsystem core;
     private UISubsystem ui;
     private PacedRunner pacedRunner;
-    private TreeSet<Friend> friendsSorted;
+    private TreeSet<Friend> friendsSortedByName;
+    private TreeSet<Friend> friendsSortedBySize;
     private TreeSet<String> groupsSorted;
     private ArrayList<String> hiddenGroups;
     private ArrayList<Friend> friends;
@@ -51,8 +52,7 @@ public class FriendListModel extends DefaultListModel {
 
         hiddenGroups = new ArrayList<String>();
 
-        friendsSorted = new TreeSet<Friend>(new Comparator<Friend>() {
-
+        friendsSortedByName = new TreeSet<Friend>(new Comparator<Friend>() {
             @Override
             public int compare(Friend o1, Friend o2) {
                 String s1 = o1.getNickname();
@@ -63,9 +63,20 @@ public class FriendListModel extends DefaultListModel {
                 return o1.getNickname().compareToIgnoreCase(o2.getNickname());
             }
         });
+        
+        friendsSortedBySize = new TreeSet<Friend>(new Comparator<Friend>() {
+            @Override
+            public int compare(Friend o1, Friend o2) {
+            	long s1 = o1.getShareSize();
+            	long s2 = o2.getShareSize();
+                if (s1 == s2) {
+                    return o1.getGuid() - o2.getGuid();
+                }
+                return s1 < s2 ? 1 : -1; // largest on top
+            }
+        });
 
         groupsSorted = new TreeSet<String>(new Comparator<String>() {
-
             @Override
             public int compare(String o1, String o2) {
                 if (o1.equalsIgnoreCase(o2)) {
@@ -83,7 +94,8 @@ public class FriendListModel extends DefaultListModel {
         friends = new ArrayList<Friend>(core.getFriendManager().friends());
         for (Friend f : friends) {
             if (f != null) {
-                friendsSorted.add(f);
+                friendsSortedByName.add(f);
+                friendsSortedBySize.add(f);
                 if (!f.getUGroupName().isEmpty()) {
                     groupsSorted.add(f.getUGroupName());
                 }
@@ -91,7 +103,8 @@ public class FriendListModel extends DefaultListModel {
         }
         friends.clear();
         runSort();
-        friendsSorted.clear();
+        friendsSortedByName.clear();
+        friendsSortedBySize.clear();
 
         clear();
         //Draw myself
@@ -137,85 +150,25 @@ public class FriendListModel extends DefaultListModel {
     	sortSize = type;
     }
     
-    private void runSort(){
-    	if(getSort()){
-    		sortBySize();
-    	}
-    	else
-    	{
-    		sortByRank();
-    	}
-    }
-    
-    private void sortByRank() {
-        int expEnd = 0;
-        int rookieEnd = 0;
-        int lameEnd = 0;
+    private void runSort() {
+    	TreeSet<Friend> friendsSorted = getSort() ? friendsSortedBySize : friendsSortedByName;
+        int onlineEnd = 0;
         int offlineEnd = 0;
-        int max = core.getFriendManager().getNumberOfInvitesNeededToBeKing();
         for (Friend f : friendsSorted) {
-            if (f.isConnected() && f.getNumberOfInvitedFriends() >= max) {
-                friends.add(0, f);
-                expEnd++;
-                rookieEnd++;
-                lameEnd++;
+            if (f.isConnected()) {
+                friends.add(onlineEnd, f);
+                onlineEnd++;
                 offlineEnd++;
-            } else if (f.isConnected() && f.getNumberOfInvitedFriends() >= 3 && f.getNumberOfInvitedFriends() < max) {
-                friends.add(expEnd, f);
-                expEnd++;
-                rookieEnd++;
-                lameEnd++;
-                offlineEnd++;
-            } else if (f.isConnected() && f.getNumberOfInvitedFriends() > 0 && f.getNumberOfInvitedFriends() < 3) {
-                friends.add(rookieEnd, f);
-                rookieEnd++;
-                lameEnd++;
-                offlineEnd++;
-            } else if (f.isConnected() && f.getNumberOfInvitedFriends() <= 0) {
-                friends.add(lameEnd, f);
-                lameEnd++;
-                offlineEnd++;
-            } else if (!f.isConnected() && !f.hasNotBeenOnlineForLongTime()) {
+            }
+            else if (!f.hasNotBeenOnlineForLongTime()) {
                 friends.add(offlineEnd, f);
                 offlineEnd++;
-            } else if (!f.isConnected() && f.hasNotBeenOnlineForLongTime()) {
+            }
+            else {
                 friends.add(f);
             }
         }
     }
-    
-	private void sortBySize() {
-		ArrayList<Friend> friendsList = new ArrayList<Friend>();
-		int k = 0, w = 0;
-		for (Friend f : friendsSorted) {
-			friendsList.add(f);
-		}
-		// ...is this bubblesort?
-		// @ToDo: use Java's built-in array sorting functions
-		int j = friendsList.size() - 1;
-		while (j != 0) {
-			for (int i = j; i > 0; i--) {
-				Friend a = friendsList.get(i);
-				Friend b = friendsList.get(i - 1);
-				if (a.getShareSize() > b.getShareSize()) {
-					friendsList.set(i, b);
-					friendsList.set(i - 1, a);
-				}
-			}
-			j--;
-		}
-		for (Friend f : friendsList) {
-			if (f.isConnected()) {
-				friends.add(k, f);
-				k++;
-				w++;
-			} else {
-				friends.add(w, f);
-				w++;
-			}
-
-		}
-	}
 
     public void signalFriendChanged() {
         pacedRunner.invoke();
