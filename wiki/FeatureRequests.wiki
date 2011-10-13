@@ -44,7 +44,7 @@ These are things that could probably be implemented quickly.
  * Resizing columns in the tabs behaves weirdly. 
  * Add a "Time started" column to the Uploads tab.
  * Clicking a column in the Uploads and Downloads tabs should sort by it.
- * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
+ * More filetype icons for common extensions: programs (exe, com, bin, app, bat, jar), comics (cbr, cbz), games (rom, n64, nes, sav), installers (msi, pkg, deb, rpm, torrent), bad files (tmp, part)
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
