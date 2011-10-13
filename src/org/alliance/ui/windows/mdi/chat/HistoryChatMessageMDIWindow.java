@@ -26,6 +26,7 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     private JCheckBox links;
     private ArrayList<String> chatTypes = new ArrayList<String>();
     private final static String PUBLIC_CHAT_ID = "Chat";
+    private final int MAX_HISTORY_LINES = ui.getCore().getSettings().getInternal().getChathistorymaxlines();
 
     public HistoryChatMessageMDIWindow(UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "historychat", ui);
@@ -63,10 +64,12 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
         DataInputStream in = null;
         try {
             File history = new File(ui.getCore().getSettings().getInternal().getHistoryfile());
+            boolean keepReading = true;
+            int numReadLines = 0;
             in = new DataInputStream(new FileInputStream(history));
             in.readInt();
             try {
-                while (true) {
+                while (keepReading) {
                     String chatName = in.readUTF();
                     String from = in.readUTF();
                     String message = in.readUTF();
@@ -90,6 +93,11 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
                             }
                         }
                     }
+                    if(numReadLines >= MAX_HISTORY_LINES){
+                    	keepReading = false;
+                    	addMessage("ALERT", "********YOUR CHAT HISTORY IS FULL - Clear the history to save more********", System.currentTimeMillis());
+                    }
+                   numReadLines++;
                 }
             } catch (EOFException ex) {
                 //EOF so continue
