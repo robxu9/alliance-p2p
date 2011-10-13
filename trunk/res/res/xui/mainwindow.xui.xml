@@ -26,9 +26,9 @@
             <menuitem eventid="connections" mnemonic="c" accelerator="ctrl-c" text="%text%"/>
             <menuitem eventid="friendtree" mnemonic="n" accelerator="ctrl-n"  text="%text%"/>
         </menu>
-        <menu id="helpmenu" text="%text%">
-        	<menuitem eventid="help" text="%text%"/>
-        	<menuitem eventid="about" text="%text%"/>
+        <menu id="helpmenu" text="%text%" mnemonic="h">
+        	<menuitem eventid="help" mnemonic="h" accelerator="f1" text="%text%"/>
+        	<menuitem eventid="about" mnemonic="a" text="%text%"/>
         	<menuitem eventid="updates" mnemonic="b" accelerator="ctrl-b" text="%text%"/>
         </menu>
     </menubar>
