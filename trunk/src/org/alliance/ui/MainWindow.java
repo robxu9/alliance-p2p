@@ -1123,7 +1123,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
     }
 
     /**
-     * r3dph1n3x's HELP EVENTS
+     * s3nd3r5s HELP EVENTS
      */
     public void EVENT_about(ActionEvent e) throws Exception {
     	OptionDialog.showAboutDialog(this, Language.getLocalizedString(getClass(), "aboutText",
