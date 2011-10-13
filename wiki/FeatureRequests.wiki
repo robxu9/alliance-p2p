@@ -39,6 +39,9 @@ These are things that could probably be implemented quickly.
     * I think users like knowing their own color, though, so maybe keep their name colored and make their text black?
  * Assign aliases to shared folders like DC++.
  * In search results, show which users are sharing the files (as a tooltip?).
+    * Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.
+ * Show extensions in search results for all files.
+ * Resizing columns in the tabs behaves weirdly. 
  * Add a "Time started" column to the Uploads tab.
  * Clicking a column in the Uploads and Downloads tabs should sort by it.
  * More filetype icons for common extensions: exe, pdf, mobi, lit, 7z
