@@ -19,7 +19,7 @@ public boolean matches(String s) {
 }
 }),
     AUDIO("audio", 1, new ExtensionFileType(new String[]{"mp3", "wav", "flac", "acc", "ogg", "asf", "wma", "aif", "aiff", "mid", "midi", "ra"})),
-    ARCHIVE("archive", 4, new ExtensionFileType(new String[]{"rar", "zip", "zipx", "tar", "gz", "7z", "tar", "tgz"}) {
+    ARCHIVE("archive", 4, new ExtensionFileType(new String[]{"rar", "zip", "zipx", "tar", "gz", "7z", "tar", "tgz", "sit", "sitx"}) {
 
 @Override
 public boolean matches(String s) {
