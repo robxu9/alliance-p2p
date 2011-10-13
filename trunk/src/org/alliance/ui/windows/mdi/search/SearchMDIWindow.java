@@ -253,7 +253,7 @@ public class SearchMDIWindow extends AllianceMDIWindow {
 
     private String simplifyPath(FileNode fn) {
         String path = fn.getSh().getPath();
-        String s = fn.getOriginalFilename();
+        String s = fn.getName(); // originalFilename
         if (fn.getParent() != null && fn.getParent() instanceof FolderNode) {
             s = ((FolderNode) fn.getParent()).getOriginalName() + "/" + s;
         }
@@ -293,7 +293,7 @@ public class SearchMDIWindow extends AllianceMDIWindow {
                             @Override
                             public void run() {
                                 try {
-                                    String name = n.getOriginalFilename();
+                                    String name = n.getName(); // originalFilename
                                     if (path.trim().length() > 0) {
                                         name = path + "/" + name;
                                     }

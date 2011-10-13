@@ -26,36 +26,19 @@ public class FileNode extends SearchTreeNode implements Comparable<FileNode> {
     ArrayList<Integer> userGuids = new ArrayList<Integer>();
     private SearchHit sh;
     private String extension;
-    private String originalFilename;
     private SearchTreeTableModel model;
 
     public FileNode(SearchTreeNode parent, SearchTreeTableModel model, String filename, SearchHit h, int guid) {
         this.parent = parent;
         this.model = model;
         this.sh = h;
-
-        originalFilename = filename;
-
-        filename = filename.replace('_', ' ');
-
-        int i = filename.lastIndexOf('.');
-        if (i == -1 || FileType.getByFileName(filename) == FileType.EVERYTHING) {
-            this.filename = filename;
-        } else {
-            if (i == -1) {
-                this.filename = filename;
-            } else {
-                this.filename = filename.substring(0, i);
-                extension = filename.substring(i + 1).toUpperCase();
-            }
-        }
-
+        this.filename = filename;
+        extension = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
         size = h.getSize();
         sources = 1;
         daysAgo = h.getHashedDaysAgo();
         userGuids.add(guid);
         updateSpeed();
-
         addToTreeNodeCache();
     }
 
@@ -69,10 +52,6 @@ public class FileNode extends SearchTreeNode implements Comparable<FileNode> {
             n = (SearchTreeNode) n.getParent();
         }
         ((RootNode) n).addToCache(this);
-    }
-
-    public String getOriginalFilename() {
-        return originalFilename;
     }
 
     @Override
