@@ -28,7 +28,7 @@
         </menu>
         <menu id="helpmenu" text="%text%" mnemonic="h">
         	<menuitem eventid="help" mnemonic="h" accelerator="f1" text="%text%"/>
-        	<menuitem eventid="about" mnemonic="a" text="%text%"/>
+        	<menuitem eventid="about" mnemonic="a" accelerator="ctrl-a" text="%text%"/>
         	<menuitem eventid="updates" mnemonic="b" accelerator="ctrl-b" text="%text%"/>
         </menu>
     </menubar>
