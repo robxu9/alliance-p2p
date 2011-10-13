@@ -45,7 +45,6 @@ These are things that could probably be implemented quickly.
  * Resizing columns in the tabs behaves weirdly. 
  * Add a "Time started" column to the Uploads tab.
  * Clicking a column in the Uploads and Downloads tabs should sort by it.
- * Fix sorting users by name so it ignores their star ranking, like when sorting by size.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
@@ -55,6 +54,7 @@ These are things that could probably be implemented quickly.
     * ~~Check for updates: move this here from the Tools menu.~~
  * ~~Highlight your own chat lines somehow; maybe make them bold, or italic, or black.~~
     * ~~I think users like knowing their own color, though, so maybe keep their name colored and make their text black?~~
+ * ~~Fix sorting users by name so it ignores their star ranking, like when sorting by size.~~
  * ~~Update users' nicknames when refreshing the user list.~~
  * ~~Fix searching so "hello world" will match "hello.world" and "Hello, world" (i.e. use regex).~~
  * ~~Allow user list to be sorted by name or by share size, not by ranking.~~
