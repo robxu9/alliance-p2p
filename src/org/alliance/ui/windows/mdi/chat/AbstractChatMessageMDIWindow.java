@@ -46,6 +46,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
+    protected final String CURRENT_USER_NICKNAME = ui.getCore().getSettings().getMy().getNickname();
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -77,7 +78,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected boolean needToUpdateHtml;
     protected ChatLine previousChatLine = null;
     private boolean alive = true;
-    String CURRENT_USER_NICKNAME = ui.getCore().getSettings().getMy().getNickname();
 
     protected AbstractChatMessageMDIWindow(MDIManager manager, String mdiWindowIdentifier, UISubsystem ui) throws Exception {
         super(manager, mdiWindowIdentifier, ui);
