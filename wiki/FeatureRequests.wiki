@@ -77,4 +77,4 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Chat history file never gets limited, and large ones can freeze Alliance.
  * The automatic database compacting hangs the UI.
  * I think files marked as 'external' still get unhashed.
- * The About dialog displays an older version and build number.
+ * ~~The About dialog displays an older version and build number.~~
