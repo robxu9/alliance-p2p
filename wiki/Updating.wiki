@@ -3,7 +3,8 @@
 
 = How to =
 
-  * First download the updater: [http://alliance-p2p.googlecode.com/files/Alliance-manual-updater-v1.2.2b1418.msi Windows] or [http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip Linux]
+   * First a previous version of Alliance *MUST* be installed.
+   * Then download the updater: [http://alliance-p2p.googlecode.com/files/Alliance-manual-updater-v1.2.2b1418.msi Windows] or [http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip Linux]
 
 
 
