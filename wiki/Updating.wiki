@@ -1,0 +1,23 @@
+#summary A guide on how to manually update to the newest release of Alliance.
+#labels Featured
+
+= How to =
+
+  * First download the updater: [http://alliance-p2p.googlecode.com/files/Alliance-manual-updater-v1.2.2b1418.msi Windows] or [http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip Linux]
+
+
+
+= Windows =
+
+   * Windows users should *CLOSE* Alliance and run the installer package 
+   * Thats it, run Alliance and all should work fine
+
+= Linux =
+
+   * *CLOSE* Alliance
+   * Copy the Language folder & alliance.jar file into your current Alliance folder
+   * Alternatively, just run the jar from here, but you'll lose your data.
+
+= Mac =
+
+   * Auto-updates from a previous version should work fine.
