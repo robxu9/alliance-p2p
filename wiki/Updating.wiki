@@ -12,6 +12,7 @@
 
    * Windows users should *CLOSE* Alliance and run the installer package 
    * Thats it, run Alliance and all should work fine
+   * Alternatively, turn off UAC and try the auto-updater again. For a guide on how to turn off UAC see [http://www.howtogeek.com/howto/windows-vista/disable-user-account-control-uac-the-easy-way-on-windows-vista/ here.]
 
 = Linux =
 
