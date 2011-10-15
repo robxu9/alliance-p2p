@@ -66,7 +66,12 @@ public enum UserCommands {
 	public static String handleCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		UserCommands command = getCommand(message);
 		if (command != null) {
+			if(message.endsWith("/"+command.getName())){
+				message = message.substring(0, message.length() - command.getName().length() - 1);
+			}
+			else{
 			message = message.substring(command.getName().length() + 1);
+			}
 			message = command.execute(message, ui, chat);
 		}
 		return message;
