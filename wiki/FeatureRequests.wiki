@@ -24,10 +24,17 @@ Things on this list are pretty major features, so no need to add them all in one
 These are things that could probably be implemented quickly.
 
  * Pause and resume downloads.
- * User status messages like on DC++.
+ * ~~User status messages like on DC++.~~
     * Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.
     * The "offline for N days" text could also go in this popup. Right now it makes the user list too wide and it scrolls horizontally.
  * Assign aliases to shared folders like DC++.
+ * ~~More filetype icons for common extensions:~~
+    * These still need icons to be drawn instead of the placeholders.
+    * ~~Programs: exe, com, bin, app, bat, jar~~
+    * ~~Comics: cbr, cbz~~
+    * ~~Games: rom, n64, nes, sav~~
+    * ~~Installers: msi, pkg, deb, rpm, torrent~~
+    * ~~Bad files: tmp, part~~
  * In search results, show which users are sharing the files (as a tooltip?).
     * Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.
  * Resizing columns in the tabs behaves weirdly. 
@@ -36,14 +43,6 @@ These are things that could probably be implemented quickly.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
- * ~~User statuses~~
-    * ~~User statuses as a tooltip, build number as a tooltip~~
- * ~~More filetype icons for common extensions:~~
-    * ~~Programs: exe, com, bin, app, bat, jar~~
-    * ~~Comics: cbr, cbz~~
-    * ~~Games: rom, n64, nes, sav~~
-    * ~~Installers: msi, pkg, deb, rpm, torrent~~
-    * ~~Bad files: tmp, part~~
 
 = Bugs =
 
