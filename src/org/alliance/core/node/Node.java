@@ -14,6 +14,7 @@ import java.util.HashMap;
 public abstract class Node {
 	
     protected String nickname;
+    protected String status = "";
     protected int guid;
     protected HashMap<Integer, UntrustedNode> friendsFriends;
 
@@ -39,6 +40,10 @@ public abstract class Node {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+    
+    public void setStatus(String status) {
+    	this.status = status;
     }
 
     public int getGuid() {
@@ -99,6 +104,10 @@ public abstract class Node {
 
     public String getNickname() {
         return nickname;
+    }
+    
+    public String getStatus() {
+    	return status;
     }
 
     public int getAllianceBuildNumber() {

@@ -73,8 +73,4 @@ public class MyNode extends Node {
     public long getTotalBytesReceived() {
         return core.getNetworkManager().getBandwidthIn().getTotalBytes();
     }
-    
-    public String getCurrentStatus(){
-    	return core.getSettings().getMy().getCurrentStatus();
-    }
 }

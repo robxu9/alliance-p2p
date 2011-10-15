@@ -26,7 +26,8 @@ public enum UserCommands {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String status = args.trim();
 			if (status.length() <= MAX_STATUS_LENGTH) {
-				ui.getCore().getSettings().getMy().setCurrentStatus(status);
+				ui.getCore().getSettings().getMy().setStatus(status);
+				ui.getCore().getFriendManager().getMe().setStatus(status);
 				chat.addMessage(ui.getCore().getSettings().getMy().getNickname(),
 						"<i>" + status.replace("<", "&lt;").replace(">", "&gt;") + "</i>",
 						System.currentTimeMillis(), false, false, false);
