@@ -41,8 +41,8 @@ public enum UserCommands {
 		}
 	},
 	HELP("help"){
-		private StringBuilder s = new StringBuilder();
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			StringBuilder s = new StringBuilder();
 			s.append("<br><b>" + Language.getLocalizedString(getClass(), "help") + "</b>");
 			for(UserCommands cmd : UserCommands.values()){
 				s.append("<br>" + cmd.getName() + " - " + Language.getLocalizedString(getClass(), cmd.getName()));
