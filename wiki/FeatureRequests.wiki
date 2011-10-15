@@ -36,6 +36,8 @@ These are things that could probably be implemented quickly.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
+ * ~~User statuses~~
+    * ~~User statuses as a tooltip, build number as a tooltip~~
  * ~~More filetype icons for common extensions:~~
     * ~~Programs: exe, com, bin, app, bat, jar~~
     * ~~Comics: cbr, cbz~~
