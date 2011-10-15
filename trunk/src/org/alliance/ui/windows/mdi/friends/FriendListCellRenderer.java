@@ -3,6 +3,7 @@ package org.alliance.ui.windows.mdi.friends;
 import com.stendahls.util.TextUtils;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
+import org.alliance.core.node.MyNode;
 import org.alliance.core.node.Node;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.themes.util.SubstanceThemeHelper;
@@ -133,22 +134,39 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
     }
 
     private String setupTooltip(Node n) {
-        String groupname;
+    	  StringBuilder sb = new StringBuilder("<html>");
+    	String status = "";
+        int build = 0;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
-            groupname = f.getUGroupName();
-            if (groupname.isEmpty()) {
-                groupname = Language.getLocalizedString(getClass(), "nogroup");
-            }
-        } else {
-            groupname = Language.getLocalizedString(getClass(), "wronggroup");
+            status = f.getCurrentStatus();
+            build = f.getAllianceBuildNumber();
         }
-
-        String cp = ui.getCore().getFriendManager().contactPath(n.getGuid());//TODO Cache This and delay refresh
-        StringBuilder sb = new StringBuilder("<html>");
-        if (cp.trim().length() > 0) {
-            sb.append(Language.getLocalizedString(getClass(), "subfriends", cp)).append("<br>");
+        else if(n instanceof MyNode){
+        	MyNode f = (MyNode)n;
+        	status = f.getCurrentStatus();
+            build = f.getAllianceBuildNumber();
         }
+        
+        //If greater than 70 characters break into two lines
+        if(status.length() > 70){
+        	int space = status.indexOf(" ", 70);
+        	String status1;
+        	String status2;
+        	if(space > 0){
+        	status1 = status.substring(0, space);
+        	status2 = status.substring(space);
+        	}
+        	else{
+        		status1 = status.substring(0, 70);
+            	status2 = status.substring(70);
+        	}
+        	sb.append(Language.getLocalizedString(getClass(), "currentstatus", status1 + "<br>" + status2)).append("<br>");
+        }
+        else{
+        	sb.append(Language.getLocalizedString(getClass(), "currentstatus", status)).append("<br>");
+        }
+        
         sb.append(Language.getLocalizedString(getClass(), "share", TextUtils.formatByteSize(n.getShareSize()),
                 Integer.toString(n.getNumberOfFilesShared()))).append("<br>");
         sb.append(Language.getLocalizedString(getClass(), "invites", Integer.toString(n.getNumberOfInvitedFriends()))).append("<br>");
@@ -157,7 +175,7 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         sb.append(Language.getLocalizedString(getClass(), "uptotal", TextUtils.formatByteSize(n.getTotalBytesSent()))).append("<br>");
         sb.append(Language.getLocalizedString(getClass(), "downtotal", TextUtils.formatByteSize(n.getTotalBytesReceived()))).append("<br>");
         sb.append(Language.getLocalizedString(getClass(), "ratio", n.calculateRatio())).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "group", groupname)).append("</html>");
+        sb.append(Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(build))).append("</html>");
         return sb.toString();
     }
 }

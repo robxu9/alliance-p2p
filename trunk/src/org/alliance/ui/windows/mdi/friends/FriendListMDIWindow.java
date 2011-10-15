@@ -51,7 +51,7 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     private static String[] LEVEL_NAMES;
     protected static final String[] LEVEL_ICONS = {"friend_lame", "friend", "friend_cool", "friend_king", "friend_admin"};
     private static final int INVITES_FOR_COOL = 3;
-    private static final int INVITES_FOR_KING = 10;
+    private static final int INVITES_FOR_KING = 25;
 
     public FriendListMDIWindow() {
     }
@@ -488,7 +488,8 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
                     }
                 }
                 try {
-                    ui.getCore().saveSettings();
+                  //TODO This exception is often getting thrown
+                	ui.getCore().saveSettings();
                 } catch (Exception ex) {
                 }
             }

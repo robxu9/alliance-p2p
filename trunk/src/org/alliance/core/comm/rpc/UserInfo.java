@@ -55,6 +55,9 @@ public class UserInfo extends RPC {
         f.setNickname(nick);
         f.setNicknameToShowInUI(nick);
         }
+        if(f.getAllianceBuildNumber() > 1418){
+        f.setCurrentStatus(in.readUTF());
+        }
         f.updateLastKnownHostInfo(host, port, dnsName);
 
         //now that we have a good connection to friend: verify that we only have ONE connection
@@ -98,6 +101,7 @@ public class UserInfo extends RPC {
         p.writeInt(core.getSettings().getMy().getInvitations());
         p.writeUTF(core.getSettings().getServer().getDnsname());
         p.writeUTF(core.getSettings().getMy().getNickname());
+        p.writeUTF(core.getSettings().getMy().getCurrentStatus());
         return p;
     }
 }
