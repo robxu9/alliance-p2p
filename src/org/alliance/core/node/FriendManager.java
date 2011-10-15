@@ -355,7 +355,7 @@ public class FriendManager extends Manager {
         if (T.t) {
             T.ass(to != null, "To is null");
         }
-        netMan.sendPersistantly(new ForwardedInvitation(from, invitationCode), to);
+        netMan.sendPersistently(new ForwardedInvitation(from, invitationCode), to);
     }
 
     public int getNFriendsConnected() {
@@ -412,7 +412,7 @@ public class FriendManager extends Manager {
                 T.error("Could not find friend that is connected to guid " + guid + "!");
             }
         } else if (getUntrustedNode(guid) != null) {
-            core.getNetworkManager().sendPersistantly(new PleaseForwardInvitation(getUntrustedNode(guid)), route);
+            core.getNetworkManager().sendPersistently(new PleaseForwardInvitation(getUntrustedNode(guid)), route);
         }
     }
 

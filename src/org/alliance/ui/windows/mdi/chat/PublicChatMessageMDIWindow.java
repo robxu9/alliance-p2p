@@ -36,7 +36,7 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             public void run() {
                 try {
                     for (Friend f : ui.getCore().getFriendManager().friends()) {
-                        ui.getCore().getFriendManager().getNetMan().sendPersistantly(new ChatMessage(text, true), f);
+                        ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(text, true), f);
                     }
                 } catch (IOException e) {
                     ui.getCore().reportError(e, this);

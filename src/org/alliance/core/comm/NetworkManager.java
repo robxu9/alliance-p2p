@@ -471,7 +471,7 @@ public class NetworkManager extends Manager {
      * @param destination
      * @throws IOException
      */
-    public void sendPersistantly(PersistantRPC rpc, Friend destination) throws IOException {
+    public void sendPersistently(PersistantRPC rpc, Friend destination) throws IOException {
         if (rpc == null || destination == null) {
             return;
         }

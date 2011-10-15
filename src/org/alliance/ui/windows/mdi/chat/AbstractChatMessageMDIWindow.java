@@ -76,7 +76,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected JTextField chat;
     protected String html = "";
     protected TreeSet<ChatLine> chatLines;
-    protected UserCommands commands = new UserCommands(ui.getCore());
     protected boolean needToUpdateHtml;
     protected ChatLine previousChatLine = null;
     private boolean alive = true;
@@ -196,7 +195,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         chatMessage();
     }
 
-    protected void chatClear() {
+    public void chatClear() {
         chatLines.clear();
         regenerateHtml();
         needToUpdateHtml = true;
@@ -204,23 +203,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     }
 
     private void chatMessage() throws Exception {
-        if (chat.getText().trim().equals("")) {//Empty
-            return;
-        } else if (chat.getText().contains("Â ")) {//(Alt+255)
-            return;
-        } else if (chat.getText().trim().equals("/clear")) {
-            chatClear();
-            return;
-        } else if (chat.getText().trim().equals("/clearlog")) {
-            chatClear();
-            ui.getCore().getPublicChatHistory().clearHistory();
-            return;
-        }
-        send(chat.getText()
-        	// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
-        	.replace("<", "&lt;")
-        	.replace(">", "&gt;")
-        );
+    	String message = chat.getText();
+    	message = UserCommands.handleCommand(message, ui, this);
+        // Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
+        send(message.replace("<", "&lt;").replace(">", "&gt;"));
+        chat.setText("");
     }
 
     private String checkLinks(String text, String pString) {
@@ -263,7 +250,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         return text;
     }
     
-    protected ChatLine createChatLine(String from, String message, long tick) {
+    protected ChatLine createChatLine(String from, String message, long tick, boolean escape) {
         Color c = null;
         if (ui.getCore().getFriendManager().isAdmin(from)) {
         	c = ADMIN_COLOR;
@@ -275,14 +262,18 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         	}
         	c = COLORS[n % COLORS.length];
         }
-        return new ChatLine(from, message, tick, c);
+        return new ChatLine(from, message, tick, c, escape);
     }
 
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
         addMessage(from, message, tick, messageHasBeenQueuedAwayForAWhile, true);
     }
-
+    
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile, boolean saveToHistory) {
+    	addMessage(from, message, tick, messageHasBeenQueuedAwayForAWhile, saveToHistory, true);
+    }
+
+    public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile, boolean saveToHistory, boolean escape) {
         if (chatLines != null && chatLines.size() > 0) {
             if (!messageHasBeenQueuedAwayForAWhile) {
                 //A message gets queued away when a user is offline and cannot receive the message.
@@ -296,7 +287,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             tick = System.currentTimeMillis();
         }
         
-        ChatLine cl = createChatLine(from, message, tick);
+        ChatLine cl = createChatLine(from, message, tick, escape);
     	while (chatLinesContainTick(tick)) {
     		tick++;
     	}
@@ -376,41 +367,24 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		s.append("</font> ");
 		// name
 		String name = cl.from;
-		String message = cl.message;
 		if (name.length() > MAX_NAME_LENGTH) {
 			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
 		}
 		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
-		
-		if (isOwnMessage(name)) {
+		if (isOwnMessage(cl.from)) {
 			s.append("<b>" + name + ":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
 		} 
 		else {
 			s.append(name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
 		// message
-		if(commands.getCommand(message) != -1){
-			String content = commands.handleCommand(name, message);
-			if(content != ""){
-			s.append(commands.handleCommand(name, message));
-			}
-			else{
-			s = new StringBuilder();
-			}
-		}
-		else{
 		s.append(cl.message + "</font><br>");
-		}
-		
 		previousChatLine = cl;
 		return s.toString();
 	}
 	
-	public boolean isOwnMessage(String from){
-		if(ui.getCore().getSettings().getMy().getNickname().equals(from)){
-			return true;
-		}
-		return false;
+	public boolean isOwnMessage(String from) {
+		return ui.getCore().getSettings().getMy().getNickname().equals(from);
 	}
 
     protected String toHexColor(Color color) {
@@ -425,8 +399,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         Color color;
 
         public ChatLine(String from, String message, long tick, Color color) {
+            this(from, message, tick, color, true);
+        }
+        
+        public ChatLine(String from, String message, long tick, Color color, boolean escape) {
             this.from = from;
-            this.message = escapeHTML(message);
+            this.message = escape ? escapeHTML(message) : message;
             this.tick = tick;
             this.color = color;
         }
