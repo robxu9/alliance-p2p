@@ -27,12 +27,6 @@
                     <strut width="5"/>
                 </panel>
             </panel>
-            <panel opaque="false" axis="x" border="0,5,0,2" maxheight="102">
-                <strut width="8"/>
-                <image src="gfx/icons/tip.png"/>
-                <strut width="8"/>
-                <mlabel id="label" html="yes"/>
-            </panel>
         </panel>
         <panel axis="x" opaque="false" border="8,6,0,1" expand="horiz">
             <label id="left" text=" "/>
