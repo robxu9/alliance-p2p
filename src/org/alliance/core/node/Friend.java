@@ -26,6 +26,7 @@ public class Friend extends Node {
     private String lastKnownHost;
     private String lastKnownDns;
     private String fixedHost;
+    private String status = "";
     private int lastKnownPort;
     private FriendManager manager;
     private FriendConnection friendConnection;
@@ -408,6 +409,12 @@ public class Friend extends Node {
     public void setInternal(boolean internal) {
         this.internal = internal;
     }
+	public String getCurrentStatus() {
+		return status;
+	}
+	public void setCurrentStatus(String currentStatus) {
+		status = currentStatus;
+	}
 
     //Kratos
     private boolean isValidIP(String host) {
@@ -454,4 +461,5 @@ public class Friend extends Node {
         array[3] = new Integer(tempString).byteValue();
         return array;
     }
+	
 }
