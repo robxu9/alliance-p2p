@@ -79,41 +79,6 @@ public class SearchMDIWindow extends AllianceMDIWindow {
         new CutCopyPastePopup(search);
 
         pacedRunner = new PacedRunner(500);
-        
-        // @ToDo: get rid of this feature
-        StringBuilder sb = new StringBuilder();
-        sb.append(Language.getLocalizedString(getClass(), "look")).append(" &#160; ");
-        sb.append("[a href=\"http://").append(FileType.VIDEO.id()).append("\"]").append(FileType.VIDEO.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.AUDIO.id()).append("\"]").append(FileType.AUDIO.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.CDDVD.id()).append("\"]").append(FileType.CDDVD.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.IMAGE.id()).append("\"]").append(FileType.IMAGE.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.DOCUMENT.id()).append("\"]").append(FileType.DOCUMENT.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.ARCHIVE.id()).append("\"]").append(FileType.ARCHIVE.description()).append("[/a] &#160; ");
-        sb.append("[a href=\"http://").append(FileType.PRESENTATION.id()).append("\"]").append(FileType.PRESENTATION.description()).append("[/a][br]");
-        sb.append(Language.getLocalizedString(getClass(), "tip"));
-
-        JHtmlLabel label = (JHtmlLabel) xui.getComponent("label");
-        label.setText(sb.toString());
-        label.addHyperlinkListener(new HyperlinkListener() {
-
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                String s = e.getURL().toString();
-                s = s.substring(s.length() - 1);
-                FileType ft = FileType.getFileTypeById(Integer.parseInt(s));
-
-                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    try {
-                        ui.getMainWindow().getMDIManager().selectWindow(ui.getMainWindow().getSearchWindow());
-                        ui.getMainWindow().getSearchWindow().searchForNewFilesOfType(ft);
-                    } catch (IOException e1) {
-                        ui.handleErrorInEventLoop(e1);
-                    }
-                } else if (e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
-                    ui.getMainWindow().setStatusMessage(Language.getLocalizedString(getClass(), "search", ft.description()));
-                }
-            }
-        });
 
         table = new JXTreeTable(model = new SearchTreeTableModel(ui.getCore(), pacedRunner));
         table.setColumnControlVisible(false);
@@ -362,15 +327,8 @@ public class SearchMDIWindow extends AllianceMDIWindow {
         search(search.getText());
     }
 
-    private void search(String text) throws IOException {
-        search(text, FileType.values()[type.getSelectedIndex()]);
-    }
-
-    public void searchForNewFilesOfType(FileType ft) throws IOException {
-        search("", ft);
-    }
-
-    public void search(String text, final FileType ft) throws IOException {
+    public void search(String text) throws IOException {
+    	final FileType ft = FileType.values()[type.getSelectedIndex()];
         String s;
         if (text.trim().length() == 0) {
             s = Language.getLocalizedString(getClass(), "searchall", ft.description());
