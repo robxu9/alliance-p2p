@@ -409,12 +409,6 @@ public class Friend extends Node {
     public void setInternal(boolean internal) {
         this.internal = internal;
     }
-	public String getCurrentStatus() {
-		return status;
-	}
-	public void setCurrentStatus(String currentStatus) {
-		status = currentStatus;
-	}
 
     //Kratos
     private boolean isValidIP(String host) {

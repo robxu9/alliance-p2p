@@ -23,6 +23,21 @@
                             <mlabel id="nicknote" html="true">%text%
                             </mlabel>
                         </panel>
+                        <form expand="horiz" border="5">
+                            <row>
+                                <cell>
+                                    <panel border="0" axis="y">
+                                        <filler/>
+                                        <label id="status" text="%text%"/>
+                                    </panel>
+                                </cell>
+                                <cell>
+                                    <panel border="0" axis="x">
+                                        <textfield expand="horiz" width="250" minwidth="250" maxwidth="500" id="my.status"/>
+                                    </panel>
+                                </cell>
+                            </row>
+                        </form>
                     </panel>
                     <panel id="guioptions" axis="y" bordertype="etched" bordertitle="%text%">
                         <form expand="horiz" border="5">

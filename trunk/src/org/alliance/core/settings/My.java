@@ -25,21 +25,29 @@ public class My extends SettingClass {
     }
 
     public String getNickname() {
-        nickname = filterNickname(nickname);
+        nickname = filterHTML(nickname);
         return nickname;
     }
 
     public void setNickname(String nickname) {
-        nickname = filterNickname(nickname);
+        nickname = filterHTML(nickname);
         this.nickname = nickname;
     }
+    
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		status = filterHTML(status);
+		this.status = status;
+	}
 
-    private String filterNickname(String nickname) {
-        if (nickname != null) {
-            nickname = nickname.replaceAll("<", "");
-            nickname = nickname.replaceAll(">", "");
+    private String filterHTML(String html) {
+        if (html != null) {
+        	html = html.replaceAll("<", "").replaceAll(">", "");
         }
-        return nickname;
+        return html;
     }
 
     public Integer getGuid() {
@@ -77,12 +85,4 @@ public class My extends SettingClass {
         this.invitations = invitations;
         cguid = (invitations ^ 234427) * 13;
     }
-
-	public String getCurrentStatus() {
-		return status;
-	}
-	
-	public void setCurrentStatus(String currentStatus) {
-		status = currentStatus;
-	}
 }

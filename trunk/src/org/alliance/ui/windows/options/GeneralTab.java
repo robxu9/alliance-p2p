@@ -30,7 +30,7 @@ public class GeneralTab extends XUIDialog implements TabHelper {
     private final static String FONT_SIZES[] = {"9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20",
         "22", "24", "26", "28", "30", "32", "34", "36", "38", "40", "44", "48", "56", "64", "72"};
     private final static String[] OPTIONS = {
-        "my.nickname", "internal.guiskin", "internal.language",
+        "my.nickname", "my.status", "internal.guiskin", "internal.language",
         "internal.enablesupportfornonenglishcharacters", "internal.showpublicchatmessagesintray",
         "internal.showprivatechatmessagesintray", "internal.showsystemmessagesintray",
         "internal.globalfont", "internal.chatfont", "internal.globalsize", "internal.chatsize",
@@ -207,6 +207,18 @@ public class GeneralTab extends XUIDialog implements TabHelper {
                 return null;
             }
             ui.getCore().getFriendManager().getMe().setNickname(nickname);
+            if (ui.getNodeTreeModel(false) != null) {
+                ui.getNodeTreeModel(false).signalNodeChanged(
+                        ui.getCore().getFriendManager().getMe());
+            }
+        }
+        if (option.equals("my.status")) {
+            String status = value.toString();
+            status = status.replace("<", "").replace(">", "");
+            if (status.trim().isEmpty()) {
+                return null;
+            }
+            ui.getCore().getFriendManager().getMe().setStatus(status);
             if (ui.getNodeTreeModel(false) != null) {
                 ui.getNodeTreeModel(false).signalNodeChanged(
                         ui.getCore().getFriendManager().getMe());

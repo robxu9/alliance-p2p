@@ -112,10 +112,13 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             if (n instanceof Friend) {
                 nodeString = trusted + friendWindow.getNickname(n.getGuid());
             } else {
-                nodeString = Language.getLocalizedString(getClass(), "myself") + " - ";
-                nodeString += n.getNickname();
+                nodeString = n.getNickname();
             }
             nodeString += " (" + TextUtils.formatByteSize(n.getShareSize()) + ")";
+            String status = n.getStatus();
+            if (status != null && status.length() > 0) {
+            	nodeString += ": " + status;
+            }
             renderer.setText(nodeString);
         } else if (n.hasNotBeenOnlineForLongTime()) {
             renderer.setIcon(iconFriendOld);
@@ -139,12 +142,12 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         int build = 0;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
-            status = f.getCurrentStatus();
+            status = f.getStatus();
             build = f.getAllianceBuildNumber();
         }
         else if(n instanceof MyNode){
         	MyNode f = (MyNode)n;
-        	status = f.getCurrentStatus();
+        	status = f.getStatus();
             build = f.getAllianceBuildNumber();
         }
         
