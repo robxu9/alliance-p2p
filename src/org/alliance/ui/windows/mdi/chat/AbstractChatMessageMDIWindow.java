@@ -379,6 +379,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
 		}
 		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
+		
 		if (isOwnMessage(cl)) {
 			s.append("<b>" + name + ":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
 		} 
@@ -387,11 +388,18 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		// message
 		if(getCommand(cl) != -1){
+			String message = handleCommand(cl);
+			if(message != ""){
 			s.append(handleCommand(cl));
+			}
+			else{
+			s = new StringBuilder();
+			}
 		}
 		else{
 		s.append(cl.message + "</font><br>");
 		}
+		
 		previousChatLine = cl;
 		return s.toString();
 	}
@@ -408,24 +416,29 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		int i = getCommand(cl);
 		String message = "";
 		if(i != -1){
-		
 			switch(i){
-		case 0: if(cl.message.toLowerCase().startsWith("/me ")){
-					if(cl.message.length() < 145 && isOwnMessage(cl)){
-						ui.getCore().getSettings().getMy().setCurrentStatus(cl.message.substring(cl.message.indexOf(" ")));
-						message =("<i>"+ cl.message.substring(cl.message.indexOf(" ")) + "</i></font><br>");
+				case 0: message = setStatus(cl);
+						break;
 					}
-					else if(cl.message.length() > 145 && isOwnMessage(cl)){
-						message = (Language.getLocalizedString(getClass(), "overstatus", Integer.toString(cl.message.length() - 145)) + "</font><br>");
-					}
-					else if(cl.message.length() < 145){
-						message = ("<i>"+ cl.message.indexOf(" ") + "</i></font><br>");
-					}
-					}
-					break;
-		}
 		}
 		return message;
+	}
+	
+	protected String setStatus(ChatLine cl){
+		String status = "";
+		if(cl.message.toLowerCase().startsWith("/me ")){
+			if(cl.message.length() < 145 && isOwnMessage(cl)){
+				ui.getCore().getSettings().getMy().setCurrentStatus(cl.message.substring(cl.message.indexOf(" ")));
+				status =("<i>"+ cl.message.substring(cl.message.indexOf(" ")) + "</i></font><br>");
+				}
+			else if(cl.message.length() > 145 && isOwnMessage(cl)){
+				status = (Language.getLocalizedString(getClass(), "overstatus", Integer.toString(cl.message.length() - 145)) + "</font><br>");
+				}
+			else if(cl.message.length() < 145){
+				status = ("<i>"+ cl.message.substring(cl.message.indexOf(" ")) + "</i></font><br>");
+				}
+			}
+		return status;
 	}
 	
 	protected int getCommand(ChatLine cl){

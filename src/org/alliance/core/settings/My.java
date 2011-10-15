@@ -14,7 +14,7 @@ public class My extends SettingClass {
     private String nickname = "Rookie";
     private Integer cguid = 0; //this is a checksum of the invitations property, disguised so that script kiddies won't find it
     private Integer invitations = 0; //every time this user completes an invitation successfully he gets a point
-    private String status;
+    private String status = "";
 
     public My() {
     }
@@ -83,7 +83,6 @@ public class My extends SettingClass {
 	}
 	
 	public void setCurrentStatus(String currentStatus) {
-		//TODO Limit the the character count to 140 (just like Twitter), limit the TextField character count?
 		status = currentStatus;
 	}
 
