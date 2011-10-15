@@ -4,6 +4,7 @@ import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
 import org.alliance.core.Language;
+import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.util.CutCopyPastePopup;
@@ -47,7 +48,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static Color DATE_COLOR = new Color(0x9F9F9F); // light gray
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static Color OWN_TEXT_COLOR = new Color(0x000000); // black
-    protected final static String COMMANDS[] = {"/me"};
     protected final static Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -76,6 +76,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected JTextField chat;
     protected String html = "";
     protected TreeSet<ChatLine> chatLines;
+    protected UserCommands commands = new UserCommands(ui.getCore());
     protected boolean needToUpdateHtml;
     protected ChatLine previousChatLine = null;
     private boolean alive = true;
@@ -375,22 +376,23 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		s.append("</font> ");
 		// name
 		String name = cl.from;
+		String message = cl.message;
 		if (name.length() > MAX_NAME_LENGTH) {
 			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
 		}
 		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
 		
-		if (isOwnMessage(cl)) {
+		if (isOwnMessage(name)) {
 			s.append("<b>" + name + ":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
 		} 
 		else {
 			s.append(name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
 		// message
-		if(getCommand(cl) != -1){
-			String message = handleCommand(cl);
-			if(message != ""){
-			s.append(handleCommand(cl));
+		if(commands.getCommand(message) != -1){
+			String content = commands.handleCommand(name, message);
+			if(content != ""){
+			s.append(commands.handleCommand(name, message));
 			}
 			else{
 			s = new StringBuilder();
@@ -404,59 +406,21 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		return s.toString();
 	}
 	
-	protected boolean isOwnMessage(ChatLine cl){
-		if(ui.getCore().getSettings().getMy().getNickname().equals(cl.from)){
+	public boolean isOwnMessage(String from){
+		if(ui.getCore().getSettings().getMy().getNickname().equals(from)){
 			return true;
 		}
 		return false;
-	}
-	
-	protected String handleCommand(ChatLine cl)
-	{
-		int i = getCommand(cl);
-		String message = "";
-		if(i != -1){
-			switch(i){
-				case 0: message = setStatus(cl);
-						break;
-					}
-		}
-		return message;
-	}
-	
-	protected String setStatus(ChatLine cl){
-		String status = "";
-		if(cl.message.toLowerCase().startsWith("/me ")){
-			if(cl.message.length() < 145 && isOwnMessage(cl)){
-				ui.getCore().getSettings().getMy().setCurrentStatus(cl.message.substring(cl.message.indexOf(" ")));
-				status =("<i>"+ cl.message.substring(cl.message.indexOf(" ")) + "</i></font><br>");
-				}
-			else if(cl.message.length() > 145 && isOwnMessage(cl)){
-				status = (Language.getLocalizedString(getClass(), "overstatus", Integer.toString(cl.message.length() - 145)) + "</font><br>");
-				}
-			else if(cl.message.length() < 145){
-				status = ("<i>"+ cl.message.substring(cl.message.indexOf(" ")) + "</i></font><br>");
-				}
-			}
-		return status;
-	}
-	
-	protected int getCommand(ChatLine cl){
-		for(int i = 0; i < COMMANDS.length; i++){
-		if(cl.message.startsWith(COMMANDS[i] + " ")){
-			return i;
-		}
-		}
-		return -1;
 	}
 
     protected String toHexColor(Color color) {
         return "#" + Integer.toHexString(color.getRGB() & 0xFFFFFF);
     }
 
-    protected class ChatLine {
+    public class ChatLine {
 
-        String from, message;
+        String from;
+		String message;
         long tick;
         Color color;
 
