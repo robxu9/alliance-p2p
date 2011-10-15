@@ -22,7 +22,7 @@ public enum UserCommands {
 	
 	ME("me") {
 		private static final int MAX_STATUS_LENGTH = 140;
-		
+	
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String status = args.trim();
 			if (status.length() <= MAX_STATUS_LENGTH) {
@@ -39,6 +39,19 @@ public enum UserCommands {
 			}
 			return "";
 		}
+	},
+	HELP("help"){
+		private StringBuilder s = new StringBuilder();
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			s.append("<br><b>" + Language.getLocalizedString(getClass(), "help") + "</b>");
+			for(UserCommands cmd : UserCommands.values()){
+				s.append("<br>" + cmd.getName() + " - " + Language.getLocalizedString(getClass(), cmd.getName()));
+			}
+			chat.addMessage(ui.getCore().getSettings().getMy().getNickname(), s.toString(),
+					System.currentTimeMillis(), false, false, false);
+			return "";			
+		}
+		
 	};
 	
 	private final String name;
