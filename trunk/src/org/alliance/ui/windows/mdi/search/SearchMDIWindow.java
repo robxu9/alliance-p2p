@@ -79,7 +79,8 @@ public class SearchMDIWindow extends AllianceMDIWindow {
         new CutCopyPastePopup(search);
 
         pacedRunner = new PacedRunner(500);
-
+        
+        // @ToDo: get rid of this feature
         StringBuilder sb = new StringBuilder();
         sb.append(Language.getLocalizedString(getClass(), "look")).append(" &#160; ");
         sb.append("[a href=\"http://").append(FileType.VIDEO.id()).append("\"]").append(FileType.VIDEO.description()).append("[/a] &#160; ");
