@@ -205,10 +205,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     private void chatMessage() throws Exception {
     	String message = chat.getText();
     	message = UserCommands.handleCommand(message, ui, this);
-        //Don't even send message to other users if its a command
-    	if(message != ""){
-    	// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
-        send(message.replace("<", "&lt;").replace(">", "&gt;"));
+    	if (message != null && !message.trim().equals("")) {
+    		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
+    		send(message.replace("<", "&lt;").replace(">", "&gt;"));
     	}
         chat.setText("");
     }

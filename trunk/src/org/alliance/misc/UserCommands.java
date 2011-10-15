@@ -20,7 +20,7 @@ public enum UserCommands {
 		}
 	},
 	
-	ME("me") {
+	STATUS("status") {
 		private static final int MAX_STATUS_LENGTH = 140;
 	
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
@@ -28,30 +28,28 @@ public enum UserCommands {
 			if (status.length() <= MAX_STATUS_LENGTH) {
 				ui.getCore().getSettings().getMy().setStatus(status);
 				ui.getCore().getFriendManager().getMe().setStatus(status);
-				chat.addMessage(ui.getCore().getSettings().getMy().getNickname(),
-						"<i>" + status.replace("<", "&lt;").replace(">", "&gt;") + "</i>",
-						System.currentTimeMillis(), false, false, false);
 			}
 			else {
-				chat.addMessage(ui.getCore().getSettings().getMy().getNickname(),
+				chat.addMessage("Alliance",
 						"<i>" + Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)) + "</i>",
 						System.currentTimeMillis(), false, false, false);
 			}
 			return "";
 		}
 	},
-	HELP("help"){
+	
+	HELP("help") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			StringBuilder s = new StringBuilder();
-			s.append("<br><b>" + Language.getLocalizedString(getClass(), "help") + "</b>");
-			for(UserCommands cmd : UserCommands.values()){
-				s.append("<br>" + cmd.getName() + " - " + Language.getLocalizedString(getClass(), cmd.getName()));
+			s.append("<br><b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
+			for (UserCommands cmd : UserCommands.values()){
+				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 			}
-			chat.addMessage(ui.getCore().getSettings().getMy().getNickname(), s.toString(),
+			// @ToDo: make system messages from Alliance appear specially
+			chat.addMessage("Alliance", s.toString(),
 					System.currentTimeMillis(), false, false, false);
-			return "";			
+			return "";
 		}
-		
 	};
 	
 	private final String name;
@@ -79,12 +77,7 @@ public enum UserCommands {
 	public static String handleCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		UserCommands command = getCommand(message);
 		if (command != null) {
-			if(message.endsWith("/"+command.getName())){
-				message = message.substring(0, message.length() - command.getName().length() - 1);
-			}
-			else{
-			message = message.substring(command.getName().length() + 1);
-			}
+			message = message.trim().substring(command.getName().length() + 1);
 			message = command.execute(message, ui, chat);
 		}
 		return message;
