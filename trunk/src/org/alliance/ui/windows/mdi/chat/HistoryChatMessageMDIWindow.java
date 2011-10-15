@@ -54,7 +54,7 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     }
 
     private void addMessage(String from, String message, long tick) {
-        ChatLine cl = createChatLine(from, message, tick);
+        ChatLine cl = createChatLine(from, message, tick, true);
         chatLines.add(cl);
     }
 

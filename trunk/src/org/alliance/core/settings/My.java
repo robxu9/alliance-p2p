@@ -78,12 +78,11 @@ public class My extends SettingClass {
         cguid = (invitations ^ 234427) * 13;
     }
 
-	public String getCurrentStatus(){
+	public String getCurrentStatus() {
 		return status;
 	}
 	
 	public void setCurrentStatus(String currentStatus) {
 		status = currentStatus;
 	}
-
 }

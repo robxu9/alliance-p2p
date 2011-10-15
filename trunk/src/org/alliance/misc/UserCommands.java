@@ -1,58 +1,73 @@
 package org.alliance.misc;
 
-import org.alliance.core.CoreSubsystem;
 import org.alliance.core.Language;
+import org.alliance.ui.UISubsystem;
+import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 
-public class UserCommands {
+public enum UserCommands {
+	CLEAR("clear") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.chatClear();
+			return "";
+		}
+	},
 	
-	protected final String COMMANDS[] = {"/me"};
-	protected CoreSubsystem core;
-	 
-	public UserCommands(CoreSubsystem core){
-		this.core = core;
-	}
-	public int getCommand(String message){
-		for(int i = 0; i < COMMANDS.length; i++){
-		if(message.startsWith(COMMANDS[i] + " ")){
-			return i;
+	CLEARLOG("clearlog") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.chatClear();
+			ui.getCore().getPublicChatHistory().clearHistory();
+			return "";
 		}
-		}
-		return -1;
-	}
+	},
 	
-	public String handleCommand(String from, String message)
-	{
-		int i = getCommand(message);
-		String s = "";
-		if(i != -1){
-			switch(i){
-				case 0: s = setStatus(from, message);
-						break;
-					}
-		}
-		return s;
-	}
-
-	public String setStatus(String from, String message){
-		String status = "";
-		if(message.toLowerCase().startsWith("/me ")){
-			if(message.length() < 145 && isOwnMessage(from)){
-				core.getSettings().getMy().setCurrentStatus(message.substring(message.indexOf(" ")));
-				status =("<i>"+ message.substring(message.indexOf(" ")) + "</i></font><br>");
-				}
-			else if(message.length() > 145 && isOwnMessage(from)){
-				status = (Language.getLocalizedString(getClass(), "overstatus", Integer.toString(message.length() - 145)) + "</font><br>");
-				}
-			else if(message.length() < 145){
-				status = ("<i>"+ message.substring(message.indexOf(" ")) + "</i></font><br>");
-				}
+	ME("me") {
+		private static final int MAX_STATUS_LENGTH = 140;
+		
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String status = args.trim();
+			if (status.length() <= MAX_STATUS_LENGTH) {
+				ui.getCore().getSettings().getMy().setCurrentStatus(status);
+				chat.addMessage(ui.getCore().getSettings().getMy().getNickname(),
+						"<i>" + status.replace("<", "&lt;").replace(">", "&gt;") + "</i>",
+						System.currentTimeMillis(), false, false, false);
 			}
-		return status;
-	}
-	protected boolean isOwnMessage(String from){
-		if(core.getSettings().getMy().getNickname().equals(from)){
-			return true;
+			else {
+				chat.addMessage(ui.getCore().getSettings().getMy().getNickname(),
+						"<i>" + Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)) + "</i>",
+						System.currentTimeMillis(), false, false, false);
+			}
+			return "";
 		}
-		return false;
+	};
+	
+	private final String name;
+	
+	private UserCommands(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
+	
+	public static UserCommands getCommand(String message) {
+		message = message.trim().toLowerCase();
+		for (UserCommands cmd : UserCommands.values()) {
+			if (message.startsWith("/" + cmd.getName() + " ") || message.endsWith("/" + cmd.getName())) {
+				return cmd;
+			}
+		}
+		return null;
+	}
+	
+	public static String handleCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		UserCommands command = getCommand(message);
+		if (command != null) {
+			message = message.substring(command.getName().length() + 1);
+			message = command.execute(message, ui, chat);
+		}
+		return message;
 	}
 }
