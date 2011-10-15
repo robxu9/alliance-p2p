@@ -54,3 +54,4 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Chat history file never gets limited, and large ones can freeze Alliance.
  * The automatic database compacting hangs the UI.
  * I think files marked as 'external' still get unhashed.
+ * Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.
