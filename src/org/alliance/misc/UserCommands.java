@@ -32,7 +32,13 @@ public enum UserCommands {
 				ui.getCore().getFriendManager().getMe().setNickname(nickname);
 			}
 			else {
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "nick_invalid", Integer.toString(nickname.length() - MyNode.MAX_NICKNAME_LENGTH)));
+				int over = nickname.length() - MyNode.MAX_NICKNAME_LENGTH;
+				if (over > 0) { // too long
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nick_invalid1", Integer.toString(over)));
+				}
+				else { // reserved
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nick_invalid2"));
+				}
 			}
 			return "";
 		}

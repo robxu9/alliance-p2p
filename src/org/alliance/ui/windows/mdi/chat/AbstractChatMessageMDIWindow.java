@@ -165,7 +165,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
                                 ArrayList<Integer> al = new ArrayList<Integer>();
                                 al.add(guid);
                                 for (int i = 1; i < hashes.length; i++) {
-                                    ui.getCore().getNetworkManager().getDownloadManager().queDownload(new Hash(hashes[i]), "Link from chat", al);//TODO: LOCALIZE
+                                    ui.getCore().getNetworkManager().getDownloadManager().queDownload(new Hash(hashes[i]), Language.getLocalizedString(getClass(), "linkfromchat"), al);
                                 }
                                 ui.getMainWindow().getMDIManager().selectWindow(ui.getMainWindow().getDownloadsWindow());
                             }
@@ -256,9 +256,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     
     protected ChatLine createChatLine(String from, String message, long tick, boolean escape) {
         Color c = null;
-    
         if (ui.getCore().getFriendManager().isAdmin(from)) {
         	c = ADMIN_COLOR;
+        }
+        else if (ui.getCore().getFriendManager().isSystem(from)) {
+        	c = SYSTEM_COLOR;
         }
         else {
         	int n = from.hashCode();
@@ -270,10 +272,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         return new ChatLine(from, message, tick, c, escape);
     }
     
-    //TODO: make system messages from Alliance appear specially
     public void addSystemMessage(String message) {
-    	message = "<i>" + message + "</i>";
-    	addMessage(SYSTEM_USER, message, System.currentTimeMillis(), false, false, false);
+    	addMessage(SYSTEM_USER, "<i>" + message + "</i>", System.currentTimeMillis(), false, false, false);
     }
     
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
@@ -381,14 +381,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
-		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
-		if(isUserAction(cl.message)){
-			s.append("<i>*" + name + " ");
-		}
-		else if (cl.from.equals(SYSTEM_USER)) {
+		if (cl.from.equals(SYSTEM_USER)) {
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
 		}
-		
 		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
 					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
@@ -397,18 +392,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
-		if(isUserAction(cl.message)){
-			s.append(cl.message.substring(13) + "</i></font><br>");
-		}
-		else{
 		s.append(cl.message + "</font><br>");
-		}
 		previousChatLine = cl;
 		return s.toString();
-	}
-	
-	private boolean isUserAction(String message) {
-		return message.startsWith("USER_ACTION: ");	
 	}
 
     protected String toHexColor(Color color) {
