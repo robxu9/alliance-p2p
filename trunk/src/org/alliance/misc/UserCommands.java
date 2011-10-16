@@ -17,17 +17,14 @@ public enum UserCommands {
 		}
 	},
 	
-	CLEAR("clear") {
+	NICK("nick") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			chat.chatClear();
-			return "";
-		}
-	},
-	
-	CLEARLOG("clearlog") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			chat.chatClear();
-			ui.getCore().getPublicChatHistory().clearHistory();
+			// TODO: length limit? Also prevent people from naming themselves the
+			// same as admins. Not just here, but also via the GUI. Probably need
+			// to edit the setNickname() methods. (It seems redundant to have two.)
+			String nickname = args.trim();
+			ui.getCore().getSettings().getMy().setNickname(nickname);
+			ui.getCore().getFriendManager().getMe().setNickname(nickname);
 			return "";
 		}
 	},
@@ -46,6 +43,21 @@ public enum UserCommands {
 			}
 			return "";
 		}
+	},
+	
+	CLEAR("clear") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.chatClear();
+			return "";
+		}
+	},
+	
+	CLEARLOG("clearlog") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.chatClear();
+			ui.getCore().getPublicChatHistory().clearHistory();
+			return "";
+		}
 	};
 	
 	/**
@@ -54,7 +66,6 @@ public enum UserCommands {
 	 * reconnect USER - reconnects to USER (with no USER, reconnects to everyone?)
 	 * search TERMS - searches for TERMS
 	 * exit - exits Alliance
-	 * nick NAME - sets your nickname to NAME
 	 * whois USER - shows USER's tooltip data
 	 * me MESSAGE - performs an action. Here's the difference:
 	 *    (Type "I'm downloading that movie.")
