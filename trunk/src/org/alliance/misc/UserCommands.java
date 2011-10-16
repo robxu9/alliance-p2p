@@ -131,7 +131,13 @@ public enum UserCommands {
 			Friend f = ui.getCore().getFriendManager().getFriend(a);
             if (f != null) {
                 try {
-					ui.getMainWindow().chatMessage(f.getGuid(), null, 0, false);
+                	if(a.contains(" ")){
+                		//This only works if we limit usernames to no spaces
+                		ui.getMainWindow().chatMessage(f.getGuid(), a.substring(a.indexOf(" ")), System.currentTimeMillis(), false);
+                	}
+                	else{
+                		ui.getMainWindow().chatMessage(f.getGuid(), null, 0, false);
+                	}
 				} catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + a + "</b>"));
 					e.printStackTrace();
