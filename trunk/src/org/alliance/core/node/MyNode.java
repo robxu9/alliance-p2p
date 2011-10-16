@@ -77,7 +77,7 @@ public class MyNode extends Node {
     @Override
     public void setNickname(String name){
     	if(canNickname(name)){
-    	this.nickname = nickname;
+    	this.nickname = name;
     	}
     }
     
