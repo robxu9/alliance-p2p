@@ -1,12 +1,12 @@
 package org.alliance.misc;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.alliance.core.Language;
-import org.alliance.core.comm.Connection;
-import org.alliance.core.comm.FriendConnection;
 import org.alliance.core.file.filedatabase.FileType;
 import org.alliance.core.node.Friend;
+import org.alliance.core.node.MyNode;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
@@ -27,27 +27,17 @@ public enum UserCommands {
 	NICK("nick") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String nickname = args.trim();
-			if(ui.getCore().getFriendManager().getMe().canNickname(nickname)){
-			ui.getCore().getSettings().getMy().setNickname(nickname);
-			ui.getCore().getFriendManager().getMe().setNickname(nickname);
+			if (ui.getCore().getFriendManager().getMe().canNickname(nickname)){
+				ui.getCore().getSettings().getMy().setNickname(nickname);
+				ui.getCore().getFriendManager().getMe().setNickname(nickname);
 			}
-			else{
-				OptionDialog.showErrorDialog(ui.getMainWindow(), "Invalid Nickname! Usernames must be less than 22 characters & cannot contain spaces.");
+			else {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "nick_invalid", Integer.toString(nickname.length() - MyNode.MAX_NICKNAME_LENGTH)));
 			}
 			return "";
 		}
 	},
 	
-	ME("me") {
-		private static final int MAX_STATUS_LENGTH = 140;
-	
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			//Added this so people who haven't updated will see "USER_ACTION" and be able to understand
-			String action = "USER_ACTION: " + args.trim();
-			
-			return action;
-		}
-	},
 	STATUS("status") {
 		private static final int MAX_STATUS_LENGTH = 140;
 	
@@ -58,7 +48,7 @@ public enum UserCommands {
 				ui.getCore().getFriendManager().getMe().setStatus(status);
 			}
 			else {
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)));
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "status_invalid", Integer.toString(status.length() - MAX_STATUS_LENGTH)));
 			}
 			return "";
 		}
@@ -78,100 +68,114 @@ public enum UserCommands {
 			return "";
 		}
 	},
-	RECONNECT("reconnect"){
-		//TODO reconnect to all if they type /reconnect *
+	
+	RECONNECT("reconnect") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			String a = args.trim();
-			Friend f = ui.getCore().getFriendManager().getFriend(a);
-			if(f != null){
-			try {
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "validreconnect", "<b>" + a + "</b>"));
-				f.reconnect();
-			} catch (IOException e) {
-				e.printStackTrace();
+			String name = args.trim();
+			if (name.equals("")) { // reconnect to all friends
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting_all"));
+				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+				for (Friend friend : friends) {
+					try {
+						friend.reconnect();
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
+			else { // reconnect to named friend
+				Friend friend = ui.getCore().getFriendManager().getFriend(name);
+				if (friend == null) {
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+				}
+				else {
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting", name));
+					try {
+						friend.reconnect();
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-			else{
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b>"));
-			}
-			
 			return "";
 		}
-		
 	},
-	REHASH("rehash"){
+	
+	REHASH("rehash") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			ui.getCore().getShareManager().getShareScanner().startScan(true);
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "rehashing"));
 			return "";
 		}
-		
 	},
-	SEARCH("search"){
+	
+	SEARCH("search") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			String q = args.trim();
+			String query = args.trim();
 			try {
-				ui.getCore().getFriendManager().getNetMan().sendSearch(q, FileType.EVERYTHING);
+				ui.getCore().getFriendManager().getNetMan().sendSearch(query, FileType.EVERYTHING);
 				//TODO Have this moved to front instead of displaying this message
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", q));
-			} catch (IOException e) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return "";
 		}
-		
 	},
-	EXIT("exit"){
+	
+	MESSAGE("msg") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			String message = null;
+			int split = name.indexOf(">");
+			if (split > -1) {
+				message = name.substring(split).trim();
+				name = name.substring(0, split).trim();
+			}
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else {
+                try {
+                	ui.getMainWindow().chatMessage(friend.getGuid(), message, System.currentTimeMillis(), false);
+				}
+                catch (Exception e) {
+					e.printStackTrace();
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", name));
+				}
+            }
+			return "";
+		}
+	},
+	
+	EXIT("exit") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
 			ui.getCore().shutdown();
 	        System.exit(0);
 			return "";
 		}
-		
-	},
-	MESSAGE("msg"){
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			String a = args.trim();
-			String n;
-			boolean containsMessage = a.contains(" ");
-			if(containsMessage){
-				n = a.substring(0, a.indexOf(" "));
-			}
-			else{
-				n = a;
-			}
-			Friend f = ui.getCore().getFriendManager().getFriend(n);
-            if (f != null) {
-                try {
-                	if(containsMessage){
-                		//This only works if we limit usernames to no spaces
-                		ui.getMainWindow().chatMessage(f.getGuid(), a.substring(a.indexOf(" ")), System.currentTimeMillis(), false);
-                	}
-                	else{
-                		ui.getMainWindow().chatMessage(f.getGuid(), null, 0, false);
-                	}
-				} catch (Exception e) {
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + n + "</b>"));
-					e.printStackTrace();
-				}
-            }
-            else{
-            	chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + n + "</b>"));
-            }
-			return "";
-		}
 	};
 	
 	/**
 	 * TODO:
-	 * whois USER - shows USER's tooltip data (first build this popup)
-	 * We'd have to change send() to be able to send a system message, since it
-	 * escapes all HTML right now. Also system messages don't yet get saved to
-	 * the chat history.
-	 * system MESSAGE - admin-only command. Sends a system message to everyone.
+	 * whois USER - Shows USER's tooltip data in chat, like the help info.
+	 * me ACTION - Sends a user action to everyone.
+	 *     (Type "/me is rehashing.")
+	 *     [12:00] * Rangi is rehashing.
+	 *     Older versions will see this:
+	 *     [12:00] Rangi: Rangi is rehashing.
+	 * system MESSAGE - Sends a system message to everyone. (Admins only.)
 	 *     (Type "/system Stop spamming!")
-	 *     [12:17] * Stop spamming!
+	 *     [12:00] * Stop spamming!
+	 *     Older versions will see this:
+	 *     [12:00] Alliance: Stop spamming!
+	 * We need a mechanism to send system messages, and to reserve the nickname
+	 * "Alliance". Also system messages don't yet get saved to the chat history.
 	 */
 	
 	private final String name;
