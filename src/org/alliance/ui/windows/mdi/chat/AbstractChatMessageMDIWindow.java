@@ -272,6 +272,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     
     //TODO: make system messages from Alliance appear specially
     public void addSystemMessage(String message) {
+    	message = "<i>" + message + "</i>";
     	addMessage(SYSTEM_USER, message, System.currentTimeMillis(), false, false, false);
     }
     
