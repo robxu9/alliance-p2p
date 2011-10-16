@@ -270,7 +270,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         return new ChatLine(from, message, tick, c, escape);
     }
     
-    // @ToDo: make system messages from Alliance appear specially
+    //TODO: make system messages from Alliance appear specially
     public void addSystemMessage(String message) {
     	addMessage(SYSTEM_USER, message, System.currentTimeMillis(), false, false, false);
     }

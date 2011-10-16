@@ -1,6 +1,12 @@
 package org.alliance.misc;
 
+import java.io.IOException;
+
 import org.alliance.core.Language;
+import org.alliance.core.comm.Connection;
+import org.alliance.core.comm.FriendConnection;
+import org.alliance.core.file.filedatabase.FileType;
+import org.alliance.core.node.Friend;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 
@@ -68,20 +74,61 @@ public enum UserCommands {
 			ui.getCore().getPublicChatHistory().clearHistory();
 			return "";
 		}
+	},
+	RECONNECT("reconnect"){
+		//TODO reconnect to all if they type /reconnect *
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String a = args.trim();
+			Friend f = ui.getCore().getFriendManager().getFriend(args);
+			chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b></i>"));
+			if(f != null){
+			try {
+				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "validreconnect", "<b>" + a + "</b></i>"));
+				f.reconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			}
+			
+			return "";
+		}
+		
+	},
+	REHASH("rehash"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			ui.getCore().getShareManager().getShareScanner().startScan(true);
+			chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "rehashing") + "</i>");
+			return "";
+		}
+		
+	},
+	SEARCH("search"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String q = args.trim();
+			try {
+				ui.getCore().getFriendManager().getNetMan().sendSearch(args, FileType.EVERYTHING);
+				//TODO Make this bring the Search tab to front, instead of displaying this text
+				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "searching", q) + "</i>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return "";
+		}
+		
+	},
+	EXIT("exit"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			ui.getCore().shutdown();
+	        System.exit(0);
+			return "";
+		}
+		
 	};
 	
 	/**
 	 * TODO:
-	 * rehash - rehashes your files
-	 * reconnect USER - reconnects to USER (with no USER, reconnects to everyone?)
-	 * search TERMS - searches for TERMS
-	 * exit - exits Alliance
 	 * whois USER - shows USER's tooltip data
-	 * me MESSAGE - performs an action. Here's the difference:
-	 *    (Type "I'm downloading that movie.")
-	 *    [12:17] Rangi: I'm downloading that movie.
-	 *    (Type "/me is downloading that movie.")
-	 *    [12:17] * Rangi is downloading that movie.
+	 * msg - private message specific user
 	 * We'd have to change send() to be able to send a system message, since it
 	 * escapes all HTML right now. Also system messages don't yet get saved to
 	 * the chat history.
