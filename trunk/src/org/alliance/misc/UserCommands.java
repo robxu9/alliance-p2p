@@ -5,6 +5,18 @@ import org.alliance.ui.UISubsystem;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 
 public enum UserCommands {
+	HELP("help") {
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			StringBuilder s = new StringBuilder();
+			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
+			for (UserCommands cmd : UserCommands.values()){
+				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
+			}
+			chat.addSystemMessage(s.toString());
+			return "";
+		}
+	},
+	
 	CLEAR("clear") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.chatClear();
@@ -34,19 +46,28 @@ public enum UserCommands {
 			}
 			return "";
 		}
-	},
-	
-	HELP("help") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			StringBuilder s = new StringBuilder();
-			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
-			for (UserCommands cmd : UserCommands.values()){
-				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
-			}
-			chat.addSystemMessage(s.toString());
-			return "";
-		}
 	};
+	
+	/**
+	 * TODO:
+	 * rehash - rehashes your files
+	 * reconnect USER - reconnects to USER (with no USER, reconnects to everyone?)
+	 * search TERMS - searches for TERMS
+	 * exit - exits Alliance
+	 * nick NAME - sets your nickname to NAME
+	 * whois USER - shows USER's tooltip data
+	 * me MESSAGE - performs an action. Here's the difference:
+	 *    (Type "I'm downloading that movie.")
+	 *    [12:17] Rangi: I'm downloading that movie.
+	 *    (Type "/me is downloading that movie.")
+	 *    [12:17] * Rangi is downloading that movie.
+	 * We'd have to change send() to be able to send a system message, since it
+	 * escapes all HTML right now. Also system messages don't yet get saved to
+	 * the chat history.
+	 * system MESSAGE - admin-only command. Sends a system message to everyone.
+	 *     (Type "/system Stop spamming!")
+	 *     [12:17] * Stop spamming!
+	 */
 	
 	private final String name;
 	
