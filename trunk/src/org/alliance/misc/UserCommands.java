@@ -30,9 +30,7 @@ public enum UserCommands {
 				ui.getCore().getFriendManager().getMe().setStatus(status);
 			}
 			else {
-				chat.addMessage("Alliance",
-						"<i>" + Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)) + "</i>",
-						System.currentTimeMillis(), false, false, false);
+				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)) + "</i>");
 			}
 			return "";
 		}
@@ -41,13 +39,11 @@ public enum UserCommands {
 	HELP("help") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			StringBuilder s = new StringBuilder();
-			s.append("<br><b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
+			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
 			for (UserCommands cmd : UserCommands.values()){
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 			}
-			// @ToDo: make system messages from Alliance appear specially
-			chat.addMessage("Alliance", s.toString(),
-					System.currentTimeMillis(), false, false, false);
+			chat.addSystemMessage(s.toString());
 			return "";
 		}
 	};

@@ -45,7 +45,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected final static int MAX_NAME_LENGTH = 20;
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
+    protected final static String SYSTEM_USER = "Alliance";
     protected final static Color DATE_COLOR = new Color(0x9F9F9F); // light gray
+    protected final static Color SYSTEM_COLOR = new Color(0x708090); // slate gray
     protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
     protected final static Color OWN_TEXT_COLOR = new Color(0x000000); // black
     protected final static Color COLORS[] = {
@@ -266,7 +268,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         }
         return new ChatLine(from, message, tick, c, escape);
     }
-
+    
+    // @ToDo: make system messages from Alliance appear specially
+    public void addSystemMessage(String message) {
+    	addMessage(SYSTEM_USER, message, System.currentTimeMillis(), false, false, false);
+    }
+    
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
         addMessage(from, message, tick, messageHasBeenQueuedAwayForAWhile, true);
     }
@@ -372,21 +379,21 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_LENGTH) {
 			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
 		}
-		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
-		if (isOwnMessage(cl.from)) {
-			s.append("<b>" + name + ":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
-		} 
+		if (cl.from.equals(SYSTEM_USER)) {
+			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
+		}
+		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
+			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
+					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
+		}
 		else {
-			s.append(name + ":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
+			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
+					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
 		// message
 		s.append(cl.message + "</font><br>");
 		previousChatLine = cl;
 		return s.toString();
-	}
-	
-	public boolean isOwnMessage(String from) {
-		return ui.getCore().getSettings().getMy().getNickname().equals(from);
 	}
 
     protected String toHexColor(Color color) {
