@@ -26,7 +26,6 @@ public class Friend extends Node {
     private String lastKnownHost;
     private String lastKnownDns;
     private String fixedHost;
-    private String status = "";
     private int lastKnownPort;
     private FriendManager manager;
     private FriendConnection friendConnection;
