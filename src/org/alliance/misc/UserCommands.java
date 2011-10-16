@@ -79,7 +79,7 @@ public enum UserCommands {
 		//TODO reconnect to all if they type /reconnect *
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String a = args.trim();
-			Friend f = ui.getCore().getFriendManager().getFriend(args);
+			Friend f = ui.getCore().getFriendManager().getFriend(a);
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b>"));
 			if(f != null){
 			try {
@@ -106,9 +106,9 @@ public enum UserCommands {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String q = args.trim();
 			try {
-				ui.getCore().getFriendManager().getNetMan().sendSearch(args, FileType.EVERYTHING);
-				//TODO Make this bring the Search tab to front, instead of displaying this text
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", "<b>" + q + "</b>"));
+				ui.getCore().getFriendManager().getNetMan().sendSearch(q, FileType.EVERYTHING);
+				//TODO Have this moved to front instead of displaying this message
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", q));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -124,6 +124,21 @@ public enum UserCommands {
 			return "";
 		}
 		
+	},
+	MESSAGE("msg"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String a = args.trim();
+			Friend f = ui.getCore().getFriendManager().getFriend(a);
+            if (f != null) {
+                try {
+					ui.getMainWindow().chatMessage(f.getGuid(), null, 0, false);
+				} catch (Exception e) {
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + a + "</b>"));
+					e.printStackTrace();
+				}
+            }
+			return "";
+		}
 	};
 	
 	/**
