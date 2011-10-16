@@ -198,7 +198,7 @@ public class OptionsWindow extends XUIDialog {
                     OptionDialog.showErrorDialog(this, "One or more required fields is empty on tab: " + tab.getTab().getName());
                     return false;
                 }
-                else if(value.equals("badname")){
+                else if(value.equals("badusername")){
                 	OptionDialog.showErrorDialog(this, "Invalid Nickname! Usernames must be less than 22 characters & cannot contain spaces.");
                     return false;
                 }

@@ -207,7 +207,8 @@ public class GeneralTab extends XUIDialog implements TabHelper {
                 return null;
             }
             if(ui.getCore().getFriendManager().getMe().canNickname(nickname)){
-            ui.getCore().getFriendManager().getMe().setNickname(nickname);
+            	ui.getCore().getSettings().getMy().setNickname(nickname);
+            	ui.getCore().getFriendManager().getMe().setNickname(nickname);
             }
             else{
             	return "badusername";
