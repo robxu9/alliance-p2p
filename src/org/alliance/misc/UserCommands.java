@@ -8,6 +8,7 @@ import org.alliance.core.comm.FriendConnection;
 import org.alliance.core.file.filedatabase.FileType;
 import org.alliance.core.node.Friend;
 import org.alliance.ui.UISubsystem;
+import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 
 public enum UserCommands {
@@ -25,12 +26,14 @@ public enum UserCommands {
 	
 	NICK("nick") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			// TODO: length limit? Also prevent people from naming themselves the
-			// same as admins. Not just here, but also via the GUI. Probably need
-			// to edit the setNickname() methods. (It seems redundant to have two.)
 			String nickname = args.trim();
+			if(ui.getCore().getFriendManager().getMe().canNickname(nickname)){
 			ui.getCore().getSettings().getMy().setNickname(nickname);
 			ui.getCore().getFriendManager().getMe().setNickname(nickname);
+			}
+			else{
+				OptionDialog.showErrorDialog(ui.getMainWindow(), "Invalid Nickname! Usernames must be less than 22 characters & cannot contain spaces.");
+			}
 			return "";
 		}
 	},
@@ -150,7 +153,6 @@ public enum UserCommands {
 	/**
 	 * TODO:
 	 * whois USER - shows USER's tooltip data
-	 * msg - private message specific user
 	 * We'd have to change send() to be able to send a system message, since it
 	 * escapes all HTML right now. Also system messages don't yet get saved to
 	 * the chat history.

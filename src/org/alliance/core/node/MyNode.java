@@ -76,20 +76,20 @@ public class MyNode extends Node {
     
     @Override
     public void setNickname(String name){
-    	if(canNickname()){
+    	if(canNickname(name)){
     	this.nickname = nickname;
-    	}
-    	else{
-    	//TODO POPUP MESSAGE HERE
     	}
     }
     
-    public boolean canNickname(){
-    	 if(nickname.contains(" ")){
+    public boolean canNickname(String name){
+    	 if(name.contains(" ")){
           	return false;
           }
+    	 else if(name.length() >= 22){
+    		 return false;
+    	 }
           else{
-          	int hash = nickname.hashCode();
+          	int hash = name.hashCode();
           	int[] admin = core.getFriendManager().getAdmin();
           	for(int i = 0; i < admin.length; i++)
           	{
@@ -101,4 +101,5 @@ public class MyNode extends Node {
     	 return true;
     	
     }
+    
  }
