@@ -43,7 +43,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	private static final long serialVersionUID = -562921870993210155L;
 	
     protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    protected final static int MAX_NAME_LENGTH = 20;
+    protected final static int MAX_NAME_DISPLAY_LENGTH = 20;
     protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
     protected final static String SYSTEM_USER = "Alliance";
     protected final static Color DATE_COLOR = new Color(0x9F9F9F); // light gray
@@ -378,8 +378,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		s.append("</font> ");
 		// name
 		String name = cl.from;
-		if (name.length() > MAX_NAME_LENGTH) {
-			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
+		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
+			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
 		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
 		if(isUserAction(cl.message)){

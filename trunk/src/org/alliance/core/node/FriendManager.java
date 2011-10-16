@@ -463,7 +463,4 @@ public class FriendManager extends Manager {
 		}
 		return false;
 	}
-	public int[] getAdmin(){
-		return ADMIN_USERS;
-	}
 }

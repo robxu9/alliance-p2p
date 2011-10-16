@@ -11,6 +11,8 @@ import org.alliance.Version;
  * To change this template use File | Settings | File Templates.
  */
 public class MyNode extends Node {
+	
+	public static final int MAX_NICKNAME_LENGTH = 24;
 
     private CoreSubsystem core;
 
@@ -75,31 +77,13 @@ public class MyNode extends Node {
     }
     
     @Override
-    public void setNickname(String name){
-    	if(canNickname(name)){
-    	this.nickname = name;
+    public void setNickname(String name) {
+    	if (canNickname(name)) {
+    		this.nickname = name;
     	}
     }
     
-    public boolean canNickname(String name){
-    	 if(name.contains(" ")){
-          	return false;
-          }
-    	 else if(name.length() >= 22){
-    		 return false;
-    	 }
-          else{
-          	int hash = name.hashCode();
-          	int[] admin = core.getFriendManager().getAdmin();
-          	for(int i = 0; i < admin.length; i++)
-          	{
-          		if(hash == admin[i]){
-          			return false;
-          		}
-          	}
-          }
-    	 return true;
-    	
+    public boolean canNickname(String name) {
+    	return name.length() <= MAX_NICKNAME_LENGTH && !core.getFriendManager().isAdmin(name);
     }
-    
- }
+}
