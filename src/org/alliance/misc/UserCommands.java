@@ -83,7 +83,6 @@ public enum UserCommands {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String a = args.trim();
 			Friend f = ui.getCore().getFriendManager().getFriend(a);
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b>"));
 			if(f != null){
 			try {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "validreconnect", "<b>" + a + "</b>"));
@@ -91,6 +90,9 @@ public enum UserCommands {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			}
+			else{
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b>"));
 			}
 			
 			return "";
@@ -131,10 +133,18 @@ public enum UserCommands {
 	MESSAGE("msg"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String a = args.trim();
-			Friend f = ui.getCore().getFriendManager().getFriend(a);
+			String n;
+			boolean containsMessage = a.contains(" ");
+			if(containsMessage){
+				n = a.substring(0, a.indexOf(" "));
+			}
+			else{
+				n = a;
+			}
+			Friend f = ui.getCore().getFriendManager().getFriend(n);
             if (f != null) {
                 try {
-                	if(a.contains(" ")){
+                	if(containsMessage){
                 		//This only works if we limit usernames to no spaces
                 		ui.getMainWindow().chatMessage(f.getGuid(), a.substring(a.indexOf(" ")), System.currentTimeMillis(), false);
                 	}
@@ -142,9 +152,12 @@ public enum UserCommands {
                 		ui.getMainWindow().chatMessage(f.getGuid(), null, 0, false);
                 	}
 				} catch (Exception e) {
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + a + "</b>"));
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + n + "</b>"));
 					e.printStackTrace();
 				}
+            }
+            else{
+            	chat.addSystemMessage(Language.getLocalizedString(getClass(), "nomessage", "<b>" + n + "</b>"));
             }
 			return "";
 		}
@@ -152,7 +165,7 @@ public enum UserCommands {
 	
 	/**
 	 * TODO:
-	 * whois USER - shows USER's tooltip data
+	 * whois USER - shows USER's tooltip data (first build this popup)
 	 * We'd have to change send() to be able to send a system message, since it
 	 * escapes all HTML right now. Also system messages don't yet get saved to
 	 * the chat history.
