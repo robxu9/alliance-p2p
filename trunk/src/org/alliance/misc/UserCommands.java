@@ -55,7 +55,7 @@ public enum UserCommands {
 				ui.getCore().getFriendManager().getMe().setStatus(status);
 			}
 			else {
-				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)) + "</i>");
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "overstatus", Integer.toString(status.length() - MAX_STATUS_LENGTH)));
 			}
 			return "";
 		}
@@ -80,10 +80,10 @@ public enum UserCommands {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String a = args.trim();
 			Friend f = ui.getCore().getFriendManager().getFriend(args);
-			chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b></i>"));
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "noreconnect", "<b>" + a + "</b>"));
 			if(f != null){
 			try {
-				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "validreconnect", "<b>" + a + "</b></i>"));
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "validreconnect", "<b>" + a + "</b>"));
 				f.reconnect();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -97,7 +97,7 @@ public enum UserCommands {
 	REHASH("rehash"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			ui.getCore().getShareManager().getShareScanner().startScan(true);
-			chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "rehashing") + "</i>");
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "rehashing"));
 			return "";
 		}
 		
@@ -108,7 +108,7 @@ public enum UserCommands {
 			try {
 				ui.getCore().getFriendManager().getNetMan().sendSearch(args, FileType.EVERYTHING);
 				//TODO Make this bring the Search tab to front, instead of displaying this text
-				chat.addSystemMessage("<i>" + Language.getLocalizedString(getClass(), "searching", q) + "</i>");
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", "<b>" + q + "</b>"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -118,6 +118,7 @@ public enum UserCommands {
 	},
 	EXIT("exit"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
 			ui.getCore().shutdown();
 	        System.exit(0);
 			return "";
