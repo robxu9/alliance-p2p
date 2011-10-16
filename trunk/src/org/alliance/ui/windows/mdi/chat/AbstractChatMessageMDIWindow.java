@@ -382,7 +382,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
 		if(isUserAction(cl.message)){
-			s.append("<i>*" + name + " " + cl.message.substring(13) + "</i></font><br>");
+			s.append("<i>*" + name + " ");
 		}
 		else if (cl.from.equals(SYSTEM_USER)) {
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
@@ -396,7 +396,13 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
-		
+		if(isUserAction(cl.message)){
+			s.append(cl.message.substring(13) + "</i></font><br>");
+		}
+		else{
+		s.append(cl.message + "</font><br>");
+		}
+		previousChatLine = cl;
 		return s.toString();
 	}
 	
