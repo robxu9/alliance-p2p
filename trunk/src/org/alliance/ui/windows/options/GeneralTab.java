@@ -206,11 +206,11 @@ public class GeneralTab extends XUIDialog implements TabHelper {
             if (nickname.trim().isEmpty()) {
                 return null;
             }
-            if(ui.getCore().getFriendManager().getMe().canNickname()){
+            if(ui.getCore().getFriendManager().getMe().canNickname(nickname)){
             ui.getCore().getFriendManager().getMe().setNickname(nickname);
             }
             else{
-            	//TODO Popup saying username cannot be chosen
+            	return "badusername";
             }
             
             if (ui.getNodeTreeModel(false) != null) {
