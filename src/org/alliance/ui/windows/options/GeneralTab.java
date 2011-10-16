@@ -206,22 +206,13 @@ public class GeneralTab extends XUIDialog implements TabHelper {
             if (nickname.trim().isEmpty()) {
                 return null;
             }
-            else if(nickname.contains(" ")){
-            	//TODO Create Popup for this (No spaces in name allowed)
-            	return null;
-            }
-            else{
-            	int hash = nickname.hashCode();
-            	int[] admin = ui.getCore().getFriendManager().getAdmin();
-            	for(int i = 0; i < admin.length; i++)
-            	{
-            		if(hash == admin[i]){
-            		//TODO Create Popup for this (Cannot be an admin)
-            			return null;
-            		}
-            	}
+            if(ui.getCore().getFriendManager().getMe().canNickname()){
             ui.getCore().getFriendManager().getMe().setNickname(nickname);
             }
+            else{
+            	//TODO Popup saying username cannot be chosen
+            }
+            
             if (ui.getNodeTreeModel(false) != null) {
                 ui.getNodeTreeModel(false).signalNodeChanged(
                         ui.getCore().getFriendManager().getMe());

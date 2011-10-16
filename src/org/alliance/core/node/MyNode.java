@@ -73,4 +73,32 @@ public class MyNode extends Node {
     public long getTotalBytesReceived() {
         return core.getNetworkManager().getBandwidthIn().getTotalBytes();
     }
-}
+    
+    @Override
+    public void setNickname(String name){
+    	if(canNickname()){
+    	this.nickname = nickname;
+    	}
+    	else{
+    	//TODO POPUP MESSAGE HERE
+    	}
+    }
+    
+    public boolean canNickname(){
+    	 if(nickname.contains(" ")){
+          	return false;
+          }
+          else{
+          	int hash = nickname.hashCode();
+          	int[] admin = core.getFriendManager().getAdmin();
+          	for(int i = 0; i < admin.length; i++)
+          	{
+          		if(hash == admin[i]){
+          			return false;
+          		}
+          	}
+          }
+    	 return true;
+    	
+    }
+ }
