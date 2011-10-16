@@ -256,6 +256,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     
     protected ChatLine createChatLine(String from, String message, long tick, boolean escape) {
         Color c = null;
+    
         if (ui.getCore().getFriendManager().isAdmin(from)) {
         	c = ADMIN_COLOR;
         }
@@ -308,7 +309,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             chatLines.remove(chatLines.first());
         }
         if (chatLines.last() == cl && !removeFirstLine) {
-            html += createHtmlChatLine(cl);
+        	html += createHtmlChatLine(cl);
         } else {
             regenerateHtml();
         }
@@ -379,9 +380,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_LENGTH) {
 			name = name.substring(0, MAX_NAME_LENGTH) + "&hellip;";
 		}
-		if (cl.from.equals(SYSTEM_USER)) {
+		s.append("<font color=\"" + toHexColor(cl.color) + "\">");
+		if(isUserAction(cl.message)){
+			s.append("<i>*" + name + " " + cl.message.substring(13) + "</i></font><br>");
+		}
+		else if (cl.from.equals(SYSTEM_USER)) {
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
 		}
+		
 		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
 					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
@@ -390,10 +396,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
-		// message
-		s.append(cl.message + "</font><br>");
-		previousChatLine = cl;
+		
 		return s.toString();
+	}
+	
+	private boolean isUserAction(String message) {
+		return message.startsWith("USER_ACTION: ");	
 	}
 
     protected String toHexColor(Color color) {
