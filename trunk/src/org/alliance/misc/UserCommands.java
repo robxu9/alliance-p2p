@@ -29,6 +29,16 @@ public enum UserCommands {
 		}
 	},
 	
+	ME("me") {
+		private static final int MAX_STATUS_LENGTH = 140;
+	
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			//Added this so people who haven't updated will see "USER_ACTION" and be able to understand
+			String action = "USER_ACTION: " + args.trim();
+			
+			return action;
+		}
+	},
 	STATUS("status") {
 		private static final int MAX_STATUS_LENGTH = 140;
 	
