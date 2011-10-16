@@ -43,7 +43,9 @@ import java.util.Random;
  */
 public class FriendManager extends Manager {
 	
-	private final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920}; // obfuscated
+	// obfuscated with hashCode()
+	private final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920};
+	private final static int SYSTEM_USER = 1871588439;
 	
     private Settings settings;
     private FriendConnector friendConnector;
@@ -462,5 +464,9 @@ public class FriendManager extends Manager {
 			}
 		}
 		return false;
+	}
+	
+	public boolean isSystem(String nickname) {
+		return nickname.hashCode() == SYSTEM_USER;
 	}
 }
