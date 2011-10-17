@@ -38,6 +38,9 @@ public class PrivateChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             Sound.start();
         }
     }
+    public void sendMessage(String message) throws IOException{
+    	send(message);
+    }
 
     @Override
     protected void send(final String text) throws IOException {

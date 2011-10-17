@@ -10,6 +10,7 @@ import org.alliance.core.node.MyNode;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
+import org.alliance.ui.windows.mdi.chat.PrivateChatMessageMDIWindow;
 
 public enum UserCommands {
 	HELP("help") {
@@ -139,9 +140,9 @@ public enum UserCommands {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			String message = null;
-			int split = name.indexOf(">");
+			int split = name.indexOf(" ");
 			if (split > -1) {
-				message = name.substring(split).trim();
+				message = name.substring(split+1).trim();
 				name = name.substring(0, split).trim();
 			}
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
@@ -150,6 +151,7 @@ public enum UserCommands {
 			}
 			else {
                 try {
+                	new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(message);
                 	ui.getMainWindow().chatMessage(friend.getGuid(), message, System.currentTimeMillis(), false);
 				}
                 catch (Exception e) {
