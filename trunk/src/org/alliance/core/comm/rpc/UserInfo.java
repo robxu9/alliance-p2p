@@ -111,8 +111,7 @@ public class UserInfo extends RPC {
     
     private String AdminCheck(){
     	//TODO make this look in a specific location, currently it's not working.
-    	String path = core.getSettings().getInternal().getCurrentDirectory()+System.getProperty("file.separator")+("admin");
-    	AdminChecker a = new AdminChecker(path,core.getSettings().getMy().getNickname());
+    	AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), core.getSettings().getInternal().getUserDirectory()+("admin"));
     	return Integer.toString(a.generateCode());
     }
 }
