@@ -17,7 +17,10 @@ public enum UserCommands {
 			StringBuilder s = new StringBuilder();
 			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
 			for (UserCommands cmd : UserCommands.values()){
+				//Don't display Admin commands
+				if(!cmd.equals("system")){
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
+				}
 			}
 			chat.addSystemMessage(s.toString());
 			return "";
@@ -171,23 +174,24 @@ public enum UserCommands {
 	        System.exit(0);
 			return "";
 		}
+	},
+	SYSTEM("system"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
+				return "*ADMIN: " + args.trim();
+			}
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "admin_invalid"));
+			return "";
+		}
+
 	};
 	
 	/**
 	 * TODO:
-	 * whois USER - Shows USER's tooltip data in chat, like the help info.
-	 * me ACTION - Sends a user action to everyone.
-	 *     (Type "/me is rehashing.")
-	 *     [12:00] * Rangi is rehashing.
-	 *     Older versions will see this:
-	 *     [12:00] Rangi: Rangi is rehashing.
-	 * system MESSAGE - Sends a system message to everyone. (Admins only.)
-	 *     (Type "/system Stop spamming!")
-	 *     [12:00] * Stop spamming!
-	 *     Older versions will see this:
-	 *     [12:00] Alliance: Stop spamming!
+	 * whois USER - Shows USER's tooltip data in chat, like the help info. (NEED TO BUILD THIS POP-UP)
 	 * We need a mechanism to send system messages, and to reserve the nickname
 	 * "Alliance". Also system messages don't yet get saved to the chat history.
+	 * (I don't think local system messages need to be saved, its more of a local notification)
 	 */
 	
 	private final String name;
