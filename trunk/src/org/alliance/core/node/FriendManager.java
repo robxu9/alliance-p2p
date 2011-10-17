@@ -457,13 +457,28 @@ public class FriendManager extends Manager {
     }
     
 	public boolean isAdmin(String name) {
+		if(isAdminNick(name)){
+			if(name.equals(core.getFriendManager().getMe().getNickname())){
+				return core.getFriendManager().getMe().iAmAdmin();
+			}
 		Friend f = getFriend(name);
 		if(f == null){
 			return false;
 		}
 		return f.isAdmin();
+		}
+		return false;
 	}
-
+	public boolean isAdminNick(String nick){
+		int hash = nick.hashCode();
+		for(int i = 0; i<ADMIN_USERS.length; i++){
+			if(hash == ADMIN_USERS[i]){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	public boolean isSystem(String nickname) {
 		return nickname.hashCode() == SYSTEM_USER;

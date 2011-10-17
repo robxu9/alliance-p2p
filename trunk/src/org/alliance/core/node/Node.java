@@ -15,7 +15,7 @@ public abstract class Node {
 	
     protected String nickname;
     protected String status = "";
-    protected int guid;
+    protected int guid, adminCode = 0;
     protected HashMap<Integer, UntrustedNode> friendsFriends;
 
     protected Node() {

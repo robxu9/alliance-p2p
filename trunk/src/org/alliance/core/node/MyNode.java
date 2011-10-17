@@ -3,6 +3,8 @@ package org.alliance.core.node;
 import org.alliance.core.CoreSubsystem;
 import org.alliance.Version;
 
+import com.Updater.Admin.AdminChecker;
+
 /**
  * Created by IntelliJ IDEA.
  * User: maciek
@@ -19,6 +21,8 @@ public class MyNode extends Node {
     public MyNode(String nickname, int guid, CoreSubsystem core) {
         super(nickname, guid);
         this.core = core;
+        AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), core.getSettings().getInternal().getUserDirectory()+("admin"));
+    	this.adminCode = a.generateCode();
     }
 
     @Override
@@ -85,7 +89,14 @@ public class MyNode extends Node {
     
     public boolean canNickname(String name) {
     	return name.length() <= MAX_NICKNAME_LENGTH
-    		&& !core.getFriendManager().isAdmin(name)
+    		&& !core.getFriendManager().isAdminNick(name)
     		&& !core.getFriendManager().isSystem(name);
+    }
+    public int getAdminCode(){
+    	return adminCode;
+    }
+    public boolean iAmAdmin(){
+    	AdminChecker a = new AdminChecker(nickname, adminCode);
+		return a.isTrueAdmin();
     }
 }

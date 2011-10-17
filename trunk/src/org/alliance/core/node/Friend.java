@@ -40,7 +40,7 @@ public class Friend extends Node {
     private boolean isAway;
     private String nicknameToShowInUI;
     private String ugroupname;
-    private int trusted, adminCode = 0;
+    private int trusted;
     private boolean internal;
 
     public Friend(FriendManager manager, org.alliance.core.settings.Friend f) {
@@ -457,7 +457,7 @@ public class Friend extends Node {
     }
 
 	public boolean isAdmin() {
-		AdminChecker a = new AdminChecker(this.nickname, this.adminCode);
+		AdminChecker a = new AdminChecker(nickname, adminCode);
 		return a.isTrueAdmin();
 	}
 
