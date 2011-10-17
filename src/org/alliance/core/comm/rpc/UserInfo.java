@@ -7,8 +7,6 @@ import org.alliance.core.comm.Packet;
 import org.alliance.core.comm.RPC;
 import org.alliance.core.node.Friend;
 
-import com.Updater.Admin.AdminChecker;
-
 import java.io.IOException;
 
 /**
@@ -105,13 +103,7 @@ public class UserInfo extends RPC {
         p.writeUTF(core.getSettings().getServer().getDnsname());
         p.writeUTF(core.getSettings().getMy().getNickname());
         p.writeUTF(core.getSettings().getMy().getStatus());
-        p.writeUTF(AdminCheck());
+        p.writeInt(core.getFriendManager().getMe().getAdminCode());
         return p;
-    }
-    
-    private String AdminCheck(){
-    	//TODO make this look in a specific location, currently it's not working.
-    	AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), core.getSettings().getInternal().getUserDirectory()+("admin"));
-    	return Integer.toString(a.generateCode());
     }
 }
