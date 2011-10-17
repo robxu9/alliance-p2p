@@ -78,7 +78,7 @@ public enum UserCommands {
 	RECONNECT("reconnect") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
-			if (name.equals("")) { // reconnect to all friends
+			if (name.equals("*")) { // reconnect to all friends
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting_all"));
 				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 				for (Friend friend : friends) {

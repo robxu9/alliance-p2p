@@ -20,8 +20,11 @@ import org.alliance.core.comm.rpc.PleaseForwardInvitation;
 import org.alliance.core.comm.rpc.UserInfo;
 import org.alliance.core.comm.rpc.UserList;
 import org.alliance.ui.addfriendwizard.ForwardInvitationNodesList;
+import com.Updater.Admin.AdminChecker;
 
+import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -456,15 +459,14 @@ public class FriendManager extends Manager {
         return nicknameWithoutLocalRename(guid);
     }
     
-	public boolean isAdmin(String nickname) {
-		int hash = nickname.hashCode();
-		for (int i = 0; i < ADMIN_USERS.length; i++) {
-			if (hash == ADMIN_USERS[i]) {
-				return true;
-			}
+	public boolean isAdmin(String name) {
+		Friend f = getFriend(name);
+		if(f == null){
+			return false;
 		}
-		return false;
+		return f.isAdmin();
 	}
+
 	
 	public boolean isSystem(String nickname) {
 		return nickname.hashCode() == SYSTEM_USER;

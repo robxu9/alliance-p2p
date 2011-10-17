@@ -7,6 +7,8 @@ import org.alliance.core.comm.Packet;
 import org.alliance.core.comm.RPC;
 import org.alliance.core.node.Friend;
 
+import com.Updater.Admin.AdminChecker;
+
 import java.io.IOException;
 
 /**
@@ -57,6 +59,7 @@ public class UserInfo extends RPC {
         }
         if(f.getAllianceBuildNumber() > 1418){
         f.setStatus(in.readUTF());
+        f.setAdminCode(in.readInt());
         }
         f.updateLastKnownHostInfo(host, port, dnsName);
 
@@ -102,6 +105,14 @@ public class UserInfo extends RPC {
         p.writeUTF(core.getSettings().getServer().getDnsname());
         p.writeUTF(core.getSettings().getMy().getNickname());
         p.writeUTF(core.getSettings().getMy().getStatus());
+        p.writeUTF(AdminCheck());
         return p;
+    }
+    
+    private String AdminCheck(){
+    	//TODO make this look in a specific location, currently it's not working.
+    	String path = core.getSettings().getInternal().getCurrentDirectory()+System.getProperty("file.separator")+("admin");
+    	AdminChecker a = new AdminChecker(path,core.getSettings().getMy().getNickname());
+    	return Integer.toString(a.generateCode());
     }
 }
