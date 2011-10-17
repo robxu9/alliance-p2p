@@ -1,5 +1,6 @@
 package org.alliance.core.node;
 
+import com.Updater.Admin.AdminChecker;
 import com.stendahls.util.TextUtils;
 import org.alliance.core.T;
 import org.alliance.core.comm.AuthenticatedConnection;
@@ -39,7 +40,7 @@ public class Friend extends Node {
     private boolean isAway;
     private String nicknameToShowInUI;
     private String ugroupname;
-    private int trusted;
+    private int trusted, adminCode = 0;
     private boolean internal;
 
     public Friend(FriendManager manager, org.alliance.core.settings.Friend f) {
@@ -454,5 +455,14 @@ public class Friend extends Node {
         array[3] = new Integer(tempString).byteValue();
         return array;
     }
+
+	public boolean isAdmin() {
+		AdminChecker a = new AdminChecker(nickname, adminCode);
+		return a.isTrueAdmin();
+	}
+
+	public void setAdminCode(int code) {
+		this.adminCode = code;
+	}
 	
 }
