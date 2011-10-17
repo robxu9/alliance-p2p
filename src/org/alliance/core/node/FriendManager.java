@@ -20,11 +20,8 @@ import org.alliance.core.comm.rpc.PleaseForwardInvitation;
 import org.alliance.core.comm.rpc.UserInfo;
 import org.alliance.core.comm.rpc.UserList;
 import org.alliance.ui.addfriendwizard.ForwardInvitationNodesList;
-import com.Updater.Admin.AdminChecker;
 
-import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

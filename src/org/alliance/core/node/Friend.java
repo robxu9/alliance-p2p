@@ -457,7 +457,7 @@ public class Friend extends Node {
     }
 
 	public boolean isAdmin() {
-		AdminChecker a = new AdminChecker(nickname, adminCode);
+		AdminChecker a = new AdminChecker(this.nickname, this.adminCode);
 		return a.isTrueAdmin();
 	}
 
