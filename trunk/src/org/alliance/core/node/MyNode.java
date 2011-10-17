@@ -17,11 +17,13 @@ public class MyNode extends Node {
 	public static final int MAX_NICKNAME_LENGTH = 24;
 
     private CoreSubsystem core;
+    private String ADMIN_FILE; 
 
     public MyNode(String nickname, int guid, CoreSubsystem core) {
         super(nickname, guid);
         this.core = core;
-        AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), core.getSettings().getInternal().getUserDirectory()+("admin"));
+        ADMIN_FILE = core.getSettings().getInternal().getUserDirectory()+("admin");;
+        AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), ADMIN_FILE);
     	this.adminCode = a.generateCode();
     }
 
@@ -89,10 +91,15 @@ public class MyNode extends Node {
     
     public boolean canNickname(String name) {
     	return name.length() <= MAX_NICKNAME_LENGTH
-    		&& core.getFriendManager().getMe().iAmAdmin()
-    		&& !core.getFriendManager().isSystem(name);
+    		&& (testAdmin(name) || !core.getFriendManager().isAdminNick(name))
+    		&& !core.getFriendManager().isSystem(name);	
     }
-    public int getAdminCode(){
+    private boolean testAdmin(String name) {
+		AdminChecker test = new AdminChecker(name, ADMIN_FILE);
+			return new AdminChecker(name, test.generateCode()).isTrueAdmin();
+	}
+
+	public int getAdminCode(){
     	return adminCode;
     }
     public boolean iAmAdmin(){
