@@ -469,7 +469,7 @@ public class FriendManager extends Manager {
 		}
 		return false;
 	}
-	private boolean isAdminNick(String nick){
+	public boolean isAdminNick(String nick){
 		int hash = nick.hashCode();
 		for(int i = 0; i<ADMIN_USERS.length; i++){
 			if(hash == ADMIN_USERS[i]){
