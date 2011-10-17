@@ -18,7 +18,7 @@ public enum UserCommands {
 			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
 			for (UserCommands cmd : UserCommands.values()){
 				//Don't display Admin commands
-				if(!cmd.equals("system")){
+				if(!cmd.getName().equals("system")){
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 				}
 			}
