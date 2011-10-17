@@ -208,6 +208,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	String message = chat.getText();
     	message = UserCommands.handleCommand(message, ui, this);
     	if (message != null && !message.trim().equals("")) {
+    		if(message.startsWith("USER_ACTION ")){
+    			message = "*" + ui.getCore().getFriendManager().getMe().getNickname() + message.substring(11);
+    		}
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
     	}
@@ -384,6 +387,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (cl.from.equals(SYSTEM_USER)) {
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
 		}
+		else if (isUserAction(cl)){
+			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + "<i>");
+		}
 		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
 					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
@@ -393,11 +399,18 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
 		s.append(cl.message + "</font><br>");
+		if(isUserAction(cl)){
+			s.append("</i>");
+		}
 		previousChatLine = cl;
 		return s.toString();
 	}
 
-    protected String toHexColor(Color color) {
+    private boolean isUserAction(ChatLine cl) {
+		return cl.message.startsWith("*" + cl.from);
+	}
+
+	protected String toHexColor(Color color) {
         return "#" + Integer.toHexString(color.getRGB() & 0xFFFFFF);
     }
 

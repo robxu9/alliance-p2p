@@ -157,7 +157,13 @@ public enum UserCommands {
 			return "";
 		}
 	},
-	
+	ME("me") {		
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {		
+		//Added this so people who haven't updated will see "USER_ACTION" and be able to understand		
+			String action = "USER_ACTION " + args.trim();		
+			return action;		
+		}		
+	},
 	EXIT("exit") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
