@@ -89,7 +89,7 @@ public class MyNode extends Node {
     
     public boolean canNickname(String name) {
     	return name.length() <= MAX_NICKNAME_LENGTH
-    		&& !core.getFriendManager().isAdminNick(name)
+    		&& core.getFriendManager().getMe().iAmAdmin()
     		&& !core.getFriendManager().isSystem(name);
     }
     public int getAdminCode(){
