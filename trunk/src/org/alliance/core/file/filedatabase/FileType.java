@@ -95,17 +95,29 @@ public enum FileType {
 			"cbz", "cbr", "cbt", "cb7"
 	})),
 	
-	SCRIPT("script", 11, new ExtensionFileType(new String[] {
+	PLAYLIST("playlist", 11, new ExtensionFileType(new String[] {
+			"pls", "m3u", "wpl", "zpl", "fpl"
+	})),
+	
+	SUBTITLE("subtitle", 12, new ExtensionFileType(new String[] {
+			"idx", "sub", "srt", "ass", "ssa"
+	})),
+	
+	SCRIPT("script", 13, new ExtensionFileType(new String[] {
 			"bat", "hta", "js", "jse", "vb", "vbe", "cgi", "pl", "rb", "py",
 			"ws", "wsf", "applescript", "ahk", "scr", "script"
 	})),
 	
-	EXECUTABLE("executable", 12, new ExtensionFileType(new String[] {
+	EXECUTABLE("executable", 14, new ExtensionFileType(new String[] {
 			"exe", "com", "command", "reg", "gadget", "app", "ipa", "out", "msi",
 			"pkg", "deb", "rpm", "apk", "xap", "air", "xpi", "jar"
 	})),
 	
-	TEMPORARY("temporary", 13, new ExtensionFileType(new String[] {
+	TORRENT("torrent", 15, new ExtensionFileType(new String[] {
+			"torrent"
+	})),
+	
+	TEMPORARY("temporary", 16, new ExtensionFileType(new String[] {
 			"tmp", "temp", "part", "partial", "dtapart", "ds_store", "!ut",
 			"!bt", "bc!", "fb!", "jc!", "ob!"
 		}) {
