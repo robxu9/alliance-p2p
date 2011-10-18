@@ -100,7 +100,7 @@ public enum FileType {
 	})),
 	
 	SUBTITLE("subtitle", 12, new ExtensionFileType(new String[] {
-			"idx", "sub", "srt", "ass", "ssa"
+			"srt", "idx", "sub", "ass", "ssa", "smi", "sami", "usf", "ssf"
 	})),
 	
 	SCRIPT("script", 13, new ExtensionFileType(new String[] {
@@ -114,7 +114,7 @@ public enum FileType {
 	})),
 	
 	TORRENT("torrent", 15, new ExtensionFileType(new String[] {
-			"torrent"
+			"torrent", "alliance"
 	})),
 	
 	TEMPORARY("temporary", 16, new ExtensionFileType(new String[] {
