@@ -123,7 +123,11 @@ public enum UserCommands {
 	},
 	
 	SEARCH("search") {
-		//TODO have this clear all current results before searching
+		/**TODO have this clear all current results before searching
+			Cannot continue work on this until the images for file types are corrected
+			I'm receiving and error that directs to "SearchMDIWindow.java:453"
+			*/
+		
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
 				try {
@@ -131,7 +135,6 @@ public enum UserCommands {
 					searchWindow.search(query);
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return "";			
