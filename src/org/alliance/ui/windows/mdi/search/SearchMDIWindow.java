@@ -68,7 +68,7 @@ public class SearchMDIWindow extends AllianceMDIWindow {
         this.ui = ui;
         Language.translateXUIElements(getClass(), xui.getXUIComponents());
 
-        fileTypeIcons = new ImageIcon[8];
+        fileTypeIcons = new ImageIcon[FileType.values().length];
         for (int i = 0; i < fileTypeIcons.length; i++) {
             fileTypeIcons[i] = new ImageIcon(ui.getRl().getResource("gfx/filetypes/" + i + ".png"));
         }
