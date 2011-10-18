@@ -1,6 +1,9 @@
 package org.alliance.core.settings;
 
 import java.util.Random;
+import java.util.TreeSet;
+
+import org.alliance.core.node.Friend;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,6 +18,7 @@ public class My extends SettingClass {
     private Integer cguid = 0; //this is a checksum of the invitations property, disguised so that script kiddies won't find it
     private Integer invitations = 0; //every time this user completes an invitation successfully he gets a point
     private String status = "";
+    private TreeSet<Friend> ignoreList;
 
     public My() {
     }
@@ -85,4 +89,20 @@ public class My extends SettingClass {
         this.invitations = invitations;
         cguid = (invitations ^ 234427) * 13;
     }
+    
+	public void addIgnore(Friend friend) {
+		ignoreList.add(friend);
+	}
+	
+	public boolean removeIgnore(Friend friend){
+		if(ignoreList.contains(friend)){
+		ignoreList.remove(friend);
+		return true;
+		}
+		return false;
+	}
+	
+	public TreeSet getIgnoreList(){
+		return ignoreList;
+	}
 }

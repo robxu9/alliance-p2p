@@ -384,8 +384,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
-		if (cl.from.equals(SYSTEM_USER) || isAdminCommand(cl)) {
+		if (cl.from.equals(SYSTEM_USER)) {
+			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
+		}
+		else if (isAdminCommand(cl)){
 			cl.from = SYSTEM_USER;
+			cl.message = cl.message.substring(6);
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
 		}
 		else if (isUserAction(cl)){
@@ -412,7 +416,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	//Can only have Admin Color if it was verified as "True Admin" as in creatChatLine();
 		return (cl.color == ADMIN_COLOR && cl.message.startsWith("*ADMIN: "));
 	}
-
+    
 	private boolean isUserAction(ChatLine cl) {
 		return cl.message.startsWith("*" + cl.from);
 	}
