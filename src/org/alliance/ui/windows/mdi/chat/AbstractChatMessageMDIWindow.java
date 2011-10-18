@@ -3,6 +3,7 @@ package org.alliance.ui.windows.mdi.chat;
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
+import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
 import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;
@@ -370,6 +371,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// date
 		s.append("<font color=\"" + toHexColor(DATE_COLOR) + "\">");
 		DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		if(isIgnored(cl.from)){
+			return "";
+		}
 		if (previousChatLine != null &&
 				f.format(new Date(cl.tick)).equals(
 				f.format(new Date(previousChatLine.tick)))) {
@@ -412,7 +416,15 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		return s.toString();
 	}
 
-    private boolean isAdminCommand(ChatLine cl) {
+    private boolean isIgnored(String name) {
+    	Friend friend = ui.getCore().getFriendManager().getFriend(name);
+    	if(friend != null){
+		return ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
+    	}
+    	return false;
+	}
+
+	private boolean isAdminCommand(ChatLine cl) {
     	//Can only have Admin Color if it was verified as "True Admin" as in creatChatLine();
 		return (cl.color == ADMIN_COLOR && cl.message.startsWith("*ADMIN: "));
 	}
