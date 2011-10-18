@@ -20,7 +20,9 @@ public enum UserCommands {
 			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
 			for (UserCommands cmd : UserCommands.values()){
 				//Don't display Admin commands
-				if(!cmd.getName().equals("system")||!cmd.getName().equals("masspm")){
+				if(!cmd.getName().equals("system")  
+				&& !cmd.getName().equals("masspm")
+				&& !cmd.getName().equals("ban")){
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 				}
 			}
@@ -123,11 +125,7 @@ public enum UserCommands {
 	},
 	
 	SEARCH("search") {
-		/**TODO have this clear all current results before searching
-			Cannot continue work on this until the images for file types are corrected
-			I'm receiving and error that directs to "SearchMDIWindow.java:453"
-			*/
-		
+		//TODO have this clear all current results before searching
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
 				try {
@@ -141,7 +139,7 @@ public enum UserCommands {
 		}
 	},
 	
-	MESSAGE("msg") {
+	MESSAGE("msg") {	
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			String message = null;
@@ -167,13 +165,15 @@ public enum UserCommands {
 			return "";
 		}
 	},
+	
 	ME("me") {		
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {		
-		//Added this so people who haven't updated will see "USER_ACTION" and be able to understand		
+		//The "USER_ACTION" is used to verify it's a User action before being sent to other users.	
 			String action = "USER_ACTION " + args.trim();		
 			return action;		
 		}		
 	},
+	
 	EXIT("exit") {
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
@@ -182,6 +182,7 @@ public enum UserCommands {
 			return "";
 		}
 	},
+	
 	SYSTEM("system"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
@@ -192,6 +193,7 @@ public enum UserCommands {
 		}
 
 	},
+	
 	MASSPM("masspm"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
@@ -210,7 +212,52 @@ public enum UserCommands {
 			return "";
 		}
 		
+	},
+	
+	IGNORE("ignore"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else {
+				ui.getCore().getSettings().getMy().addIgnore(friend);
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "added_ignore", name));
+            }
+			return "";
+		}
+		
+	},
+	UNIGNORE("unignore"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (name.equals("*")){
+				for(int i = 0; i < ui.getCore().getSettings().getMy().getIgnoreList().size(); i++){
+					ui.getCore().getSettings().getMy().removeIgnore(friend);
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "remove_ignore", name));
+				}
+				
+			}
+			else if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else{
+				if(!ui.getCore().getSettings().getMy().removeIgnore(friend)){
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "invaild_unignore", name));
+				}
+				else{
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "remove_ignore", name));
+				}
+			}
+			return "";
+		}
+	
 	};
+	
+	
+	
 	
 	/**
 	 * TODO:
