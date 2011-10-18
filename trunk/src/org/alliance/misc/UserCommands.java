@@ -11,6 +11,7 @@ import org.alliance.ui.UISubsystem;
 import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.chat.PrivateChatMessageMDIWindow;
+import org.alliance.ui.windows.mdi.search.SearchMDIWindow;
 
 public enum UserCommands {
 	HELP("help") {
@@ -19,7 +20,7 @@ public enum UserCommands {
 			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
 			for (UserCommands cmd : UserCommands.values()){
 				//Don't display Admin commands
-				if(!cmd.getName().equals("system")){
+				if(!cmd.getName().equals("system")||!cmd.getName().equals("masspm")){
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 				}
 			}
@@ -122,17 +123,18 @@ public enum UserCommands {
 	},
 	
 	SEARCH("search") {
+		//TODO have this clear all current results before searching
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
-			try {
-				ui.getCore().getFriendManager().getNetMan().sendSearch(query, FileType.EVERYTHING);
-				//TODO Have this moved to front instead of displaying this message
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-			return "";
+				try {
+					SearchMDIWindow searchWindow = new SearchMDIWindow(ui);
+					searchWindow.search(query);
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return "";			
 		}
 	},
 	
@@ -186,6 +188,25 @@ public enum UserCommands {
 			return "";
 		}
 
+	},
+	MASSPM("masspm"){
+		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
+				String message = args.trim();
+				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+				for (Friend friend : friends) {
+					try {
+						new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage("*ADMIN: " + message);
+					} catch (Exception e) {
+						chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
+						e.printStackTrace();
+					}
+				}
+			}
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "admin_invalid"));
+			return "";
+		}
+		
 	};
 	
 	/**

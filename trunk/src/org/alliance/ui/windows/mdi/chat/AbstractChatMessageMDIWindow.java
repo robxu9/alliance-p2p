@@ -370,7 +370,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// date
 		s.append("<font color=\"" + toHexColor(DATE_COLOR) + "\">");
 		DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		boolean adminCommand = isAdminCommand(cl);
 		if (previousChatLine != null &&
 				f.format(new Date(cl.tick)).equals(
 				f.format(new Date(previousChatLine.tick)))) {
@@ -385,12 +384,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
-		if (cl.from.equals(SYSTEM_USER)) {
-			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">* ");
-		}
-		else if (adminCommand){
-			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\">" + "<i><b>******");
-			cl.message = cl.message.substring(8) + "******";
+		if (cl.from.equals(SYSTEM_USER) || isAdminCommand(cl)) {
+			cl.from = SYSTEM_USER;
+			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
 		}
 		else if (isUserAction(cl)){
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + "<i>");
@@ -405,11 +401,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		s.append(cl.message + "</font><br>");
 		
-		if(isUserAction(cl)){
+		if(cl.from.equals(SYSTEM_USER) || isUserAction(cl)){
 			s.append("</i>");
-		}
-		else if(adminCommand){
-			s.append("</b></i>");
 		}
 		previousChatLine = cl;
 		return s.toString();
