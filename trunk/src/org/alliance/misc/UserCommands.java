@@ -2,13 +2,12 @@ package org.alliance.misc;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.alliance.core.Language;
-import org.alliance.core.file.filedatabase.FileType;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
 import org.alliance.ui.UISubsystem;
-import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.chat.PrivateChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.search.SearchMDIWindow;
@@ -217,12 +216,20 @@ public enum UserCommands {
 	IGNORE("ignore"){
 		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
+			if(name.equals("*")){
+				StringBuilder s = new StringBuilder();
+				Iterator<Integer> ignoreList = ui.getCore().getSettings().getMy().getIgnoreList().iterator();
+				s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelist") + "</b>");
+				while(ignoreList.hasNext()){
+				s.append("<br>&nbsp;&bull; " + ui.getCore().getFriendManager().getFriend(ignoreList.next()) + " &mdash; ");
+				}
+			}
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
 			if (friend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
-				ui.getCore().getSettings().getMy().addIgnore(friend);
+				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "added_ignore", name));
             }
 			return "";
@@ -235,7 +242,7 @@ public enum UserCommands {
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
 			if (name.equals("*")){
 				for(int i = 0; i < ui.getCore().getSettings().getMy().getIgnoreList().size(); i++){
-					ui.getCore().getSettings().getMy().removeIgnore(friend);
+					ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid());
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "remove_ignore", name));
 				}
 				
@@ -244,7 +251,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else{
-				if(!ui.getCore().getSettings().getMy().removeIgnore(friend)){
+				if(!ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid())){
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "invaild_unignore", name));
 				}
 				else{
