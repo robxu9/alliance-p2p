@@ -173,7 +173,7 @@ public enum UserCommands {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			for (Friend friend : friends) {
 				try {
-					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage("* ADMIN: " + message);
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(chat.ADMIN_COMMAND + message);
 				}
 				catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
@@ -192,8 +192,38 @@ public enum UserCommands {
 			// This won't be possible on 1.2.2, so the only option would be
 			// something like:
 			// Spiderman: * SYSTEM: message goes here
-			return "* ADMIN: " + args.trim();
+			return chat.ADMIN_COMMAND + args.trim();
 		}
+	},
+	
+	BAN("ban", true){
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else{
+				return chat.BAN_COMMAND + name;
+			}
+			return "";
+		}
+		
+	},
+	
+	SILENCE("silence", true){
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else{
+				return chat.SILENCE_COMMAND + name;
+			}
+			return "";
+		}
+		
 	},
 	
 	ME("me") {		
@@ -231,6 +261,10 @@ public enum UserCommands {
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
 			if (friend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else if(friend.isAdmin()){
+				//Cannot ignore an Admin
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "ignore_admin", name));
 			}
 			else {
 				// TODO why does this corrupt the settings?
@@ -279,7 +313,7 @@ public enum UserCommands {
 	
 	/**
 	 * TODO:
-	 * ban USER - bans USER. Admin-only.
+	 * unsilence USER - unsilences a user
 	 * whois USER - Shows USER's tooltip data in chat, like the help info. (NEED TO BUILD THIS POP-UP)
 	 * We need a mechanism to send system messages, and to reserve the nickname
 	 * "Alliance". Also system messages don't yet get saved to the chat history.

@@ -53,6 +53,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected static final Color SYSTEM_COLOR = new Color(0x708090); // slate gray
     protected static final Color ADMIN_COLOR = new Color(0xD81818); // red
     protected static final Color OWN_TEXT_COLOR = new Color(0x000000); // black
+    public static final String BAN_COMMAND = "* BAN: ", ADMIN_COMMAND = "* SYSTEM: ", SILENCE_COMMAND = "* SILENCE: ";
     protected static final Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -395,8 +396,28 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		else if (isAdminCommand(cl)){
 			cl.from = SYSTEM_USER;
-			cl.message = cl.message.substring(6);
+			cl.message = cl.message.substring(ADMIN_COMMAND.length());
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
+			if(cl.message.startsWith(BAN_COMMAND)){
+				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
+				if (friend != null) {
+                     ui.getCore().getFriendManager().permanentlyRemove(friend);
+                     cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
+                 }
+				else{
+					return "";
+				}
+			}
+			else if(cl.message.startsWith(SILENCE_COMMAND)){
+				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
+				if (friend != null) {
+					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+					cl.message = Language.getLocalizedString(getClass(), "friend_silenced", name);
+                 }
+				else{
+					return "";
+				}
+			}
 		}
 		else if (isUserAction(cl)){
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + "<i>");
@@ -427,8 +448,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	}
 
 	private boolean isAdminCommand(ChatLine cl) {
-    	//Can only have Admin Color if it was verified as "True Admin" as in creatChatLine();
-		return (cl.color == ADMIN_COLOR && cl.message.startsWith("*ADMIN: "));
+    	//Can only have Admin Color if it was verified as "True Admin" as in createChatLine();
+		return (cl.color == ADMIN_COLOR && cl.message.startsWith(ADMIN_COMMAND));
 	}
     
 	private boolean isUserAction(ChatLine cl) {
