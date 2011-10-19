@@ -124,12 +124,11 @@ public enum UserCommands {
 	},
 	
 	SEARCH("search") {
-		//TODO have this clear all current results before searching
-		// also switch to the search tab
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
 			try {
 				SearchMDIWindow searchWindow = new SearchMDIWindow(ui);
+				searchWindow.refresh(ui);
 				searchWindow.search(query);
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
 			}
@@ -329,9 +328,6 @@ public enum UserCommands {
 	/**
 	 * TODO:
 	 * whois USER - Shows USER's tooltip data in chat, like the help info. (NEED TO BUILD THIS POP-UP)
-	 * We need a mechanism to send system messages, and to reserve the nickname
-	 * "Alliance". Also system messages don't yet get saved to the chat history.
-	 * (I don't think local system messages need to be saved, its more of a local notification)
 	 */
 	
 	private final String name;
