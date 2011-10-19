@@ -3,6 +3,7 @@ package org.alliance.misc;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
@@ -206,10 +207,16 @@ public enum UserCommands {
 	IGNORELIST("ignorelist") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			StringBuilder s = new StringBuilder();
-			s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelist") + "</b>");
-			for (Integer guid : ui.getCore().getSettings().getMy().getIgnoreList()) {
-				Friend friend = ui.getCore().getFriendManager().getFriend(guid);
-				s.append("<br>&nbsp;&bull; " + friend.getNickname());
+			Set<Integer> ignoreList = ui.getCore().getSettings().getMy().getIgnoreList();
+			if (ignoreList.isEmpty()) {
+				s.append(Language.getLocalizedString(getClass(), "ignorelistempty"));
+			}
+			else {
+				s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelistabout") + "</b>");
+				for (Integer guid : ignoreList) {
+					Friend friend = ui.getCore().getFriendManager().getFriend(guid);
+					s.append("<br>&nbsp;&bull; " + friend.getNickname());
+				}
 			}
 			chat.addSystemMessage(s.toString());
 			return "";
