@@ -459,7 +459,7 @@ public class FriendManager extends Manager {
 	public boolean isAdmin(String name) {
 		if(isAdminNick(name)){
 			if(name.equals(core.getFriendManager().getMe().getNickname())){
-				return core.getFriendManager().getMe().iAmAdmin();
+				return core.getFriendManager().getMe().isAdmin();
 			}
 		Friend f = getFriend(name);
 		if(f == null){

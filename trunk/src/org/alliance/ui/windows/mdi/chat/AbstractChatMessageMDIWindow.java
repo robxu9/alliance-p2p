@@ -43,15 +43,17 @@ import javax.swing.event.HyperlinkListener;
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
 	private static final long serialVersionUID = -562921870993210155L;
 	
-    protected final static DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    protected final static int MAX_NAME_DISPLAY_LENGTH = 20;
-    protected final static DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
-    protected final static String SYSTEM_USER = "Alliance";
-    protected final static Color DATE_COLOR = new Color(0x9F9F9F); // light gray
-    protected final static Color SYSTEM_COLOR = new Color(0x708090); // slate gray
-    protected final static Color ADMIN_COLOR = new Color(0xD81818); // red
-    protected final static Color OWN_TEXT_COLOR = new Color(0x000000); // black
-    protected final static Color COLORS[] = {
+	public static final String USER_ACTION = "/me ";
+	
+    protected static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    protected static final int MAX_NAME_DISPLAY_LENGTH = 20;
+    protected static final DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
+    protected static final String SYSTEM_USER = "Alliance";
+    protected static final Color DATE_COLOR = new Color(0x9F9F9F); // light gray
+    protected static final Color SYSTEM_COLOR = new Color(0x708090); // slate gray
+    protected static final Color ADMIN_COLOR = new Color(0xD81818); // red
+    protected static final Color OWN_TEXT_COLOR = new Color(0x000000); // black
+    protected static final Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
     	new Color(0xB88828), // tan
@@ -209,8 +211,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	String message = chat.getText();
     	message = UserCommands.handleCommand(message, ui, this);
     	if (message != null && !message.trim().equals("")) {
-    		if(message.startsWith("USER_ACTION ")){
-    			message = "*" + ui.getCore().getFriendManager().getMe().getNickname() + message.substring(11);
+    		if (message.startsWith(USER_ACTION)) {
+    			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(USER_ACTION.length()).trim(); 
     		}
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
