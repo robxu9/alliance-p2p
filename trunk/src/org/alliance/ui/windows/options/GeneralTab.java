@@ -225,6 +225,7 @@ public class GeneralTab extends XUIDialog implements TabHelper {
             if (status.trim().isEmpty()) {
                 return null;
             }
+            ui.getCore().getSettings().getMy().setStatus(status);
             ui.getCore().getFriendManager().getMe().setStatus(status);
             if (ui.getNodeTreeModel(false) != null) {
                 ui.getNodeTreeModel(false).signalNodeChanged(
