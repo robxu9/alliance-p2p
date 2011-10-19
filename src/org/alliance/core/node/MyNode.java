@@ -17,13 +17,13 @@ public class MyNode extends Node {
 	public static final int MAX_NICKNAME_LENGTH = 24;
 
     private CoreSubsystem core;
-    private String ADMIN_FILE; 
+    private String adminFile; 
 
     public MyNode(String nickname, int guid, CoreSubsystem core) {
         super(nickname, guid);
         this.core = core;
-        ADMIN_FILE = core.getSettings().getInternal().getUserDirectory()+("admin");;
-        AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), ADMIN_FILE);
+        adminFile = core.getSettings().getInternal().getUserDirectory() + "admin";
+        AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), adminFile);
     	this.adminCode = a.generateCode();
     }
 
@@ -94,12 +94,13 @@ public class MyNode extends Node {
     		&& (testAdmin(name) || !core.getFriendManager().isAdminNick(name))
     		&& !core.getFriendManager().isSystem(name);	
     }
+    
     private boolean testAdmin(String name) {
-		AdminChecker test = new AdminChecker(name, ADMIN_FILE);
-			return new AdminChecker(name, test.generateCode()).isTrueAdmin();
+		AdminChecker test = new AdminChecker(name, adminFile);
+		return new AdminChecker(name, test.generateCode()).isTrueAdmin();
 	}
 
-	public int getAdminCode(){
+	public int getAdminCode() {
     	return adminCode;
     }
 	
