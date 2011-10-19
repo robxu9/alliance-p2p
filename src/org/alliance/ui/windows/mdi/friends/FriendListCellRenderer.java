@@ -116,7 +116,13 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             }
             nodeString += " (" + TextUtils.formatByteSize(n.getShareSize()) + ")";
             String status = n.getStatus();
+            if(n.getGuid() == ui.getCore().getSettings().getMy().getGuid()){
+            	status = ui.getCore().getSettings().getMy().getStatus();
+            }
             if (status != null && status.length() > 0) {
+            	if(status.length() > 20){
+            		status = status.substring(0, 20) + "...";
+            	}
             	nodeString += ": " + status;
             }
             renderer.setText(nodeString);
