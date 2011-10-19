@@ -19,6 +19,7 @@ public class My extends SettingClass {
     private Integer invitations = 0; //every time this user completes an invitation successfully he gets a point
     private String status = "";
     private TreeSet<Integer> ignoreList = new TreeSet<Integer>();
+    private boolean silenced = false;
 
     public My() {
     }
@@ -104,5 +105,13 @@ public class My extends SettingClass {
 	
 	public void setIgnoreList(TreeSet<Integer> ignoreList) {
 		this.ignoreList = ignoreList;
+	}
+	
+	public boolean isSilenced(){
+		return silenced;
+	}
+	
+	public void setSilenced(boolean silence){
+		this.silenced = silence;
 	}
 }

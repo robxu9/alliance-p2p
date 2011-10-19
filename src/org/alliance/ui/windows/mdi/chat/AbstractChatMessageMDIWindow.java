@@ -215,8 +215,13 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     		if (message.startsWith(USER_ACTION)) {
     			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(USER_ACTION.length()).trim(); 
     		}
+    		if(!ui.getCore().getSettings().getMy().isSilenced()){
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
+    		}
+    		else{
+    			addSystemMessage(Language.getLocalizedString(getClass(), "silenced"));
+    		}
     	}
         chat.setText("");
     }
@@ -409,14 +414,19 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 				}
 			}
 			else if(cl.message.startsWith(SILENCE_COMMAND)){
-				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
-				if (friend != null) {
-					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-					cl.message = Language.getLocalizedString(getClass(), "friend_silenced", name);
-                 }
-				else{
-					return "";
+				if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
+					ui.getCore().getSettings().getMy().setSilenced(true);
 				}
+				else {
+					Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
+					if(friend != null){
+					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+					cl.message = Language.getLocalizedString(getClass(), "friend_silenced", friend.getNickname());
+					}
+					else{
+						return "";
+					}
+                 }
 			}
 		}
 		else if (isUserAction(cl)){
