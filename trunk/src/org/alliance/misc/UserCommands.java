@@ -226,6 +226,21 @@ public enum UserCommands {
 		
 	},
 	
+	UNSILENCE("unsilence", true){
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else{
+				return chat.UNSILENCE_COMMAND + name;
+			}
+			return "";
+		}
+		
+	},
+	
 	ME("me") {		
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {		
 			// This is basically a redundant command, since the message already
@@ -313,7 +328,6 @@ public enum UserCommands {
 	
 	/**
 	 * TODO:
-	 * unsilence USER - unsilences a user
 	 * whois USER - Shows USER's tooltip data in chat, like the help info. (NEED TO BUILD THIS POP-UP)
 	 * We need a mechanism to send system messages, and to reserve the nickname
 	 * "Alliance". Also system messages don't yet get saved to the chat history.

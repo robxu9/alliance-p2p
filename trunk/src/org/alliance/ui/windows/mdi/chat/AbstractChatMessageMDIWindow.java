@@ -53,7 +53,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     protected static final Color SYSTEM_COLOR = new Color(0x708090); // slate gray
     protected static final Color ADMIN_COLOR = new Color(0xD81818); // red
     protected static final Color OWN_TEXT_COLOR = new Color(0x000000); // black
-    public static final String BAN_COMMAND = "* BAN: ", ADMIN_COMMAND = "* SYSTEM: ", SILENCE_COMMAND = "* SILENCE: ";
+    public static final String BAN_COMMAND = "* BAN: ", ADMIN_COMMAND = "* SYSTEM: ", SILENCE_COMMAND = "* SILENCE: ", UNSILENCE_COMMAND = "* UNSILENCE: ";
     protected static final Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -215,13 +215,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     		if (message.startsWith(USER_ACTION)) {
     			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(USER_ACTION.length()).trim(); 
     		}
-    		if(!ui.getCore().getSettings().getMy().isSilenced()){
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
-    		}
-    		else{
-    			addSystemMessage(Language.getLocalizedString(getClass(), "silenced"));
-    		}
     	}
         chat.setText("");
     }
@@ -396,37 +391,13 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
-		if (cl.from.equals(SYSTEM_USER)) {
+		if (cl.from.equals(SYSTEM_USER) || isAdminCommand(cl)) {
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
-		}
-		else if (isAdminCommand(cl)){
-			cl.from = SYSTEM_USER;
-			cl.message = cl.message.substring(ADMIN_COMMAND.length());
-			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
-			if(cl.message.startsWith(BAN_COMMAND)){
-				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
-				if (friend != null) {
-                     ui.getCore().getFriendManager().permanentlyRemove(friend);
-                     cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
-                 }
-				else{
+			if(isAdminCommand(cl)){
+				cl = handleAdminCommand(cl);
+				if(cl == null){
 					return "";
 				}
-			}
-			else if(cl.message.startsWith(SILENCE_COMMAND)){
-				if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
-					ui.getCore().getSettings().getMy().setSilenced(true);
-				}
-				else {
-					Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
-					if(friend != null){
-					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-					cl.message = Language.getLocalizedString(getClass(), "friend_silenced", friend.getNickname());
-					}
-					else{
-						return "";
-					}
-                 }
 			}
 		}
 		else if (isUserAction(cl)){
@@ -460,6 +431,59 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	private boolean isAdminCommand(ChatLine cl) {
     	//Can only have Admin Color if it was verified as "True Admin" as in createChatLine();
 		return (cl.color == ADMIN_COLOR && cl.message.startsWith(ADMIN_COMMAND));
+	}
+	
+	private ChatLine handleAdminCommand(ChatLine cl){
+		cl.from = SYSTEM_USER;
+		cl.message = cl.message.substring(ADMIN_COMMAND.length());
+		if(cl.message.startsWith(BAN_COMMAND)){
+			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
+				cl.message = Language.getLocalizedString(getClass(), "banned");
+			}
+			else{
+			Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
+				if (friend != null) {
+                 ui.getCore().getFriendManager().permanentlyRemove(friend);
+                 cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
+				}
+				else{
+					return null;
+				}
+			}
+		}
+		else if(cl.message.startsWith(SILENCE_COMMAND)){
+			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
+				ui.getCore().getSettings().getMy().setSilenced(true);
+				cl.message = Language.getLocalizedString(getClass(), "silenced");
+			}
+			else {
+				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(SILENCE_COMMAND.length()).trim());
+				if(friend != null){
+				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+				cl.message = Language.getLocalizedString(getClass(), "friend_silenced", friend.getNickname());
+				}
+				else{
+					return null;
+				}
+             }
+		}
+		else if(cl.message.startsWith(UNSILENCE_COMMAND)){
+			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(UNSILENCE_COMMAND.length()).trim())){
+				ui.getCore().getSettings().getMy().setSilenced(false);
+				cl.message = Language.getLocalizedString(getClass(), "unsilenced");
+			}
+			else {
+				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(UNSILENCE_COMMAND.length()).trim());
+				if(friend != null){
+				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+				cl.message = Language.getLocalizedString(getClass(), "friend_unsilenced", friend.getNickname());
+				}
+				else{
+					return null;
+				}
+             }
+		}
+		return cl;
 	}
     
 	private boolean isUserAction(ChatLine cl) {

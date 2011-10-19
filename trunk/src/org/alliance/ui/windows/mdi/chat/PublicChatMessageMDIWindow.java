@@ -27,7 +27,9 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
 
     @Override
     public void send(final String text) throws Exception {
-        if (text == null || text.trim().length() == 0) {
+    //Cannot public chat if silenced
+    if(!ui.getCore().getSettings().getMy().isSilenced()){
+    	if (text == null || text.trim().length() == 0) {
             return;
         }
         ui.getCore().invokeLater(new Runnable() {
@@ -45,6 +47,10 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
         });
         chat.setText("");
         ui.getMainWindow().publicChatMessage(ui.getCore().getFriendManager().getMe().getGuid(), text, System.currentTimeMillis(), false);
+    }
+    else{
+		addSystemMessage(Language.getLocalizedString(getClass(), "silenced"));
+	}
     }
 
     @Override
