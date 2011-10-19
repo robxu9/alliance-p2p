@@ -90,23 +90,19 @@ public class My extends SettingClass {
         cguid = (invitations ^ 234427) * 13;
     }
     
-	public void addIgnore(int GUID) {
-		ignoreList.add(GUID);
+	public void addIgnore(int guid) {
+		ignoreList.add(guid);
 	}
 	
-	public boolean removeIgnore(int i){
-		if(ignoreList.contains(i)){
-		ignoreList.remove(i);
-		return true;
-		}
-		return false;
+	public boolean removeIgnore(int guid) {
+		return ignoreList.remove(guid);
 	}
 	
-	public TreeSet<Integer> getIgnoreList(){
+	public TreeSet<Integer> getIgnoreList() {
 		return ignoreList;
 	}
 	
-	public void setIgnoreList(TreeSet<Integer> ignoreList){
+	public void setIgnoreList(TreeSet<Integer> ignoreList) {
 		this.ignoreList = ignoreList;
 	}
 }

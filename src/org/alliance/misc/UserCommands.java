@@ -14,16 +14,13 @@ import org.alliance.ui.windows.mdi.search.SearchMDIWindow;
 
 public enum UserCommands {
 	HELP("help") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			StringBuilder s = new StringBuilder();
 			s.append("<b>" + Language.getLocalizedString(getClass(), "helpabout") + "</b>");
-			for (UserCommands cmd : UserCommands.values()){
-				//Don't display Admin commands
-				if(!cmd.getName().equals("system")  
-				&& !cmd.getName().equals("masspm")
-				&& !cmd.getName().equals("ban")){
+			for (UserCommands cmd : UserCommands.values()) {
+				if (cmd.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin())
+					continue;
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
-				}
 			}
 			chat.addSystemMessage(s.toString());
 			return "";
@@ -31,7 +28,7 @@ public enum UserCommands {
 	},
 	
 	NICK("nick") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String nickname = args.trim();
 			if (ui.getCore().getFriendManager().getMe().canNickname(nickname)){
 				ui.getCore().getSettings().getMy().setNickname(nickname);
@@ -53,7 +50,7 @@ public enum UserCommands {
 	STATUS("status") {
 		private static final int MAX_STATUS_LENGTH = 140;
 	
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String status = args.trim();
 			if (status.length() <= MAX_STATUS_LENGTH) {
 				ui.getCore().getSettings().getMy().setStatus(status);
@@ -67,14 +64,14 @@ public enum UserCommands {
 	},
 	
 	CLEAR("clear") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.chatClear();
 			return "";
 		}
 	},
 	
 	CLEARLOG("clearlog") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.chatClear();
 			ui.getCore().getPublicChatHistory().clearHistory();
 			return "";
@@ -82,9 +79,10 @@ public enum UserCommands {
 	},
 	
 	RECONNECT("reconnect") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
-			if (name.equals("*")) { // reconnect to all friends
+			if (name.equals("")) { // reconnect to all friends
+				// don't use * to reconnect to all, since someone could be named *
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting_all"));
 				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 				for (Friend friend : friends) {
@@ -116,7 +114,7 @@ public enum UserCommands {
 	},
 	
 	REHASH("rehash") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			ui.getCore().getShareManager().getShareScanner().startScan(true);
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "rehashing"));
 			return "";
@@ -125,24 +123,25 @@ public enum UserCommands {
 	
 	SEARCH("search") {
 		//TODO have this clear all current results before searching
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
-				try {
-					SearchMDIWindow searchWindow = new SearchMDIWindow(ui);
-					searchWindow.search(query);
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return "";			
+			try {
+				SearchMDIWindow searchWindow = new SearchMDIWindow(ui);
+				searchWindow.search(query);
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return "";			
 		}
 	},
 	
 	MESSAGE("msg") {	
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			String message = null;
-			int split = name.indexOf(" ");
+			int split = name.indexOf(">"); // > is not allowed in usernames
 			if (split > -1) {
 				message = name.substring(split+1).trim();
 				name = name.substring(0, split).trim();
@@ -165,109 +164,113 @@ public enum UserCommands {
 		}
 	},
 	
+	MESSAGEALL("msgall", true) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String message = args.trim();
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				try {
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage("* ADMIN: " + message);
+				}
+				catch (Exception e) {
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
+					e.printStackTrace();
+				}
+			}
+			return "";
+		}
+	},
+	
+	SYSTEM("system", true) {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			// On 1.3.0, system messages should be displayed with a * instead of
+			// a username, and should be in the system color. Like:
+			// * message goes here
+			// This won't be possible on 1.2.2, so the only option would be
+			// something like:
+			// Spiderman: * SYSTEM: message goes here
+			return "* ADMIN: " + args.trim();
+		}
+	},
+	
 	ME("me") {		
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {		
-		//The "USER_ACTION" is used to verify it's a User action before being sent to other users.	
-			String action = "USER_ACTION " + args.trim();		
-			return action;		
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {		
+			// This is basically a redundant command, since the message already
+			// started with /me. What's special is that 1.3.0 clients will render
+			// such messages as user actions, so "/me is waiting" becomes:
+			// * <%USERNAME%> is waiting
+			return AbstractChatMessageMDIWindow.USER_ACTION + args.trim();
 		}		
 	},
 	
-	EXIT("exit") {
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
-			ui.getCore().shutdown();
-	        System.exit(0);
-			return "";
-		}
-	},
-	
-	SYSTEM("system"){
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
-				return "*ADMIN: " + args.trim();
+	IGNORELIST("ignorelist") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			StringBuilder s = new StringBuilder();
+			s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelist") + "</b>");
+			for (Integer guid : ui.getCore().getSettings().getMy().getIgnoreList()) {
+				Friend friend = ui.getCore().getFriendManager().getFriend(guid);
+				s.append("<br>&nbsp;&bull; " + friend.getNickname());
 			}
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "admin_invalid"));
+			chat.addSystemMessage(s.toString());
 			return "";
 		}
-
 	},
 	
-	MASSPM("masspm"){
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			if(ui.getCore().getFriendManager().getMe().iAmAdmin()){
-				String message = args.trim();
-				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
-				for (Friend friend : friends) {
-					try {
-						new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage("*ADMIN: " + message);
-					} catch (Exception e) {
-						chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
-						e.printStackTrace();
-					}
-				}
-			}
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "admin_invalid"));
-			return "";
-		}
-		
-	},
-	
-	IGNORE("ignore"){
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+	IGNORE("ignore") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
-			if(name.equals("*")){
-				StringBuilder s = new StringBuilder();
-				Iterator<Integer> ignoreList = ui.getCore().getSettings().getMy().getIgnoreList().iterator();
-				s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelist") + "</b>");
-				while(ignoreList.hasNext()){
-				s.append("<br>&nbsp;&bull; " + ui.getCore().getFriendManager().getFriend(ignoreList.next()) + " &mdash; ");
-				}
-			}
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
 			if (friend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
+				// TODO why does this corrupt the settings?
 				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "added_ignore", name));
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "ignored", name));
             }
 			return "";
 		}
-		
 	},
-	UNIGNORE("unignore"){
-		public String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+	
+	UNIGNORE("unignore") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
-			if (name.equals("*")){
-				for(int i = 0; i < ui.getCore().getSettings().getMy().getIgnoreList().size(); i++){
-					ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid());
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "remove_ignore", name));
-				}
-				
-			}
-			else if (friend == null) {
+			if (friend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
-			else{
-				if(!ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid())){
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "invaild_unignore", name));
-				}
-				else{
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "remove_ignore", name));
-				}
+			// TODO Does this also corrupt the settings?
+			else if (!ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid())) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignore_invalid", name));
+			}
+			else {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignored", name));
 			}
 			return "";
 		}
+	},
 	
+	UNIGNOREALL("unignoreall") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			int n = ui.getCore().getSettings().getMy().getIgnoreList().size();
+			ui.getCore().getSettings().getMy().getIgnoreList().clear();
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignoredall", Integer.toString(n)));
+			return "";
+		}
+	},
+	
+	EXIT("exit") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
+			ui.getCore().shutdown();
+	        System.exit(0);
+			return "";
+		}
 	};
-	
-	
-	
 	
 	/**
 	 * TODO:
+	 * ban USER - bans USER. Admin-only.
 	 * whois USER - Shows USER's tooltip data in chat, like the help info. (NEED TO BUILD THIS POP-UP)
 	 * We need a mechanism to send system messages, and to reserve the nickname
 	 * "Alliance". Also system messages don't yet get saved to the chat history.
@@ -275,16 +278,26 @@ public enum UserCommands {
 	 */
 	
 	private final String name;
+	private final boolean adminOnly;
 	
 	private UserCommands(String name) {
+		this(name, false);
+	}
+	
+	private UserCommands(String name, boolean adminOnly) {
 		this.name = name;
+		this.adminOnly = adminOnly;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
+	public boolean isAdminOnly() {
+		return adminOnly;
+	}
+	
+	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
 	
 	public static UserCommands getCommand(String message) {
 		message = message.trim().toLowerCase();
@@ -299,6 +312,10 @@ public enum UserCommands {
 	public static String handleCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		UserCommands command = getCommand(message);
 		if (command != null) {
+			if (command.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin()) {
+				chat.addSystemMessage(Language.getLocalizedString(UserCommands.class, "admin_only"));
+				return "";
+			}
 			message = message.trim().substring(command.getName().length() + 1);
 			message = command.execute(message, ui, chat);
 		}

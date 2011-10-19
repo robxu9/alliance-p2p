@@ -102,7 +102,8 @@ public class MyNode extends Node {
 	public int getAdminCode(){
     	return adminCode;
     }
-    public boolean iAmAdmin(){
+	
+    public boolean isAdmin() {
     	AdminChecker a = new AdminChecker(nickname, adminCode);
 		return a.isTrueAdmin();
     }
