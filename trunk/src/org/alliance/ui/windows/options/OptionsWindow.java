@@ -199,7 +199,7 @@ public class OptionsWindow extends XUIDialog {
                     return false;
                 }
                 else if(value.equals("badusername")){
-                	OptionDialog.showErrorDialog(this, "Invalid Nickname! Usernames must be less than 22 characters & cannot contain spaces.");
+                	OptionDialog.showErrorDialog(this, "Invalid Nickname!");
                     return false;
                 }
                 setSettingValue(option, value);

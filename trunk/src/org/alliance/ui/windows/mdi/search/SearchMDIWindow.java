@@ -1,6 +1,7 @@
 package org.alliance.ui.windows.mdi.search;
 
 import com.stendahls.nif.ui.mdi.MDIWindow;
+import com.stendahls.nif.ui.mdi.infonodemdi.InfoNodeMDIManager;
 import com.stendahls.ui.JHtmlLabel;
 import com.stendahls.util.TextUtils;
 import org.alliance.core.Language;
@@ -618,5 +619,10 @@ public class SearchMDIWindow extends AllianceMDIWindow {
             g2.setColor(new Color(255, 255, 255, 180));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
+    }
+    public void refresh(UISubsystem ui) throws Exception{
+    	InfoNodeMDIManager m = (InfoNodeMDIManager) this.manager;
+        m.removeWindow(this, true, true);
+        m.addWindow(new SearchMDIWindow(ui));
     }
 }
