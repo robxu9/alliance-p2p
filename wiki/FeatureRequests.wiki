@@ -9,14 +9,14 @@ If you're working on a feature, claim it here so we don't duplicate work. Once y
 Things on this list are pretty major features, so no need to add them all in one update.
 
  * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot].
- * Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.
-    * Silence users from chat or ban them entirely. A banlist should get propagated to all users.
+ * ~~Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.~~
+    * ~~Silence users from chat or ban them entirely. A banlist should get propagated to all users.~~
     * ~~Send mass PMs to everyone.~~
       * ~~It looks like this was already started; look in !MessageBoard.java.~~
     * Appoint moderators who get some admin powers.
-    * Admins can ban users
-    * Silence users
-      * For the above 3 we need to create a ban/silence list for each specific user that'll save locally on their machine.
+    * ~~Admins can ban users~~
+    * ~~Silence users~~
+      * ~~For the above 3 we need to create a ban/silence list for each specific user that'll save locally on their machine.~~
  * Let clients with different encryption levels communicate (as per [http://code.google.com/p/alliancep2pbeta/issues/detail?id=6 this issue]), which would also let us easily transition to the "experimental" AES option.
  * Fix the LAN option so only on-campus people can connect; somehow COner is still connecting despite being off-campus.
  * Monitor selected users for new files
