@@ -432,7 +432,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	}
     
 	private boolean isUserAction(ChatLine cl) {
-		return cl.message.startsWith("*" + cl.from);
+		return cl.message.startsWith("* " + cl.from + " ");
 	}
 
 	protected String toHexColor(Color color) {

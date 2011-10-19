@@ -82,32 +82,33 @@ public enum UserCommands {
 	RECONNECT("reconnect") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
-			if (name.equals("")) { // reconnect to all friends
-				// don't use * to reconnect to all, since someone could be named *
-				chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting_all"));
-				Collection<Friend> friends = ui.getCore().getFriendManager().friends();
-				for (Friend friend : friends) {
-					try {
-						friend.reconnect();
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting", name));
+				try {
+					friend.reconnect();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
-			else { // reconnect to named friend
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
-				if (friend == null) {
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			return "";
+		}
+	},
+	
+	RECONNECTALL("reconnectall") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnectingall"));
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				try {
+					friend.reconnect();
 				}
-				else {
-					chat.addSystemMessage(Language.getLocalizedString(getClass(), "reconnecting", name));
-					try {
-						friend.reconnect();
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
+				catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			return "";
@@ -124,6 +125,7 @@ public enum UserCommands {
 	
 	SEARCH("search") {
 		//TODO have this clear all current results before searching
+		// also switch to the search tab
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
 			try {
