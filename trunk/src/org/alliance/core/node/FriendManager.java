@@ -45,7 +45,6 @@ public class FriendManager extends Manager {
 	
 	// obfuscated with hashCode()
 	private final static int ADMIN_USERS[] = {-410302411, 78727457, 548413920};
-	private final static int SYSTEM_USER = 1871588439;
 	
     private Settings settings;
     private FriendConnector friendConnector;
@@ -418,6 +417,10 @@ public class FriendManager extends Manager {
         }
     }
 
+    // Does this really permanently remove someone, so they can't reconnect?
+    // Even if they change their nickname or wait for you to restart or
+    // something? I'd expect banning to require a list of GUIDs to actively
+    // refuse.
     public void permanentlyRemove(Friend f) {
         try {
             if (f.isConnected()) {
@@ -456,31 +459,35 @@ public class FriendManager extends Manager {
         return nicknameWithoutLocalRename(guid);
     }
     
-	public boolean isAdmin(String name) {
-		if(isAdminNick(name)){
-			if(name.equals(core.getFriendManager().getMe().getNickname())){
-				return core.getFriendManager().getMe().isAdmin();
-			}
-		Friend f = getFriend(name);
-		if(f == null){
+	public boolean isAdmin(String nickname) {
+		if (!isAdminNickname(nickname)) {
 			return false;
 		}
-		return f.isAdmin();
+		if (nickname.equals(core.getFriendManager().getMe().getNickname())) {
+			return core.getFriendManager().getMe().isAdmin();
 		}
-		return false;
+		Friend friend = getFriend(nickname);
+		if (friend == null) {
+			return false;
+		}
+		return friend.isAdmin();
 	}
-	public boolean isAdminNick(String nick){
-		int hash = nick.hashCode();
-		for(int i = 0; i<ADMIN_USERS.length; i++){
-			if(hash == ADMIN_USERS[i]){
+	
+	public boolean isAdminNickname(String nickname) {
+		if (isSystem(nickname)) { // system user
+			return false;
+		}
+		int hash = nickname.hashCode();
+		// Java needs Arrays.contains(), not just Arrays.binarySearch()
+		for (int i = 0; i < ADMIN_USERS.length; i++) {
+			if (hash == ADMIN_USERS[i]) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	
 	public boolean isSystem(String nickname) {
-		return nickname.hashCode() == SYSTEM_USER;
+		return nickname == null;
 	}
 }

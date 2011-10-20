@@ -151,12 +151,17 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             status = f.getStatus();
             build = f.getAllianceBuildNumber();
         }
-        else if(n instanceof MyNode){
+        else if (n instanceof MyNode) {
         	status = ui.getCore().getSettings().getMy().getStatus();
         	build = Version.BUILD_NUMBER;
         }
-        if(build < 1477){
-        	return Language.getLocalizedString(getClass(), "needupgrade", name,  "v1.3.0");
+        // TODO This is temporary and for dev purposes, right? It'll become outdated
+        // as soon as people start upgrading to 1.3.0 and 1.3.1 comes out.
+        // And I like the getInfoString() tooltip.
+        // Also, status messages should appear in the list, like DC++, so you can
+        // scan it for stuff like "I'm sharing anime" or "PM for study aids".
+        if (build < 1477) {
+        	return Language.getLocalizedString(getClass(), "needupgrade", name, "v1.3.0");
         }
         
         //If greater than 70 characters break into two lines
