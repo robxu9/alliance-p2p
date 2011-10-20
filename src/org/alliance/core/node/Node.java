@@ -151,7 +151,22 @@ public abstract class Node {
     
     public String getInfoString(){
     	StringBuilder sb = new StringBuilder("<html>");
-    	 sb.append("<b>" + getNickname() + ": </b>" + getStatus() + "<br>");
+    	String status = getStatus();
+    	  if(status.length() > 70){
+          	int space = status.indexOf(" ", 70);
+          	String status1;
+          	String status2;
+          	if(space > 0){
+          	status1 = status.substring(0, space);
+          	status2 = status.substring(space);
+          	}
+          	else{
+          		status1 = status.substring(0, 70);
+              	status2 = status.substring(70);
+          	}
+          	status = status1 + "<br>" + status2;
+    	  }
+    	 sb.append("<b>" + getNickname() + ": </b><i>" + status + "</i><br>");
     	 
     	 sb.append(Language.getLocalizedString(getClass(), "share", TextUtils.formatByteSize(getShareSize()),
                  Integer.toString(getNumberOfFilesShared()))).append("<br>");
