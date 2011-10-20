@@ -120,8 +120,8 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             	status = ui.getCore().getSettings().getMy().getStatus();
             }
             if (status != null && status.length() > 0) {
-            	if(status.length() > 20){
-            		status = status.substring(0, 20) + "...";
+            	if(status.length() > 80) {
+            		status = status.substring(0, 80) + "&hellip;";
             	}
             	nodeString += ": " + status;
             }
