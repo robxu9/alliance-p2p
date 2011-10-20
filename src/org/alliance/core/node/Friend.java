@@ -2,6 +2,8 @@ package org.alliance.core.node;
 
 import com.Updater.Admin.AdminChecker;
 import com.stendahls.util.TextUtils;
+
+import org.alliance.core.Language;
 import org.alliance.core.T;
 import org.alliance.core.comm.AuthenticatedConnection;
 import org.alliance.core.comm.Connection;
@@ -463,6 +465,11 @@ public class Friend extends Node {
 
 	public void setAdminCode(int code) {
 		this.adminCode = code;
+	}
+	
+	public String getInfoString(){
+		String s = super.getInfoString();
+		return s.substring(0, s.indexOf("</html>"))+ Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(getAllianceBuildNumber())) + "</html>";
 	}
 	
 }

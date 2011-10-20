@@ -3,6 +3,8 @@ package org.alliance.ui.windows.mdi.friends;
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import com.stendahls.util.TextUtils;
+
+import org.alliance.Version;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
@@ -335,8 +337,17 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     }
 
     public void EVENT_friendinfo(ActionEvent e) {
-        	Node n = (Node) list.getSelectedValue();
-             OptionDialog.showInformationDialog(ui.getMainWindow(), n.getInfoString());
+        	if (list.getSelectedValue() instanceof MyNode){
+        		MyNode n = (MyNode) list.getSelectedValue();
+        		String s = n.getInfoString();
+        		s = s.substring(0, s.indexOf("</html>"))+ Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(Version.BUILD_NUMBER)) + "</html>";
+        		OptionDialog.showInformationDialog(ui.getMainWindow(), s);
+        	}
+        	else{
+        		Friend n = (Friend) list.getSelectedValue();
+        		OptionDialog.showInformationDialog(ui.getMainWindow(), n.getInfoString());
+        	}
+        	
     }
 
     public void EVENT_chat(ActionEvent e) throws Exception {
