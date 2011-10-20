@@ -1,6 +1,8 @@
 package org.alliance.ui.windows.mdi.friends;
 
 import com.stendahls.util.TextUtils;
+
+import org.alliance.Version;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
@@ -141,12 +143,20 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
     private String setupTooltip(Node n) {
     	  StringBuilder sb = new StringBuilder("<html>");
     	String status = "";
+    	String name = "";
+    	int build = 0;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
+            name = f.getNickname();
             status = f.getStatus();
+            build = f.getAllianceBuildNumber();
         }
         else if(n instanceof MyNode){
         	status = ui.getCore().getSettings().getMy().getStatus();
+        	build = Version.BUILD_NUMBER;
+        }
+        if(build < 1477){
+        	return Language.getLocalizedString(getClass(), "needupgrade", name,  "v1.3.0");
         }
         
         //If greater than 70 characters break into two lines
