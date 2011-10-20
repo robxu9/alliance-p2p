@@ -88,7 +88,7 @@ public enum FileType {
 	})),
 	
 	EBOOK("ebook", 9, new ExtensionFileType(new String[] {
-			"lit", "mobi", "epub"
+			"lit", "epub", "mobi", "prc", "fb2", "mbp"
 	})),
 	
 	COMIC("comic", 10, new ExtensionFileType(new String[] {
