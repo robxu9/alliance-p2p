@@ -32,12 +32,15 @@ public enum UserCommands {
 	
 	NICK("nick") {
 		// TODO: fix bug
+		// Create a "refresh" chat method, which would be used here, could this have to do with the NicknametoShowInUI method?
 		// if you change your nickname with /nick and then use /me, /me doesn't
 		// recognize the name change.
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String nickname = args.trim();
 			if (ui.getCore().getFriendManager().getMe().canNickname(nickname)) {
 				// TODO: refactor code so we don't need two separate setNickname()s
+				// Issue here is this: 
+				// Setting is what stores it to a file, while MyNode (getMe) stores it to runtime memory.
 				ui.getCore().getSettings().getMy().setNickname(nickname);
 				ui.getCore().getFriendManager().getMe().setNickname(nickname);
 			}
