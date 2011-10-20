@@ -380,6 +380,10 @@ public class Download {
             setState(State.DOWNLOADING);
         }
     }
+    
+    public void pauseDownload() {
+    	setState(State.WAITING_TO_START);
+    }
 
     public State getState() {
         return state;
