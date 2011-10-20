@@ -3,6 +3,7 @@ package org.alliance.core.comm.filetransfers;
 import org.alliance.core.CoreSubsystem;
 import org.alliance.core.Manager;
 import org.alliance.core.comm.NetworkManager;
+import org.alliance.core.comm.filetransfers.Download.State;
 import org.alliance.core.comm.rpc.GetBlockMask;
 import org.alliance.core.file.blockstorage.BlockMask;
 import org.alliance.core.file.blockstorage.BlockStorage;
@@ -432,7 +433,7 @@ public class DownloadManager extends Manager implements Runnable {
         Download download;
     }
 
-	public void pauseDownload(Download d) {
-		//TODO create a pause method.
+	public void pauseDownload(Download d) throws IOException {
+	//TODO create this method.
 	}
 }

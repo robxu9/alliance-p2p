@@ -3,6 +3,7 @@
         <popupmenu id="popup" detached="yes">
             <menuitem image="gfx/icons/cleanup.png" text="%text%" eventid="cleanup"/>
             <menuitem image="gfx/icons/delete.png" text="%text%" eventid="remove"/>
+            <menuitem image="gfx/icons/pause_download.png" text="%text%" eventid="pause"/>
             <menuitem image="gfx/icons/up.png" text="%text%" eventid="moveup"/>
             <menuitem image="gfx/icons/down.png" text="%text%" eventid="movedown"/>
             <menuitem image="gfx/icons/top.png" text="%text%" eventid="movetop"/>

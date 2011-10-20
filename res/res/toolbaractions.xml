@@ -198,6 +198,11 @@
             description="%DES%"
             toolbarimage="gfx/icons/cleanup.png"/>
         <action
+        	id="pause"
+        	name="%NAME%"
+        	description="%DES%"
+        	toolbarimage="gfx/icons/pause_download.png"/>
+        <action
             id="remove"
             name="%NAME%"
             description="%DES%"
