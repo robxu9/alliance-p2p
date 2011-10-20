@@ -152,7 +152,16 @@ public abstract class Node {
     public String getInfoString(){
     	StringBuilder sb = new StringBuilder("<html>");
 
-    	 sb.append("<b>" + getNickname() + ": </b><i>" + getStatus() + "</i><br>");
+    	 sb.append("<b>" + getNickname() + ": </b>");
+    	 if(hasNotBeenOnlineForLongTime() && getLastSeenOnlineAt() != 0){
+    		 sb.append(Language.getLocalizedString(getClass(), "seen", Long.toString((System.currentTimeMillis() - getLastSeenOnlineAt()) / 1000 / 60 / 60 / 24))).append("<br>");
+    	 }
+    	 else {
+    		 sb.append("<br>");
+    	 }
+    	 if(getStatus() != ""){
+    	 sb.append("<i><p>" + getStatus() + "</p></i><br>");
+    	 }
     	 sb.append(Language.getLocalizedString(getClass(), "share", TextUtils.formatByteSize(getShareSize()),
                  Integer.toString(getNumberOfFilesShared()))).append("<br>");
          sb.append(Language.getLocalizedString(getClass(), "ratio", calculateRatio())).append("<br>");
