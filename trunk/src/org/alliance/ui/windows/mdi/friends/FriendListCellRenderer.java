@@ -145,16 +145,12 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
     private String setupTooltip(Node n) {
     	  StringBuilder sb = new StringBuilder("<html>");
     	String status = "";
-        int build = 0;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
             status = f.getStatus();
-            build = f.getAllianceBuildNumber();
         }
         else if(n instanceof MyNode){
-        	MyNode f = (MyNode)n;
-        	status = f.getStatus();
-            build = f.getAllianceBuildNumber();
+        	status = ui.getCore().getSettings().getMy().getStatus();
         }
         
         //If greater than 70 characters break into two lines
