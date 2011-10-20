@@ -1,5 +1,23 @@
 package org.alliance.ui.windows.mdi.chat;
 
+/**
+ * TODO:
+ * I feel like this class is disorganized. Code for handling input and output
+ * messages is scattered in various methods. Filtering code to prevent HTML
+ * injection is duplicated, sometimes incompletely. It needs refactoring.
+ * After we're done implementing user commands and this file is stable,
+ * I'll try and understand how its methods call each other and how they
+ * interact with the extending classes (since this is abstract).
+ * -- Rangi
+ * P.S. This is probably overly OCD of me, but we could also run an automated
+ * code formatter on all the source files. It would get rid of irrelevant
+ * comments like the "Created by IntelliJ IDEA" below, make indentation
+ * and brace placement consistent, etc. They're the sort of things that I'm
+ * compelled to change anyway when I open a file to code in it, so might as
+ * well get a machine to do it for me. I'll hold off on that, though, because
+ * it would play hell with the SVN diffs.
+ */
+
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
@@ -45,15 +63,22 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	
 	public static final String USER_ACTION = "/me ";
 	
+	// TODO Too many similar constants should probably become an enum, which
+	// would also let us move functionality into enum methods
+	public static final String ADMIN_COMMAND = "* SYSTEM: ";
+	public static final String SILENCE_COMMAND = "* SILENCE: ";
+	public static final String UNSILENCE_COMMAND = "* UNSILENCE: ";
+	public static final String BAN_COMMAND = "* BAN: ";
+	
     protected static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    protected static final int MAX_NAME_DISPLAY_LENGTH = 20;
     protected static final DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
-    protected static final String SYSTEM_USER = "Alliance";
+    
+    protected static final int MAX_NAME_DISPLAY_LENGTH = 20;
+    
     protected static final Color DATE_COLOR = new Color(0x9F9F9F); // light gray
     protected static final Color SYSTEM_COLOR = new Color(0x708090); // slate gray
     protected static final Color ADMIN_COLOR = new Color(0xD81818); // red
     protected static final Color OWN_TEXT_COLOR = new Color(0x000000); // black
-    public static final String BAN_COMMAND = "* BAN: ", ADMIN_COMMAND = "* SYSTEM: ", SILENCE_COMMAND = "* SILENCE: ", UNSILENCE_COMMAND = "* UNSILENCE: ";
     protected static final Color COLORS[] = {
     	new Color(0xD87818), // orange
     	new Color(0x984808), // dark orange/brown
@@ -78,6 +103,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	new Color(0x888888), // gray
     	new Color(0x484848) // dark gray
     };
+    
     protected JEditorPane textarea;
     protected JTextField chat;
     protected String html = "";
@@ -280,7 +306,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     }
     
     public void addSystemMessage(String message) {
-    	addMessage(SYSTEM_USER, "<i>" + message + "</i>", System.currentTimeMillis(), false, false, false);
+    	// from=null for system messages
+    	// system messages are local 
+    	addMessage(null, "<i>" + message + "</i>", System.currentTimeMillis(), false, false, false);
     }
     
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
@@ -370,6 +398,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     }
 
 	private String createHtmlChatLine(ChatLine cl) {
+		// This would read more cleanly if we used some sort of FormattedStringBuilder.
+		// Pseudocode:
+		// Color color = [lots of if-else logic to determine color];
+		// Date date = [date-fetching code];
+		// s.addFormatted("<font color='%s'>%s</font>", color, name);
+		// Kind of like the <%PARAMETERS%> in the language files.
 		StringBuilder s = new StringBuilder();
 		// date
 		s.append("<font color=\"" + toHexColor(DATE_COLOR) + "\">");
@@ -388,22 +422,34 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		s.append("</font> ");
 		// name
 		String name = cl.from;
-		if (name.length() > MAX_NAME_DISPLAY_LENGTH) {
+		if (name != null && name.length() > MAX_NAME_DISPLAY_LENGTH) {
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
-		if (cl.from.equals(SYSTEM_USER) || isAdminCommand(cl)) {
+		boolean italic = false;
+		if (cl.from == null || isAdminCommand(cl)) {
+			// * System message or admin command
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
-			if(isAdminCommand(cl)){
+			if (isAdminCommand(cl)) {
+				// TODO: Weird to be handling commands when displaying messages.
+				// Could be buggy too -- this method gets called when viewing
+				// chat history; would it re-execute old commands? Needs testing.
 				cl = handleAdminCommand(cl);
-				if(cl == null){
+				if (cl == null) {
+					// Wait, what? Interrupt displaying the message halfway through?
+					// Need to test this, in public chat, PMs, and chat history.
+					// previousChatLine = cl; // Should this still be done?
 					return "";
 				}
 			}
+			italic = true;
 		}
-		else if (isUserAction(cl)){
-			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + "<i>");
+		else if (isUserAction(cl)) {
+			// * Username is actioning.
+			s.append("<font color=\"" + toHexColor(cl.color) + "\"><i>");
+			italic = true;
 		}
 		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
+			// Your own messages appear specially
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
 					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
 		}
@@ -411,83 +457,107 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
-		s.append(cl.message + "</font><br>");
-		
-		if(cl.from.equals(SYSTEM_USER) || isUserAction(cl)){
+		s.append(cl.message);
+		// conclude
+		if (italic) {
 			s.append("</i>");
 		}
+		s.append("</font><br>");
 		previousChatLine = cl;
 		return s.toString();
 	}
 
+	// We have enough methods for processing names that they should probably go
+	// in their own class. isIgnored, isAdmin, isTooLong, etc.
+	
     private boolean isIgnored(String name) {
     	Friend friend = ui.getCore().getFriendManager().getFriend(name);
-    	if(friend != null){
-		return ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
+    	if (friend == null) {
+    		return false;
     	}
-    	return false;
-	}
-
-	private boolean isAdminCommand(ChatLine cl) {
-    	//Can only have Admin Color if it was verified as "True Admin" as in createChatLine();
-		return (cl.color == ADMIN_COLOR && cl.message.startsWith(ADMIN_COMMAND));
-	}
-	
-	private ChatLine handleAdminCommand(ChatLine cl){
-		cl.from = SYSTEM_USER;
-		cl.message = cl.message.substring(ADMIN_COMMAND.length());
-		if(cl.message.startsWith(BAN_COMMAND)){
-			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
-				cl.message = Language.getLocalizedString(getClass(), "banned");
-			}
-			else{
-			Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(BAN_COMMAND.length()).trim());
-				if (friend != null) {
-                 ui.getCore().getFriendManager().permanentlyRemove(friend);
-                 cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
-				}
-				else{
-					return null;
-				}
-			}
-		}
-		else if(cl.message.startsWith(SILENCE_COMMAND)){
-			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(SILENCE_COMMAND.length()).trim())){
-				ui.getCore().getSettings().getMy().setSilenced(true);
-				cl.message = Language.getLocalizedString(getClass(), "silenced");
-			}
-			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(SILENCE_COMMAND.length()).trim());
-				if(friend != null){
-				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-				cl.message = Language.getLocalizedString(getClass(), "friend_silenced", friend.getNickname());
-				}
-				else{
-					return null;
-				}
-             }
-		}
-		else if(cl.message.startsWith(UNSILENCE_COMMAND)){
-			if(ui.getCore().getSettings().getMy().getNickname().equals(cl.message.substring(UNSILENCE_COMMAND.length()).trim())){
-				ui.getCore().getSettings().getMy().setSilenced(false);
-				cl.message = Language.getLocalizedString(getClass(), "unsilenced");
-			}
-			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(cl.message.substring(UNSILENCE_COMMAND.length()).trim());
-				if(friend != null){
-				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-				cl.message = Language.getLocalizedString(getClass(), "friend_unsilenced", friend.getNickname());
-				}
-				else{
-					return null;
-				}
-             }
-		}
-		return cl;
+    	return ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
 	}
     
 	private boolean isUserAction(ChatLine cl) {
+		// These can be done with /me or entered manually.
+		// So if Joe types "* Joe is hungry.", it will be interpreted as a
+		// user action. Not a big deal, and unavoidable given that we need
+		// to stay backwards-compatible with 1.2.2, so we can't change the
+		// message protocol to add flags for system or action messages.
+		System.out.println(cl.message);
+		System.out.println(cl.message.startsWith("* " + cl.from + " "));
 		return cl.message.startsWith("* " + cl.from + " ");
+	}
+
+	private boolean isAdminCommand(ChatLine cl) {
+		// Check color to prevent admin command spoofing
+		return cl.color == ADMIN_COLOR && cl.message.startsWith(ADMIN_COMMAND);
+	}
+	
+	private ChatLine handleAdminCommand(ChatLine cl) {
+		cl.from = null; // System message
+		cl.message = cl.message.substring(ADMIN_COMMAND.length()).trim();
+		// silence
+		if (cl.message.startsWith(SILENCE_COMMAND)) {
+			String name = cl.message.substring(SILENCE_COMMAND.length()).trim();
+			// you were silenced
+			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
+				ui.getCore().getSettings().getMy().setSilenced(true);
+				cl.message = Language.getLocalizedString(getClass(), "silenced");
+			}
+			// your friend was silenced
+			else {
+				Friend friend = ui.getCore().getFriendManager().getFriend(name);
+				if (friend == null) {
+					return null;
+				}
+				else {
+					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+					cl.message = Language.getLocalizedString(getClass(), "silenced_friend", friend.getNickname());
+				}
+             }
+		}
+		// unsilence
+		else if (cl.message.startsWith(UNSILENCE_COMMAND)) {
+			String name = cl.message.substring(UNSILENCE_COMMAND.length()).trim();
+			// you were unsilenced
+			if (ui.getCore().getSettings().getMy().getNickname().equals(name)){
+				ui.getCore().getSettings().getMy().setSilenced(false);
+				cl.message = Language.getLocalizedString(getClass(), "unsilenced");
+			}
+			// your friend was unsilenced
+			else {
+				Friend friend = ui.getCore().getFriendManager().getFriend(name);
+				if (friend == null) {
+					return null;
+				}
+				else {
+					ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid());
+					cl.message = Language.getLocalizedString(getClass(), "friend_unsilenced", friend.getNickname());
+				}
+             }
+		}
+		// ban
+		else if (cl.message.startsWith(BAN_COMMAND)) {
+			String name = cl.message.substring(BAN_COMMAND.length()).trim();
+			// you were banned
+			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
+				cl.message = Language.getLocalizedString(getClass(), "banned");
+			}
+			// your friend was banned
+			else {
+				Friend friend = ui.getCore().getFriendManager().getFriend(name);
+				if (friend == null) {
+					return null;
+				}
+				else {
+					// does this really work? even if they change their nickname?
+					ui.getCore().getFriendManager().permanentlyRemove(friend);
+					cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
+				}
+			}
+		}
+		return cl;
 	}
 
 	protected String toHexColor(Color color) {

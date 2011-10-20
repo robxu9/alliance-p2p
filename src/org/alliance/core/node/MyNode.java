@@ -91,7 +91,7 @@ public class MyNode extends Node {
     
     public boolean canNickname(String name) {
     	return name.length() <= MAX_NICKNAME_LENGTH
-    		&& (testAdmin(name) || !core.getFriendManager().isAdminNick(name))
+    		&& (testAdmin(name) || !core.getFriendManager().isAdminNickname(name))
     		&& !core.getFriendManager().isSystem(name);	
     }
     

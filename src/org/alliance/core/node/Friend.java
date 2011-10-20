@@ -270,14 +270,14 @@ public class Friend extends Node {
     public void reconnect() throws IOException {
         disconnect(GracefulClose.RECONNECT);
         Thread t = new Thread(new Runnable() {
-//TODO Have this method also check for new friends connected to the friend we're reconnecting to
-      //Maybe just check for new friends every time we connect to a friend?
+        	//TODO Have this method also check for new friends connected to the friend we're reconnecting to
+        	//Maybe just check for new friends every time we connect to a friend?
             @Override
             public void run() {
                 try {
                     Thread.sleep(3000);
-                } catch (InterruptedException e1) {
                 }
+                catch (InterruptedException e1) {}
                 manager.getCore().invokeLater(new Runnable() {
 
                     @Override
@@ -285,7 +285,8 @@ public class Friend extends Node {
                         if (isConnected()) {
                             try {
                                 getFriendConnection().close();
-                            } catch (IOException e1) {
+                            }
+                            catch (IOException e1) {
                                 if (org.alliance.ui.T.t) {
                                     org.alliance.ui.T.warn("Error when closing connection: " + e1);
                                 }
@@ -293,8 +294,8 @@ public class Friend extends Node {
                         }
                         try {
                             Thread.sleep(500);
-                        } catch (InterruptedException e1) {
                         }
+                        catch (InterruptedException e1) {}
                         manager.getCore().getFriendManager().getFriendConnector().queHighPriorityConnectTo(Friend.this);
                     }
                 });
@@ -467,9 +468,9 @@ public class Friend extends Node {
 		this.adminCode = code;
 	}
 	
-	public String getInfoString(){
+	public String getInfoString() {
 		String s = super.getInfoString();
-		return s.substring(0, s.indexOf("</html>"))+ Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(getAllianceBuildNumber())) + "</html>";
+		return s.substring(0, s.indexOf("</html>")) + Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(getAllianceBuildNumber())) + "</html>";
 	}
 	
 }
