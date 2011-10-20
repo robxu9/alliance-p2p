@@ -334,21 +334,9 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
         return ui.getCore().getFriendManager().nickname(guid);
     }
 
-    public void EVENT_editname(ActionEvent e) {
-        if (list.getSelectedValue() instanceof MyNode) {
-            OptionDialog.showInformationDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "ownname"));
-        } else if (list.getSelectedValue() instanceof Friend) {
-            Friend f = (Friend) list.getSelectedValue();
-            if (f != null) {
-                String pi = JOptionPane.showInputDialog(Language.getLocalizedString(getClass(), "editname", getNickname(f.getGuid())), getNickname(f.getGuid()));
-                if (pi != null) {
-                    f.setNicknameToShowInUI(pi);
-                }
-                ui.getFriendListModel().signalFriendChanged();
-            }
-        } else {
-            return;
-        }
+    public void EVENT_friendinfo(ActionEvent e) {
+        	Node n = (Node) list.getSelectedValue();
+             OptionDialog.showInformationDialog(ui.getMainWindow(), n.getInfoString());
     }
 
     public void EVENT_chat(ActionEvent e) throws Exception {

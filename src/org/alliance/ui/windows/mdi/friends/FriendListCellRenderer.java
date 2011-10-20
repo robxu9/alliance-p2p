@@ -175,16 +175,6 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         else{
         	sb.append(Language.getLocalizedString(getClass(), "currentstatus", status)).append("<br>");
         }
-        
-        sb.append(Language.getLocalizedString(getClass(), "share", TextUtils.formatByteSize(n.getShareSize()),
-                Integer.toString(n.getNumberOfFilesShared()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "ratio", n.calculateRatio())).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "invites", Integer.toString(n.getNumberOfInvitedFriends()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "upspeed", TextUtils.formatByteSize((long) n.getHighestOutgoingCPS()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "downspeed", TextUtils.formatByteSize((long) n.getHighestIncomingCPS()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "uptotal", TextUtils.formatByteSize(n.getTotalBytesSent()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "downtotal", TextUtils.formatByteSize(n.getTotalBytesReceived()))).append("<br>");
-        sb.append(Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(build))).append("</html>");
         return sb.toString();
     }
 }
