@@ -5,6 +5,9 @@ import com.stendahls.util.TextUtils;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.alliance.core.Language;
+import org.alliance.ui.dialogs.OptionDialog;
+
 /**
  * Created by IntelliJ IDEA.
  * User: maciek
@@ -144,5 +147,20 @@ public abstract class Node {
             return ((double) Math.round(((double) upload) / download * 10)) / 10 + ":1";
         }
         return "1:" + ((double) Math.round(((double) download) / upload * 10)) / 10;
+    }
+    
+    public String getInfoString(){
+    	StringBuilder sb = new StringBuilder("<html>");
+    	 sb.append("<b>" + getNickname() + ": </b>" + getStatus() + "<br>");
+    	 
+    	 sb.append(Language.getLocalizedString(getClass(), "share", TextUtils.formatByteSize(getShareSize()),
+                 Integer.toString(getNumberOfFilesShared()))).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "ratio", calculateRatio())).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "invites", Integer.toString(getNumberOfInvitedFriends()))).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "upspeed", TextUtils.formatByteSize((long) getHighestOutgoingCPS()))).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "downspeed", TextUtils.formatByteSize((long) getHighestIncomingCPS()))).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "uptotal", TextUtils.formatByteSize(getTotalBytesSent()))).append("<br>");
+         sb.append(Language.getLocalizedString(getClass(), "downtotal", TextUtils.formatByteSize(getTotalBytesReceived()))).append("<br>");
+         return sb.toString() + "</html>";
     }
 }

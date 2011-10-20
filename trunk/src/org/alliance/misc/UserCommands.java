@@ -8,7 +8,9 @@ import java.util.Set;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
+import org.alliance.core.node.Node;
 import org.alliance.ui.UISubsystem;
+import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.chat.PrivateChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.search.SearchMDIWindow;
@@ -248,6 +250,21 @@ public enum UserCommands {
 			// * <%USERNAME%> is waiting
 			return AbstractChatMessageMDIWindow.USER_ACTION + args.trim();
 		}		
+	},
+	
+	WHOIS("whois"){
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+            String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else {
+				OptionDialog.showInformationDialog(ui.getMainWindow(), friend.getInfoString());
+			}
+			return "";
+		}
+		
 	},
 	
 	IGNORELIST("ignorelist") {

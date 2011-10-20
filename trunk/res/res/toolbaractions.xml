@@ -18,7 +18,7 @@
             description="%DES%"
             toolbarimage="gfx/icons/folder_view.png"/>
         <action
-            id="editname"
+            id="friendinfo"
             name="%NAME%"
             description="%DES%"
             toolbarimage="gfx/icons/edit_friend.png"/>
