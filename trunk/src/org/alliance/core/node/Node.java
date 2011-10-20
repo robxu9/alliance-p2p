@@ -46,6 +46,7 @@ public abstract class Node {
     }
     
     public void setStatus(String status) {
+    	status = filterHTML(status);
     	this.status = status;
     }
 
@@ -177,5 +178,12 @@ public abstract class Node {
          sb.append(Language.getLocalizedString(getClass(), "uptotal", TextUtils.formatByteSize(getTotalBytesSent()))).append("<br>");
          sb.append(Language.getLocalizedString(getClass(), "downtotal", TextUtils.formatByteSize(getTotalBytesReceived()))).append("<br>");
          return sb.toString() + "</html>";
+    }
+    
+    private String filterHTML(String html) {
+        if (html != null) {
+        	html = html.replaceAll("<", "").replaceAll(">", "");
+        }
+        return html;
     }
 }

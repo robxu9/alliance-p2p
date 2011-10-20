@@ -2,7 +2,7 @@
     <body>
         <popupmenu id="popup" detached="yes">
             <menuitem image="gfx/icons/chatmessage.png" text="%text%" eventid="chat"/>
-            <menuitem image="gfx/icons/edit_friend.png" text="%text%" eventid="friendinfo"/>
+            <menuitem image="gfx/icons/friend_info.png" text="%text%" eventid="friendinfo"/>
             <menuitem image="gfx/icons/reconnect.png" text="%text%" eventid="reconnect"/>
             <menuitem image="gfx/icons/connections.png" text="%text%" eventid="changesort"/>
             <menuitem image="gfx/icons/removeconnection.png" text="%text%" eventid="removefriend"/>
