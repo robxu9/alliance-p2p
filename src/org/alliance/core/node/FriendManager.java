@@ -421,6 +421,8 @@ public class FriendManager extends Manager {
     // Even if they change their nickname or wait for you to restart or
     // something? I'd expect banning to require a list of GUIDs to actively
     // refuse.
+    //TODO: Add unremovable (unless admin) IP to users blacklist
+    
     public void permanentlyRemove(Friend f) {
         try {
             if (f.isConnected()) {
