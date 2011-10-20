@@ -479,7 +479,7 @@ public class NetworkManager extends Manager {
         rpc.resetTimestamp();
         if (destination.getFriendConnection() != null) {
             if (T.t) {
-                T.trace("Sending persistant RPC immidiatly.");
+                T.trace("Sending persistant RPC immediately.");
             }
             destination.getFriendConnection().send(rpc);
         } else {

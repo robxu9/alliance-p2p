@@ -86,6 +86,7 @@ public class MyNode extends Node {
     public void setNickname(String name) {
     	if (canNickname(name)) {
     		this.nickname = name;
+    		core.getSettings().getMy().setNickname(name);
     	}
     }
     

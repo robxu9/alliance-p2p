@@ -2,18 +2,15 @@ package org.alliance.misc;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
-import org.alliance.core.node.Node;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
 import org.alliance.ui.windows.mdi.chat.PrivateChatMessageMDIWindow;
-import org.alliance.ui.windows.mdi.search.SearchMDIWindow;
 
 public enum UserCommands {
 	HELP("help") {
@@ -41,8 +38,10 @@ public enum UserCommands {
 				// TODO: refactor code so we don't need two separate setNickname()s
 				// Issue here is this: 
 				// Setting is what stores it to a file, while MyNode (getMe) stores it to runtime memory.
-				ui.getCore().getSettings().getMy().setNickname(nickname);
+				//It seems, no matter what I do. After I change my nick, I have to open and close Alliance
+				//exactly twice, before the name change takes effect. Even when just chatting.
 				ui.getCore().getFriendManager().getMe().setNickname(nickname);
+				ui.getCore().getSettings().getMy().setNickname(nickname);
 			}
 			else {
 				int over = nickname.length() - MyNode.MAX_NICKNAME_LENGTH;
@@ -137,9 +136,8 @@ public enum UserCommands {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String query = args.trim();
 			try {
-				SearchMDIWindow searchWindow = new SearchMDIWindow(ui);
-				searchWindow.refresh(ui);
-				searchWindow.search(query);
+				ui.getMainWindow().getSearchWindow().refresh(ui);
+				ui.getMainWindow().getSearchWindow().search(query);
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "searching", query));
 			}
 			catch (Exception e) {
