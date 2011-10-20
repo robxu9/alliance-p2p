@@ -192,6 +192,19 @@ public class Java6TrayIconSubsystem implements Subsystem, Runnable {
             }
         });
         m.add(mi);
+        
+        m.addSeparator();
+        
+        mi = new MenuItem(Language.getLocalizedString(getClass(), "menureload"));
+        mi.setFont(f);
+        mi.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reloadUI();
+            }
+        });
+        m.add(mi);
 
         m.addSeparator();
 
@@ -326,5 +339,14 @@ public class Java6TrayIconSubsystem implements Subsystem, Runnable {
         } catch (Exception t) {
             core.reportError(t, this);
         }
+    }
+    
+    private void reloadUI() {
+    	try {
+			core.restartProgram(true);
+		} catch (Exception e) {
+			 core.reportError(e, this);
+		}
+    
     }
 }
