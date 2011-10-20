@@ -21,7 +21,7 @@
             id="friendinfo"
             name="%NAME%"
             description="%DES%"
-            toolbarimage="gfx/icons/edit_friend.png"/>
+            toolbarimage="gfx/icons/friend_info.png"/>
         <action separator="yes"/>
         <action
             id="revert"
