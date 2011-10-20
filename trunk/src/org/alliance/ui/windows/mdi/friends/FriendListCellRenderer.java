@@ -166,6 +166,8 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         		status1 = status.substring(0, 70);
             	status2 = status.substring(70);
         	}
+        	//Indent second line
+        	status2 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + status2;
         	sb.append(Language.getLocalizedString(getClass(), "currentstatus", status1 + "<br>" + status2)).append("<br>");
         }
         else{

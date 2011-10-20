@@ -433,6 +433,41 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         });
     }
 
+    public void EVENT_pause(ActionEvent e) {
+    	  int selection[] = table.getSelectedRows();
+
+          if (selection != null && selection.length > 0) {
+
+              final ArrayList<Download> dls = new ArrayList<Download>();
+              for (int i : selection) {
+                  dls.add(rows.get(i).download);
+              }
+              ui.getCore().invokeLater(new Runnable() {
+
+                  @Override
+                  public void run() {
+                      for (Download d : dls) {
+                          if (d.isComplete()) {
+                              ui.getCore().getNetworkManager().getDownloadManager().remove(d);
+                          } else {
+                              try {
+                                  ui.getCore().getNetworkManager().getDownloadManager().pauseDownload(d);
+                              } catch (Exception e1) {
+                                  ui.handleErrorInEventLoop(e1);
+                              }
+                          }
+                      }
+                      SwingUtilities.invokeLater(new Runnable() {
+
+                          @Override
+                          public void run() {
+                              update();
+                          }
+                      });
+                  }
+              });
+          }
+      }
     public void EVENT_movedown(ActionEvent e) {
         int selection[] = table.getSelectedRows();
         if (selection != null && selection.length > 0) {
