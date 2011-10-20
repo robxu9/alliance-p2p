@@ -431,4 +431,8 @@ public class DownloadManager extends Manager implements Runnable {
         Friend friend;
         Download download;
     }
+
+	public void pauseDownload(Download d) {
+		//TODO create a pause method.
+	}
 }
