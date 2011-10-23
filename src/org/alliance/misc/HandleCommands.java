@@ -11,13 +11,18 @@ public class HandleCommands {
 	private String message;
 	private Friend friend;
 	private UISubsystem ui;
+	private boolean ignored;
+	
 	public HandleCommands(int guid, String message, UISubsystem ui){
 		this.guid = guid;
 		this.message = message;
 		this.ui = ui;
 		this.friend = ui.getCore().getFriendManager().getFriend(guid);
-		if(isAdminCommand()){
+		if(isAdminCommand()) {
 			handleAdminCommand();
+		}
+		else {
+		setIgnored();
 		}
 	}
 	
@@ -95,6 +100,16 @@ public class HandleCommands {
 			}
 
 	}
+	
+    private void setIgnored() {
+    	if (friend != null) {
+    		this.ignored = ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
+    	}
+	}
+    
+    public boolean isIgnored() {
+    	return ignored;
+    }
 
 	public int getGuid() {
 		return guid;

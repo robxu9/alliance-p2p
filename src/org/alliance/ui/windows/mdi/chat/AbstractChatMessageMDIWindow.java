@@ -402,9 +402,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// date
 		s.append("<font color=\"" + toHexColor(DATE_COLOR) + "\">");
 		DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		if(isIgnored(cl.from)){
-			return "";
-		}
 		if (previousChatLine != null &&
 				f.format(new Date(cl.tick)).equals(
 				f.format(new Date(previousChatLine.tick)))) {
@@ -449,17 +446,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		return s.toString();
 	}
 
-	// We have enough methods for processing names that they should probably go
-	// in their own class. isIgnored, isAdmin, isTooLong, etc.
-	
-    private boolean isIgnored(String name) {
-    	Friend friend = ui.getCore().getFriendManager().getFriend(name);
-    	if (friend == null) {
-    		return false;
-    	}
-    	return ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
-	}
-    
 	private boolean isUserAction(ChatLine cl) {
 		// These can be done with /me or entered manually.
 		// So if Joe types "* Joe is hungry.", it will be interpreted as a
