@@ -174,13 +174,13 @@ public enum UserCommands {
 		}
 	},
 	
-	MESSAGEALL("msgall", true) {
+	MESSAGEALL("msgall", true, null) {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String message = args.trim();
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			for (Friend friend : friends) {
 				try {
-					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(ADMIN_COMMAND + message);
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(SYSTEM.getKey() + message);
 				}
 				catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
@@ -191,7 +191,7 @@ public enum UserCommands {
 		}
 	},
 	
-	SYSTEM("system", true) {
+	SYSTEM("system", true, "* SYSTEM: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			// On 1.3.0, system messages should be displayed with a * instead of
 			// a username, and should be in the system color. Like:
@@ -199,13 +199,13 @@ public enum UserCommands {
 			// This won't be possible on 1.2.2, so the only option would be
 			// something like:
 			// Spiderman: * SYSTEM: message goes here
-			return ADMIN_COMMAND + args.trim();
+			return getKey() + args.trim();
 		}
 	},
 	
-	ME("me") {		
+	ME("me", false, "/me ") {		
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			return USER_ACTION + args.trim();
+			return getKey() + args.trim();
 		}
 	},
 	
@@ -289,7 +289,7 @@ public enum UserCommands {
 		}
 	},
 	
-	SILENCE("silence", true) {
+	SILENCE("silence", true, "* SILENCE: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
@@ -297,13 +297,13 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else{
-				return SILENCE_COMMAND + name;
+				return getKey() + name;
 			}
 			return "";
 		}
 	},
 	
-	UNSILENCE("unsilence", true) {
+	UNSILENCE("unsilence", true, "* UNSILENCE: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
@@ -311,13 +311,13 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else{
-				return UNSILENCE_COMMAND + name;
+				return getKey() + name;
 			}
 			return "";
 		}
 	},
 	
-	BAN("ban", true) {
+	BAN("ban", true, "* BAN: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String name = args.trim();
 			Friend friend = ui.getCore().getFriendManager().getFriend(name);
@@ -325,7 +325,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
-				return BAN_COMMAND + name;
+				return getKey() + name;
 			}
 			return "";
 		}
@@ -344,19 +344,16 @@ public enum UserCommands {
 	
 	private final String name;
 	private final boolean adminOnly;
-	public static final String ADMIN_COMMAND = "* SYSTEM: ";
-	public static final String SILENCE_COMMAND = "* SILENCE: ";
-	public static final String UNSILENCE_COMMAND = "* UNSILENCE: ";
-	public static final String BAN_COMMAND = "* BAN: ";
-	public static final String USER_ACTION = "/me ";
+	private final String commandKey;
 	
 	private UserCommands(String name) {
-		this(name, false);
+		this(name, false, null);
 	}
 	
-	private UserCommands(String name, boolean adminOnly) {
+	private UserCommands(String name, boolean adminOnly, String commandKey) {
 		this.name = name;
 		this.adminOnly = adminOnly;
+		this.commandKey = commandKey;
 	}
 	
 	public String getName() {
@@ -365,6 +362,10 @@ public enum UserCommands {
 	
 	public boolean isAdminOnly() {
 		return adminOnly;
+	}
+	
+	public String getKey() {
+		return commandKey;
 	}
 	
 	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
