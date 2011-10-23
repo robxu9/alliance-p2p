@@ -750,8 +750,8 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
                 HandleCommands cmd = new HandleCommands(pmi.getFromGuid(), pmi.getMessage(), ui);
                 if(cmd.isIgnored()){
                 	//Do nothing
-                	return;
                 }
+                else{
                 try {
                     if (pmi instanceof PostMessageToAllInteraction) {
                         publicChatMessage(cmd.getGuid(), cmd.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
@@ -760,6 +760,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
                     }
                 } catch (Exception e) {
                     ui.handleErrorInEventLoop(e);
+                }
                 }
             } else if (nui instanceof PleaseForwardInvitationInteraction) {
                 final PleaseForwardInvitationInteraction pmi = (PleaseForwardInvitationInteraction) nui;
