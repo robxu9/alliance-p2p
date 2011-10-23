@@ -61,14 +61,8 @@ import javax.swing.event.HyperlinkListener;
 public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow implements Runnable {
 	private static final long serialVersionUID = -562921870993210155L;
 	
-	public static final String USER_ACTION = "/me ";
-	
 	// TODO Too many similar constants should probably become an enum, which
 	// would also let us move functionality into enum methods
-	public static final String ADMIN_COMMAND = "* SYSTEM: ";
-	public static final String SILENCE_COMMAND = "* SILENCE: ";
-	public static final String UNSILENCE_COMMAND = "* UNSILENCE: ";
-	public static final String BAN_COMMAND = "* BAN: ";
 	
     protected static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     protected static final DateFormat SHORT_FORMAT = new SimpleDateFormat("HH:mm");
@@ -238,8 +232,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	String message = chat.getText();
     	message = UserCommands.handleCommand(message, ui, this);
     	if (message != null && !message.trim().equals("")) {
-    		if (message.startsWith(USER_ACTION)) {
-    			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(USER_ACTION.length()).trim(); 
+    		if (message.startsWith(UserCommands.USER_ACTION)) {
+    			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(UserCommands.USER_ACTION.length()).trim(); 
     		}
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
@@ -426,21 +420,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			name = name.substring(0, MAX_NAME_DISPLAY_LENGTH) + "&hellip;";
 		}
 		boolean italic = false;
-		if (cl.from == null || isAdminCommand(cl)) {
+		if (cl.from == null) {
 			// * System message or admin command
 			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
-			if (isAdminCommand(cl)) {
-				// TODO: Weird to be handling commands when displaying messages.
-				// Could be buggy too -- this method gets called when viewing
-				// chat history; would it re-execute old commands? Needs testing.
-				cl = handleAdminCommand(cl);
-				if (cl == null) {
-					// Wait, what? Interrupt displaying the message halfway through?
-					// Need to test this, in public chat, PMs, and chat history.
-					// previousChatLine = cl; // Should this still be done?
-					return "";
-				}
-			}
 			italic = true;
 		}
 		else if (isUserAction(cl)) {
@@ -490,89 +472,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		return cl.message.startsWith("* " + cl.from + " ");
 	}
-
-	private boolean isAdminCommand(ChatLine cl) {
-		// Check color to prevent admin command spoofing
-		return cl.color == ADMIN_COLOR && cl.message.startsWith(ADMIN_COMMAND);
-	}
 	
-	private ChatLine handleAdminCommand(ChatLine cl) {
-		cl.from = null; // System message
-		cl.message = cl.message.substring(ADMIN_COMMAND.length()).trim();
-		// silence
-		if (cl.message.startsWith(SILENCE_COMMAND)) {
-			String name = cl.message.substring(SILENCE_COMMAND.length()).trim();
-			// you were silenced
-			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
-				if(!(this instanceof HistoryChatMessageMDIWindow)) {
-				ui.getCore().getSettings().getMy().setSilenced(true);
-				}
-				cl.message = Language.getLocalizedString(getClass(), "silenced");
-			}
-			// your friend was silenced
-			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
-				if (friend == null) {
-					return null;
-				}
-				else {
-					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
-					cl.message = Language.getLocalizedString(getClass(), "silenced_friend", friend.getNickname());
-				}
-             }
-		}
-		// unsilence
-		else if (cl.message.startsWith(UNSILENCE_COMMAND)) {
-			String name = cl.message.substring(UNSILENCE_COMMAND.length()).trim();
-			// you were unsilenced
-			if (ui.getCore().getSettings().getMy().getNickname().equals(name)){
-				if(!(this instanceof HistoryChatMessageMDIWindow)) {
-				ui.getCore().getSettings().getMy().setSilenced(false);
-				}
-				cl.message = Language.getLocalizedString(getClass(), "unsilenced");
-			}
-			// your friend was unsilenced
-			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
-				if (friend == null) {
-					return null;
-				}
-				else {
-					ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid());
-					cl.message = Language.getLocalizedString(getClass(), "friend_unsilenced", friend.getNickname());
-				}
-             }
-		}
-		// ban
-		else if (cl.message.startsWith(BAN_COMMAND)) {
-			String name = cl.message.substring(BAN_COMMAND.length()).trim();
-			// you were banned
-			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
-				cl.message = Language.getLocalizedString(getClass(), "banned");
-			}
-			// your friend was banned
-			else {
-				if(!(this instanceof HistoryChatMessageMDIWindow)) {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
-				if (friend == null) {
-					return null;
-				}
-				else {
-					//Adds banned users IP to Blacklist
-					try {
-						ui.getCore().getSettings().getRulelist().add("DENY" + friend.getFriendConnection().getSocketAddress());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					ui.getCore().getFriendManager().permanentlyRemove(friend);
-					cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
-				}
-				}
-			}
-		}
-		return cl;
-	}
-
 	protected String toHexColor(Color color) {
         return "#" + Integer.toHexString(color.getRGB() & 0xFFFFFF);
     }

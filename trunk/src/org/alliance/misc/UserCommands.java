@@ -180,7 +180,7 @@ public enum UserCommands {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			for (Friend friend : friends) {
 				try {
-					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(AbstractChatMessageMDIWindow.ADMIN_COMMAND + message);
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(ADMIN_COMMAND + message);
 				}
 				catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
@@ -199,13 +199,13 @@ public enum UserCommands {
 			// This won't be possible on 1.2.2, so the only option would be
 			// something like:
 			// Spiderman: * SYSTEM: message goes here
-			return AbstractChatMessageMDIWindow.ADMIN_COMMAND + args.trim();
+			return ADMIN_COMMAND + args.trim();
 		}
 	},
 	
 	ME("me") {		
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			return AbstractChatMessageMDIWindow.USER_ACTION + args.trim();
+			return USER_ACTION + args.trim();
 		}
 	},
 	
@@ -297,7 +297,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else{
-				return AbstractChatMessageMDIWindow.SILENCE_COMMAND + name;
+				return SILENCE_COMMAND + name;
 			}
 			return "";
 		}
@@ -311,7 +311,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else{
-				return AbstractChatMessageMDIWindow.UNSILENCE_COMMAND + name;
+				return UNSILENCE_COMMAND + name;
 			}
 			return "";
 		}
@@ -325,7 +325,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
-				return AbstractChatMessageMDIWindow.BAN_COMMAND + name;
+				return BAN_COMMAND + name;
 			}
 			return "";
 		}
@@ -344,6 +344,11 @@ public enum UserCommands {
 	
 	private final String name;
 	private final boolean adminOnly;
+	public static final String ADMIN_COMMAND = "* SYSTEM: ";
+	public static final String SILENCE_COMMAND = "* SILENCE: ";
+	public static final String UNSILENCE_COMMAND = "* UNSILENCE: ";
+	public static final String BAN_COMMAND = "* BAN: ";
+	public static final String USER_ACTION = "/me ";
 	
 	private UserCommands(String name) {
 		this(name, false);

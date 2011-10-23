@@ -31,6 +31,7 @@ import org.alliance.core.interactions.NewVersionAvailableInteraction;
 import org.alliance.core.Language;
 import org.alliance.launchers.OSInfo;
 import org.alliance.launchers.StartupProgressListener;
+import org.alliance.misc.HandleCommands;
 import org.alliance.ui.addfriendwizard.AddFriendWizard;
 import org.alliance.ui.addfriendwizard.ForwardInvitationNodesList;
 import org.alliance.ui.dialogs.OptionDialog;
@@ -746,11 +747,12 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         try {
             if (nui instanceof PostMessageInteraction) {
                 PostMessageInteraction pmi = (PostMessageInteraction) nui;
+                HandleCommands cmd = new HandleCommands(pmi.getFromGuid(), pmi.getMessage(), ui);
                 try {
                     if (pmi instanceof PostMessageToAllInteraction) {
-                        publicChatMessage(pmi.getFromGuid(), pmi.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
+                        publicChatMessage(cmd.getGuid(), cmd.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
                     } else {
-                        chatMessage(pmi.getFromGuid(), pmi.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
+                        chatMessage(cmd.getGuid(), cmd.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
                     }
                 } catch (Exception e) {
                     ui.handleErrorInEventLoop(e);

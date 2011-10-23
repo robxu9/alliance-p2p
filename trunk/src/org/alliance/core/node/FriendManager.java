@@ -455,6 +455,10 @@ public class FriendManager extends Manager {
     }
 
     public String nickname(int guid) {
+    	//Use 0 in case a GUID gets lost in transit deeming it null
+    	if(guid == 0){
+    		return null;
+    	}
         if (getFriend(guid) != null) {
             return getFriend(guid).getNickname();
         }
