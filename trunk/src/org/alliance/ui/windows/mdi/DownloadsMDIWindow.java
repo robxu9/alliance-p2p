@@ -337,7 +337,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                     downloadGrid.setDownload(null);
                 }
                 state = download.getState();
-                if (download.getBandwidth().hasGoodAverage()) {
+                if(download.isPaused()){
+                	eta = Language.getLocalizedString(getClass().getEnclosingClass(), "paused");
+                } else  if (download.getBandwidth().hasGoodAverage()) {
                     eta = formatETA(download.getETAInMinutes());
                 } else {
                     eta = "?";

@@ -81,7 +81,7 @@ public class DownloadConnection extends TransferConnection {
         if (mode == Mode.PACKET) {
             super.received(buf);
         } else {
-            while (buf.remaining() > 0) {
+            while (buf.remaining() > 0 && !download.isPaused()) {
                 //this might seem weird, but when a consumer is done, it will compact the buffer,
                 // remove itself from the queue and return. This way we continue with the next consumer.
                 consumerQue.get(0).consume(buf);
