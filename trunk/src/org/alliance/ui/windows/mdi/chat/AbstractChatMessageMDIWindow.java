@@ -1,7 +1,7 @@
 package org.alliance.ui.windows.mdi.chat;
 
 /**
- * TODO:
+ * TODO: (Organize Code)
  * I feel like this class is disorganized. Code for handling input and output
  * messages is scattered in various methods. Filtering code to prevent HTML
  * injection is duplicated, sometimes incompletely. It needs refactoring.
@@ -484,8 +484,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// user action. Not a big deal, and unavoidable given that we need
 		// to stay backwards-compatible with 1.2.2, so we can't change the
 		// message protocol to add flags for system or action messages.
-		System.out.println(cl.message);
+		if(cl.message.startsWith("* " + cl.from + " ")){
 		System.out.println(cl.message.startsWith("* " + cl.from + " "));
+		System.out.println(cl.message);
+		}
 		return cl.message.startsWith("* " + cl.from + " ");
 	}
 
@@ -502,7 +504,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			String name = cl.message.substring(SILENCE_COMMAND.length()).trim();
 			// you were silenced
 			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
+				if(!(this instanceof HistoryChatMessageMDIWindow)) {
 				ui.getCore().getSettings().getMy().setSilenced(true);
+				}
 				cl.message = Language.getLocalizedString(getClass(), "silenced");
 			}
 			// your friend was silenced
@@ -522,7 +526,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			String name = cl.message.substring(UNSILENCE_COMMAND.length()).trim();
 			// you were unsilenced
 			if (ui.getCore().getSettings().getMy().getNickname().equals(name)){
+				if(!(this instanceof HistoryChatMessageMDIWindow)) {
 				ui.getCore().getSettings().getMy().setSilenced(false);
+				}
 				cl.message = Language.getLocalizedString(getClass(), "unsilenced");
 			}
 			// your friend was unsilenced
@@ -546,14 +552,21 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			}
 			// your friend was banned
 			else {
+				if(!(this instanceof HistoryChatMessageMDIWindow)) {
 				Friend friend = ui.getCore().getFriendManager().getFriend(name);
 				if (friend == null) {
 					return null;
 				}
 				else {
-					// does this really work? even if they change their nickname?
+					//Adds banned users IP to Blacklist
+					try {
+						ui.getCore().getSettings().getRulelist().add("DENY" + friend.getFriendConnection().getSocketAddress());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					ui.getCore().getFriendManager().permanentlyRemove(friend);
 					cl.message = Language.getLocalizedString(getClass(), "friend_banned", friend.getNickname());
+				}
 				}
 			}
 		}
