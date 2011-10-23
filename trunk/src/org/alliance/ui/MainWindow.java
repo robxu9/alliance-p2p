@@ -748,10 +748,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             if (nui instanceof PostMessageInteraction) {
                 PostMessageInteraction pmi = (PostMessageInteraction) nui;
                 HandleCommands cmd = new HandleCommands(pmi.getFromGuid(), pmi.getMessage(), ui);
-                if(cmd.isIgnored()){
-                	//Do nothing
-                }
-                else{
+                if(!(cmd.isIgnored())){
                 try {
                     if (pmi instanceof PostMessageToAllInteraction) {
                         publicChatMessage(cmd.getGuid(), cmd.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
