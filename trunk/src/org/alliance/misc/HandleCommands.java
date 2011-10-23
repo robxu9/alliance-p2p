@@ -4,12 +4,19 @@ import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.ui.UISubsystem;
 import org.alliance.misc.UserCommands;
-
+/**
+ * 
+ * @author Spiderman
+ * This method handles incoming messages and checks if they're admin commands
+ * If they are commands, it carries those commands out.
+ * If it is not a command, it checks if that user should be ignored.
+ *
+ */
 public class HandleCommands {
 
 	private int guid;
 	private String message;
-	private Friend friend;
+	private Friend from;
 	private UISubsystem ui;
 	private boolean ignored;
 	
@@ -17,25 +24,48 @@ public class HandleCommands {
 		this.guid = guid;
 		this.message = message;
 		this.ui = ui;
-		this.friend = ui.getCore().getFriendManager().getFriend(guid);
+		this.from = ui.getCore().getFriendManager().getFriend(guid);
 		if(isAdminCommand()) {
 			handleAdminCommand();
 		}
 		else {
-		setIgnored();
+			checkIgnored();
 		}
 	}
 	
 	private boolean isAdminCommand() {
-		return friend.isAdmin() && message.startsWith(UserCommands.ADMIN_COMMAND);
+		UserCommands[] cmds = UserCommands.values();
+		if(!(from.isAdmin())) {
+			return false;
+		}
+		else {
+			for(UserCommands c : cmds){
+				if(message.startsWith(c.getKey()) && c.isAdminOnly()){
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	private void handleAdminCommand() {
 		guid = 0;// System message
-		message = message.substring(UserCommands.ADMIN_COMMAND.length()).trim();
+		UserCommands[] cmds = UserCommands.values();
+		UserCommands command = null;
+		String name = "";
+		for(UserCommands c : cmds){
+			if(message.startsWith(c.getKey())){
+				name = message.substring(c.getKey().length()).trim();
+				command = c;
+				break;
+			}
+		}
+		
+		Friend friend = ui.getCore().getFriendManager().getFriend(name);
+		
 		// silence
-		if (message.startsWith(UserCommands.SILENCE_COMMAND)) {
-			String name = message.substring(UserCommands.SILENCE_COMMAND.length()).trim();
+		if (command == UserCommands.SILENCE) {
 			// you were silenced
 			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
 				ui.getCore().getSettings().getMy().setSilenced(true);
@@ -43,7 +73,6 @@ public class HandleCommands {
 			}
 			// your friend was silenced
 			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
 				if (friend == null) {
 					return;
 				}
@@ -54,8 +83,7 @@ public class HandleCommands {
              }
 		}
 		// unsilence
-		else if (message.startsWith(UserCommands.SILENCE_COMMAND)) {
-			String name = message.substring(UserCommands.SILENCE_COMMAND.length()).trim();
+		else if (command == UserCommands.UNSILENCE) {
 			// you were unsilenced
 			if (ui.getCore().getSettings().getMy().getNickname().equals(name)){
 				ui.getCore().getSettings().getMy().setSilenced(false);
@@ -63,7 +91,6 @@ public class HandleCommands {
 			}
 			// your friend was unsilenced
 			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
 				if (friend == null) {
 					return;
 				}
@@ -74,15 +101,13 @@ public class HandleCommands {
              }
 		}
 		// ban
-		else if (message.startsWith(UserCommands.BAN_COMMAND)) {
-			String name = message.substring(UserCommands.BAN_COMMAND.length()).trim();
+		else if (command == UserCommands.BAN) {
 			// you were banned
 			if (ui.getCore().getSettings().getMy().getNickname().equals(name)) {
 				message = Language.getLocalizedString(getClass(), "banned");
 			}
 			// your friend was banned
 			else {
-				Friend friend = ui.getCore().getFriendManager().getFriend(name);
 				if (friend == null) {
 					return;
 				}
@@ -101,9 +126,9 @@ public class HandleCommands {
 
 	}
 	
-    private void setIgnored() {
-    	if (friend != null) {
-    		this.ignored = ui.getCore().getSettings().getMy().getIgnoreList().contains(friend.getGuid());
+    private void checkIgnored() {
+    	if (from != null) {
+    		this.ignored = ui.getCore().getSettings().getMy().getIgnoreList().contains(from.getGuid());
     	}
 	}
     

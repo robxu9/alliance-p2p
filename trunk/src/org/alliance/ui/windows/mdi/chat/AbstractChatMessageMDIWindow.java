@@ -232,8 +232,8 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     	String message = chat.getText();
     	message = UserCommands.handleCommand(message, ui, this);
     	if (message != null && !message.trim().equals("")) {
-    		if (message.startsWith(UserCommands.USER_ACTION)) {
-    			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(UserCommands.USER_ACTION.length()).trim(); 
+    		if (message.startsWith(UserCommands.ME.getKey())) {
+    			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(UserCommands.ME.getKey().length()).trim(); 
     		}
     		// Escape HTML tags, but allow HTML entities like &eacute; or &#x123;
     		send(message.replace("<", "&lt;").replace(">", "&gt;"));
