@@ -26,7 +26,7 @@ Things on this list are pretty major features, so no need to add them all in one
 
 These are things that could probably be implemented quickly.
 
- * Pause and resume downloads.
+ * ~~Pause and resume downloads.~~
  * ~~User status messages like on DC++.~~
     * ~~Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.~~
     * ~~The "offline for N days" text could also go in this popup. Right now it makes the user list too wide and it scrolls horizontally.~~
