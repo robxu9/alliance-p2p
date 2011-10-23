@@ -35,7 +35,7 @@ public class Download {
 
     public enum State {
 
-        WAITING_TO_START, LOADING_FD, DOWNLOADING, COMPLETED
+        WAITING_TO_START, LOADING_FD, PAUSED, DOWNLOADING, COMPLETED
     };
     private Hash root;
     private FileDescriptor fd;
@@ -381,8 +381,22 @@ public class Download {
         }
     }
     
-    public void pauseDownload() {
+    public void resumeDownload() {
     	setState(State.WAITING_TO_START);
+    }
+    
+    public void pauseDownload() {
+    	if(this.state == State.PAUSED){
+    		resumeDownload();
+    	}
+    	else{
+    	setState(State.PAUSED);
+    	
+    	}
+    }
+    
+    public boolean isPaused() {
+    	return state == State.PAUSED;
     }
 
     public State getState() {

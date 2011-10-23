@@ -434,6 +434,7 @@ public class DownloadManager extends Manager implements Runnable {
     }
 
 	public void pauseDownload(Download d) throws IOException {
-	//TODO create this method.
+		d.pauseDownload();
+		moveBottom(d);
 	}
 }
