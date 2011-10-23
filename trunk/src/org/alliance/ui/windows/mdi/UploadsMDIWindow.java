@@ -12,7 +12,11 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -42,6 +46,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         table.getColumnModel().getColumn(1).setPreferredWidth(300);
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(50);
+        table.getColumnModel().getColumn(4).setPreferredWidth(50);
 
         update();
         setTitle(Language.getLocalizedString(getClass(), "title"));
@@ -110,12 +115,14 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
     }
 
     private class UploadWrapper {
-
+    	
         public UploadConnection upload;
-        public String nickname, filename, speed, sent;
+        public String nickname, filename, speed, sent, startedAt;
+        DateFormat FORMAT = new SimpleDateFormat("MM-dd HH:mm");
 
         public UploadWrapper(UploadConnection uc) {
             this.upload = uc;
+            startedAt = FORMAT.format(new Date(System.currentTimeMillis()));
         }
 
         public void update() {
@@ -146,7 +153,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
 
         @Override
         public int getColumnCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -159,6 +166,8 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 case 2:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "speed");
                 case 3:
+                	return Language.getLocalizedString(getClass().getEnclosingClass(), "startedat");
+                case 4:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "sent");
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
@@ -175,6 +184,8 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 case 2:
                     return rows.get(rowIndex).speed;
                 case 3:
+                	return rows.get(rowIndex).startedAt;
+                case 4:
                     return rows.get(rowIndex).sent;
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
