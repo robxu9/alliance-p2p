@@ -18,7 +18,7 @@ public class HandleCommands {
 	private String message;
 	private Friend from;
 	private UISubsystem ui;
-	private boolean ignored;
+	private boolean ignored = false;;
 	
 	public HandleCommands(int guid, String message, UISubsystem ui){
 		this.guid = guid;
@@ -63,6 +63,7 @@ public class HandleCommands {
 		}
 		
 		Friend friend = ui.getCore().getFriendManager().getFriend(name);
+
 		
 		// silence
 		if (command == UserCommands.SILENCE) {
@@ -74,7 +75,7 @@ public class HandleCommands {
 			// your friend was silenced
 			else {
 				if (friend == null) {
-					return;
+					ignored = true;
 				}
 				else {
 					ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
@@ -92,7 +93,7 @@ public class HandleCommands {
 			// your friend was unsilenced
 			else {
 				if (friend == null) {
-					return;
+					ignored = true;
 				}
 				else {
 					ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid());
@@ -109,7 +110,7 @@ public class HandleCommands {
 			// your friend was banned
 			else {
 				if (friend == null) {
-					return;
+					ignored = true;
 				}
 				else {
 					//Adds banned users IP to Blacklist
