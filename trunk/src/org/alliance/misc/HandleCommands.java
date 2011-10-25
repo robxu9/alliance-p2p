@@ -18,7 +18,7 @@ public class HandleCommands {
 	private String message;
 	private Friend from;
 	private UISubsystem ui;
-	private boolean ignored = false;;
+	private boolean ignored = false;
 	
 	public HandleCommands(int guid, String message, UISubsystem ui){
 		this.guid = guid;

@@ -118,11 +118,12 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
     	
         public UploadConnection upload;
         public String nickname, filename, speed, sent, startedAt;
-        DateFormat FORMAT = new SimpleDateFormat("MM-dd HH:mm");
+        
+        private Date began;
 
         public UploadWrapper(UploadConnection uc) {
             this.upload = uc;
-            startedAt = FORMAT.format(new Date(System.currentTimeMillis()));
+            began = new Date(System.currentTimeMillis());
         }
 
         public void update() {
@@ -166,7 +167,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 case 2:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "speed");
                 case 3:
-                	return Language.getLocalizedString(getClass().getEnclosingClass(), "startedat");
+                	return Language.getLocalizedString(getClass().getEnclosingClass(), "elapsed");
                 case 4:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "sent");
                 default:
@@ -184,12 +185,42 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 case 2:
                     return rows.get(rowIndex).speed;
                 case 3:
-                	return rows.get(rowIndex).startedAt;
+                	return elapsedSince(rows.get(rowIndex).began);
                 case 4:
                     return rows.get(rowIndex).sent;
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
             }
+        }
+        
+        private String elapsedSince(Date began) {
+        	Date current = new Date(System.currentTimeMillis());
+        	long diff = (current.getTime() - began.getTime()) / 1000;
+        	int secs = 0, mins = 0, hours = 0, days = 0, weeks = 0;
+        	if (diff < 60) {
+        		secs = (int)diff;
+        		return secs + " sec";
+        	}
+        	secs = (int)(diff % 60);
+        	diff /= 60;
+        	if (diff < 60) {
+        		mins = (int)diff;
+        		return mins + " min";
+        	}
+        	mins = (int)(diff % 60);
+        	diff /= 60;
+        	if (diff < 24) {
+        		hours = (int)diff;
+        		return hours + "h" + mins + "m";
+        	}
+        	days = (int)(diff % 24);
+        	diff /= 24;
+        	if (diff < 7) {
+        		weeks = (int)diff;
+        		return days + "d" + hours + "h";
+        	}
+        	weeks = (int)(diff % 7);
+        	return weeks + "w" + days + "d";
         }
     }
 
