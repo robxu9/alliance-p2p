@@ -126,7 +126,7 @@ public class NetworkTab extends XUIDialog implements TabHelper {
         };
 
         ipv6.addMouseListener(il);
-        lanMode.addMouseListener(il);
+      //  lanMode.addMouseListener(il);
         dnsMode.addMouseListener(il);
         bindToAll.addMouseListener(il);
 

@@ -31,7 +31,7 @@ import org.alliance.core.interactions.NewVersionAvailableInteraction;
 import org.alliance.core.Language;
 import org.alliance.launchers.OSInfo;
 import org.alliance.launchers.StartupProgressListener;
-import org.alliance.misc.HandleCommands;
+import org.alliance.misc.UserCommands.Command;
 import org.alliance.ui.addfriendwizard.AddFriendWizard;
 import org.alliance.ui.addfriendwizard.ForwardInvitationNodesList;
 import org.alliance.ui.dialogs.OptionDialog;
@@ -80,7 +80,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
@@ -747,8 +746,8 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         try {
             if (nui instanceof PostMessageInteraction) {
                 PostMessageInteraction pmi = (PostMessageInteraction) nui;
-                HandleCommands cmd = new HandleCommands(pmi.getFromGuid(), pmi.getMessage(), ui);
-                if(!(cmd.isIgnored())){
+                Command cmd = new Command(pmi.getFromGuid(), pmi.getMessage(), ui).execute();
+                if(!(cmd.isIgnored()) && cmd != null){
                 try {
                     if (pmi instanceof PostMessageToAllInteraction) {
                         publicChatMessage(cmd.getGuid(), cmd.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());

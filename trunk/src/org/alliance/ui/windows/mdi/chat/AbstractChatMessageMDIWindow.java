@@ -230,7 +230,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 
     private void chatMessage() throws Exception {
     	String message = chat.getText();
-    	message = UserCommands.handleCommand(message, ui, this);
+    	message = UserCommands.handleOutCommand(message, ui, this);
     	if (message != null && !message.trim().equals("")) {
     		if (message.startsWith(UserCommands.ME.getKey())) {
     			message = "* " + ui.getCore().getFriendManager().getMe().getNickname() + " " + message.substring(UserCommands.ME.getKey().length()).trim(); 
