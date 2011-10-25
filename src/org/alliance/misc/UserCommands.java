@@ -25,6 +25,10 @@ public enum UserCommands {
 			chat.addSystemMessage(s.toString());
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	NICK("nick") {
@@ -54,6 +58,10 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	STATUS("status") {
@@ -71,12 +79,20 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	CLEAR("clear") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.chatClear();
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -85,6 +101,10 @@ public enum UserCommands {
 			chat.chatClear();
 			ui.getCore().getPublicChatHistory().clearHistory();
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -106,6 +126,10 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	RECONNECTALL("reconnectall") {
@@ -122,6 +146,10 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	REHASH("rehash") {
@@ -129,6 +157,10 @@ public enum UserCommands {
 			ui.getCore().getShareManager().getShareScanner().startScan(true);
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "rehashing"));
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -144,6 +176,10 @@ public enum UserCommands {
 				e.printStackTrace();
 			}
 			return "";			
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -172,6 +208,10 @@ public enum UserCommands {
             }
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	MESSAGEALL("msgall", true, null) {
@@ -189,6 +229,10 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	SYSTEM("system", true, "* SYSTEM: ") {
@@ -201,11 +245,20 @@ public enum UserCommands {
 			// Spiderman: * SYSTEM: message goes here
 			return getKey() + args.trim();
 		}
+
+		protected Command executeCommand(Command command) {
+			command.message = command.message.substring(command.cmd.getKey().length());
+			return command;
+		}
 	},
 	
 	ME("me", false, "/me ") {		
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			return getKey() + args.trim();
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -220,6 +273,10 @@ public enum UserCommands {
 				OptionDialog.showInformationDialog(ui.getMainWindow(), friend.getInfoString());
 			}
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 		
 	},
@@ -241,6 +298,10 @@ public enum UserCommands {
 			chat.addSystemMessage(s.toString());
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	IGNORE("ignore") {
@@ -261,6 +322,10 @@ public enum UserCommands {
             }
 			return "";
 		}
+		
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	UNIGNORE("unignore") {
@@ -278,6 +343,10 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			return null;
+		}
 	},
 	
 	UNIGNOREALL("unignoreall") {
@@ -286,6 +355,10 @@ public enum UserCommands {
 			ui.getCore().getSettings().getMy().getIgnoreList().clear();
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignoredall", Integer.toString(n)));
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	},
 	
@@ -301,6 +374,25 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+				// you were silenced
+				if (command.isDirectedAtMe()) {
+					command.ui.getCore().getSettings().getMy().setSilenced(true);
+					command.message = Language.getLocalizedString(getClass(), "silenced");
+				}
+				// your friend was silenced
+				else {
+					if (command.from == null) {
+						command.ignored = true;
+					}
+					else {
+						command.ui.getCore().getSettings().getMy().addIgnore(command.from.getGuid());
+						command.message = Language.getLocalizedString(getClass(), "silenced_friend", command.from.getNickname());
+					}
+	             }
+				return command;
+			}
 	},
 	
 	UNSILENCE("unsilence", true, "* UNSILENCE: ") {
@@ -314,6 +406,25 @@ public enum UserCommands {
 				return getKey() + name;
 			}
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			// you were unsilenced
+			if (command.isDirectedAtMe()){
+				command.ui.getCore().getSettings().getMy().setSilenced(false);
+				command.message = Language.getLocalizedString(getClass(), "unsilenced");
+			}
+			// your friend was unsilenced
+			else {
+				if (command.from == null) {
+					command.ignored = true;
+				}
+				else {
+					command.ui.getCore().getSettings().getMy().removeIgnore(command.from.getGuid());
+					command.message = Language.getLocalizedString(getClass(), "friend_unsilenced", command.from.getNickname());
+				}
+             }
+			return command;
 		}
 	},
 	
@@ -329,6 +440,31 @@ public enum UserCommands {
 			}
 			return "";
 		}
+
+		protected Command executeCommand(Command command) {
+			// you were banned
+			if (command.isDirectedAtMe()) {
+				command.message = Language.getLocalizedString(getClass(), "banned");
+			}
+			// your friend was banned
+			else {
+				if (command.from == null) {
+					command.ignored = true;
+				}
+				else {
+					//Adds banned users IP to Blacklist
+					try {
+						command.ui.getCore().getSettings().getRulelist().add("DENY" + command.from.getFriendConnection().getSocketAddress());
+					} catch (Exception e) {
+						//If you can't add to blacklist, remove as friend.
+						command.ui.getCore().getFriendManager().permanentlyRemove(command.from);
+						e.printStackTrace();
+					}
+					command.message = Language.getLocalizedString(getClass(), "friend_banned", command.from.getNickname());
+				}
+				}
+			return command;
+			}
 	},
 	
 	// TODO unban
@@ -339,6 +475,10 @@ public enum UserCommands {
 			ui.getCore().shutdown();
 	        System.exit(0);
 			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			return null;
 		}
 	};
 	
@@ -370,6 +510,8 @@ public enum UserCommands {
 	
 	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
 	
+	protected abstract Command executeCommand(Command command);
+	
 	public static UserCommands getCommand(String message) {
 		message = message.trim().toLowerCase();
 		for (UserCommands cmd : UserCommands.values()) {
@@ -380,7 +522,7 @@ public enum UserCommands {
 		return null;
 	}
 	
-	public static String handleCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+	public static String handleOutCommand(String message, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		UserCommands command = getCommand(message);
 		if (command != null) {
 			if (command.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin()) {
@@ -391,5 +533,68 @@ public enum UserCommands {
 			message = command.execute(message, ui, chat);
 		}
 		return message;
+	}
+	
+	public static class Command {
+		private int guid;
+		private String message, name = "";
+		private Friend from;
+		private UISubsystem ui;
+		private boolean ignored = false;
+		private UserCommands cmd = null;
+		public Command(int guid, String message, UISubsystem ui){
+			this.guid = guid;
+			this.message = message;
+			this.ui = ui;
+			this.from = ui.getCore().getFriendManager().getFriend(guid);
+			checkIgnored();
+		}
+
+		private boolean isAdminCommand() {
+			if(!(from.isAdmin())) {
+				return false;
+			}
+			else {
+				for(UserCommands c : UserCommands.values()){
+					if(message.startsWith(c.getKey()) && c.isAdminOnly()){
+						name = message.substring(c.getKey().length()).trim();
+						guid = 0;
+						cmd = c;
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		private boolean isDirectedAtMe(){
+			return ui.getCore().getSettings().getMy().getNickname().equals(name);
+		}
+		
+		private void checkIgnored() {
+			if (from != null) {
+				this.ignored = ui.getCore().getSettings().getMy().getIgnoreList().contains(from.getGuid());
+		    }
+		}
+		    
+		public boolean isIgnored() {
+			return ignored;
+		}
+		
+		public Command execute(){
+			if(isAdminCommand()){
+				return cmd.executeCommand(this);
+			}
+			return this;
+		}
+
+		public int getGuid() {
+			return guid;
+		}
+
+		public String getMessage() {
+			return message;
+		}
 	}
 }
