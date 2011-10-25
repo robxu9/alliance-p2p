@@ -2,6 +2,8 @@
 
 Read through the comments on [http://code.google.com/p/alliancep2pbeta/issues/list issues with the beta] (1.2.0-pre build 1280). Some feature requests and bugfixes were already under development.
 
+Also look through the source code for "ToDo" indicating various bugs and unfinished features.
+
 If you're working on a feature, claim it here so we don't duplicate work. Once you're done, cross the item out. After we release a version with that feature included, the item can just be deleted.
 
 = Feature requests =
@@ -28,7 +30,7 @@ These are things that could probably be implemented quickly.
 
  * Assign aliases to shared folders like DC++.
  * Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.
- * Remove the Trusted users feature.
+ * Remove the Trusted users feature. It's redundant now with the /ignore command.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
@@ -44,7 +46,7 @@ These are things that could probably be implemented quickly.
     * ~~Installers: msi, pkg, deb, rpm, torrent~~
     * ~~Bad files: tmp, part~~
  * ~~In search results, show which users are sharing the files (as a tooltip?).~~
-    * Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.
+    * ~~Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.~~
  * ~~Add a "Time started" column to the Uploads tab.~~
 
 = Bugs =
@@ -58,4 +60,5 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * The automatic database compacting hangs the UI.
  * Some files marked as 'external' still get unhashed.
  * Though greyed out, the LAN option is still clickable.
+ * Your nickname and status are handled in multiple places by Alliance, and don't always stay synchronized. (Example: use /nick and then /me.)
  * ~~Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.~~
