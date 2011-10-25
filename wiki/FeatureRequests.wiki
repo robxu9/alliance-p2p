@@ -9,43 +9,43 @@ If you're working on a feature, claim it here so we don't duplicate work. Once y
 Things on this list are pretty major features, so no need to add them all in one update.
 
  * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot].
- * ~~Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.~~
-    * ~~Silence users from chat or ban them entirely. A banlist should get propagated to all users.~~
-    * ~~Send mass PMs to everyone.~~
-      * ~~It looks like this was already started; look in !MessageBoard.java.~~
-    * Appoint moderators who get some admin powers.
-    * ~~Admins can ban users~~
-    * ~~Silence users~~
-      * ~~For the above 3 we need to create a ban/silence list for each specific user that'll save locally on their machine.~~
+ * Allow admins to appoint moderators who get some admin powers.
  * Let clients with different encryption levels communicate (as per [http://code.google.com/p/alliancep2pbeta/issues/detail?id=6 this issue]), which would also let us easily transition to the "experimental" AES option.
  * Fix the LAN option so only on-campus people can connect; somehow COner is still connecting despite being off-campus.
  * Monitor selected users for new files
     * There's a [http://code.google.com/p/alliancep2pbeta/issues/detail?id=36 plugin] being developed for that.
+ * ~~Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.~~
+    * ~~Silence users from chat or ban them entirely. A banlist should get propagated to all users.~~
+    * ~~Send mass PMs to everyone.~~
+      * ~~It looks like this was already started; look in !MessageBoard.java.~~
+    * ~~Admins can ban users~~
+    * ~~Silence users~~
+      * ~~For the above 3 we need to create a ban/silence list for each specific user that'll save locally on their machine.~~
 
 = Minor features =
 
 These are things that could probably be implemented quickly.
 
+ * Assign aliases to shared folders like DC++.
+ * Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.
+ * Remove the Trusted users feature.
+ * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
+    * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
+    * http://www.jguru.com/faq/view.jsp?EID=16674
  * ~~Pause and resume downloads.~~
  * ~~User status messages like on DC++.~~
     * ~~Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.~~
     * ~~The "offline for N days" text could also go in this popup. Right now it makes the user list too wide and it scrolls horizontally.~~
- * Assign aliases to shared folders like DC++.
  * ~~More filetype icons for common extensions:~~
-    * These still need icons to be drawn instead of the placeholders.
+    * ~~These still need icons to be drawn instead of the placeholders.~~
     * ~~Programs: exe, com, bin, app, bat, jar~~
     * ~~Comics: cbr, cbz~~
     * ~~Games: rom, n64, nes, sav~~
     * ~~Installers: msi, pkg, deb, rpm, torrent~~
     * ~~Bad files: tmp, part~~
- * In search results, show which users are sharing the files (as a tooltip?).
+ * ~~In search results, show which users are sharing the files (as a tooltip?).~~
     * Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.
- * Resizing columns in the tabs behaves weirdly. 
  * ~~Add a "Time started" column to the Uploads tab.~~
- * Clicking a column in the Uploads and Downloads tabs should sort by it.
- * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
-    * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
-    * http://www.jguru.com/faq/view.jsp?EID=16674
 
 = Bugs =
 
@@ -56,6 +56,6 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * !NullPointerException when you try to connect to your own connection code.
  * Chat history file never gets limited, and large ones can freeze Alliance.
  * The automatic database compacting hangs the UI.
- * I think files marked as 'external' still get unhashed.
- * Though greyed out, the LAN option is still clickable
+ * Some files marked as 'external' still get unhashed.
+ * Though greyed out, the LAN option is still clickable.
  * ~~Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.~~
