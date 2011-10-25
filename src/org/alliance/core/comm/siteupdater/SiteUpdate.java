@@ -5,6 +5,7 @@ import org.alliance.core.CoreSubsystem;
 import org.alliance.core.file.FileManager;
 import org.alliance.core.Language;
 import org.alliance.core.comm.T;
+import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.util.*;
 import org.alliance.launchers.OSInfo;
 import static org.alliance.core.CoreSubsystem.KB;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
@@ -31,6 +33,7 @@ public class SiteUpdate implements Runnable {
     private final CoreSubsystem core;
     private static final String JAR_URL = "http://alliance-p2p.googlecode.com/svn/updater/version/alliance.new";
     private static final String INFO_URL = "http://alliance-p2p.googlecode.com/svn/updater/version/build.info";
+    private static final String USER_URL = "http://code.google.com/p/alliance-p2p/wiki/Updating";
     private boolean alive = true;
     private String updateFilePath;
     private String orginalFilePath;
@@ -173,8 +176,20 @@ public class SiteUpdate implements Runnable {
             UnZipTool.unZip(updateFilePath, updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME)), true);
             core.runUpdater(updateFilePath.substring(0,updateFilePath.lastIndexOf(FileManager.UPDATE_FILE_NAME))+"updates", orginalFilePath, siteVersion, siteBuild);
         } catch (Exception e) {
+        	 if(java.awt.Desktop.isDesktopSupported() ) {
+    			 java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+    			 java.net.URI url;
+				try {
+					url = new java.net.URI(USER_URL);
+					desktop.browse(url);
+				} catch (URISyntaxException e2) {
+					e2.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+    		 }
             core.getUICallback().statusMessage(Language.getLocalizedString(getClass(), "updatefailed"), true);
-            if (!OSInfo.isWindows()) {
+            if (OSInfo.isWindows()) {
                 core.getUICallback().statusMessage(Language.getLocalizedString(getClass(), "updatemanual"), true);
             }
         }
