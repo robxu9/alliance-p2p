@@ -54,7 +54,7 @@
                             <row>
                                 <cell>
                                     <panel border="0" axis="y">
-                                        <filler/>
+                                        <filler axis="x"/>
                                         <label id="port" tooltip="%text%" text="%text%"/>
                                     </panel>
                                 </cell>

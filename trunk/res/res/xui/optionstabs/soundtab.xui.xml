@@ -9,6 +9,26 @@
                                 <cell>
                                     <panel border="0" axis="y">
                                         <filler/>
+                                        <label id="openingsound" text="%text%"/>
+                                    </panel>
+                                </cell>
+                                <cell>
+                                    <panel border="0" axis="x">
+                                        <filler axis="x"/>
+                                        <textfield width="250" minwidth="250" maxwidth="250" id="internal.openingsound"/>
+                                    </panel>
+                                </cell>
+                            </row>
+                        </form>
+                        <panel axis="x">
+                            <filler/>
+                            <button eventid="browseopening" text="%text%"/>
+                        </panel>
+                        <form expand="horiz" border="5">
+                            <row>
+                                <cell>
+                                    <panel border="0" axis="y">
+                                        <filler/>
                                         <label id="private" text="%text%"/>
                                     </panel>
                                 </cell>
@@ -64,33 +84,11 @@
                             <filler/>
                             <button eventid="browsedownload" text="%text%"/>
                         </panel>
-                        
-                        <form expand="horiz" border="5">
-                            <row>
-                                <cell>
-                                    <panel border="0" axis="y">
-                                        <filler/>
-                                        <label id="openingsound" text="%text%"/>
-                                    </panel>
-                                </cell>
-                                <cell>
-                                    <panel border="0" axis="x">
-                                        <filler axis="x"/>
-                                        <textfield width="250" minwidth="250" maxwidth="250" id="internal.openingsound"/>
-                                    </panel>
-                                </cell>
-                            </row>
-                        </form>
-                        <panel axis="x">
-                            <filler/>
-                            <button eventid="browseopening" text="%text%"/>
-                        </panel>
-                        
                         <strut height="10"/>
-                        <mlabel id="blanknote" html="true">%text%
+                        <mlabel id="blanknote" expand="horiz" html="true">%text%
                         </mlabel>
                         <panel axis="x">
-                            <filler/>
+                            <filler axis="x"/>
                             <button width="85" eventid="soundmute" text="%text%"/>
                             <strut width="5"/>
                             <button width="85" eventid="sounddefault" text="%text%"/>
