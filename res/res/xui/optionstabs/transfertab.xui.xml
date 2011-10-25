@@ -41,11 +41,11 @@
                             </row>
                         </form>
                         <panel axis="x">
-                            <filler/>
+                            <filler axis="x"/>
                             <button eventid="browse" text="%text%"/>
                         </panel>
                         <panel axis="x">
-                            <mlabel id="downnote" html="true">%text%
+                            <mlabel id="downnote" expand="horiz" html="true">%text%
                             </mlabel>
                         </panel>
                     </panel>

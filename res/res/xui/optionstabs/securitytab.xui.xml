@@ -46,7 +46,7 @@
                             <filler/>
                         </panel>
                         <strut height="10"/>
-                        <mlabel id="cryptnote" html="true">%text%
+                        <mlabel id="cryptnote" expand="horiz" html="true">%text%
                         </mlabel>
                     </panel>
                 </panel>

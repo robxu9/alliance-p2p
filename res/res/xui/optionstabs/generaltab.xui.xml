@@ -19,10 +19,6 @@
                                 </cell>
                             </row>
                         </form>
-                        <panel axis="x">
-                            <mlabel id="nicknote" html="true">%text%
-                            </mlabel>
-                        </panel>
                         <form expand="horiz" border="5">
                             <row>
                                 <cell>
@@ -57,7 +53,7 @@
                             <row>
                                 <cell>
                                     <panel border="0" axis="y">
-                                        <filler/>
+                                        <filler axis="x"/>
                                         <label id="skin" text="%text%"/>
                                     </panel>
                                 </cell>
