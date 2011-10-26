@@ -1,5 +1,6 @@
 package org.alliance.ui.windows.mdi;
 
+
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import com.stendahls.util.TextUtils;
 import org.alliance.core.Language;
@@ -9,6 +10,8 @@ import org.alliance.core.file.filedatabase.FileDescriptor;
 import org.alliance.ui.UISubsystem;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,6 +23,8 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,6 +52,35 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(50);
         table.getColumnModel().getColumn(4).setPreferredWidth(50);
+        
+       table.getTableHeader().addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+                JTableHeader h = (JTableHeader) e.getSource();
+                TableColumnModel columnModel = h.getColumnModel();
+                int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+                int column = columnModel.getColumn(viewColumn).getModelIndex();
+                if (column != -1) {
+                    switch (column) {
+                        case 0:
+                        //	model.sortByName();
+                            break;
+                        case 1:
+                        //  model.sortBySize();
+                            break;
+                        case 2:
+                        //	model.sortByDaysAgo();
+                            break;
+                        case 3:
+                        //	model.sortBySources();
+                            break;
+                        case 4:
+                        //	model.sortBySpeed();
+                        	model.sortBySize();
+                            break;
+                    }
+                }
+        	}
+        }); 
 
         update();
         setTitle(Language.getLocalizedString(getClass(), "title"));
@@ -117,7 +151,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
     private class UploadWrapper {
     	
         public UploadConnection upload;
-        public String nickname, filename, speed, sent, startedAt;
+        public String nickname, filename, speed, sent, elapsed;
         
         private Date began;
 
@@ -136,23 +170,71 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 if (fd != null) {
                     filename = fd.getSubPath();
                 }
+                elapsed = elapsedSince(began);
                 speed = TextUtils.formatByteSize((long) upload.getBandwidthOut().getCPS()) + "/s";
                 sent = TextUtils.formatByteSize(upload.getBytesSent());
             } catch (IOException e) {
                 ui.handleErrorInEventLoop(e);
             }
         }
+        
+        private String elapsedSince(Date began) {
+        	Date current = new Date(System.currentTimeMillis());
+        	long diff = (current.getTime() - began.getTime()) / 1000;
+        	int secs = 0, mins = 0, hours = 0, days = 0, weeks = 0;
+        	if (diff < 60) {
+        		secs = (int)diff;
+        		return secs + " sec";
+        	}
+        	secs = (int)(diff % 60);
+        	diff /= 60;
+        	if (diff < 60) {
+        		mins = (int)diff;
+        		return mins + ":" + String.format("%02d", secs) + "mins";
+        	}
+        	mins = (int)(diff % 60);
+        	diff /= 60;
+        	if (diff < 24) {
+        		hours = (int)diff;
+        		return hours + "h" + mins + "m";
+        	}
+        	days = (int)(diff % 24);
+        	diff /= 24;
+        	if (diff < 7) {
+        		weeks = (int)diff;
+        		return days + "d" + hours + "h";
+        	}
+        	weeks = (int)(diff % 7);
+        	return weeks + "w" + days + "d";
+        }
     }
 
     private class UploadsTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = -4440907637702707612L;
-
+		
 		@Override
         public int getRowCount() {
             return rows.size();
         }
+        public void sortBySize() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+        		{
+        			for(int i = j; i > 0; i--)				
+        			{
+        				if(Integer.parseInt(rows.get(i).sent) > Integer.parseInt(rows.get(i-1).sent))
+        				{
+        					UploadWrapper temp = rows.get(i);
+        					rows.set(i, rows.get(i-1));
+        					rows.set(i-1, temp);
+        				}
+        			}
+        			j--;
+        		}
+        	model.fireTableStructureChanged();
+		}
 
-        @Override
+		@Override
         public int getColumnCount() {
             return 5;
         }
@@ -185,42 +267,12 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 case 2:
                     return rows.get(rowIndex).speed;
                 case 3:
-                	return elapsedSince(rows.get(rowIndex).began);
+                	return rows.get(rowIndex).elapsed;
                 case 4:
                     return rows.get(rowIndex).sent;
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
             }
-        }
-        
-        private String elapsedSince(Date began) {
-        	Date current = new Date(System.currentTimeMillis());
-        	long diff = (current.getTime() - began.getTime()) / 1000;
-        	int secs = 0, mins = 0, hours = 0, days = 0, weeks = 0;
-        	if (diff < 60) {
-        		secs = (int)diff;
-        		return secs + " sec";
-        	}
-        	secs = (int)(diff % 60);
-        	diff /= 60;
-        	if (diff < 60) {
-        		mins = (int)diff;
-        		return mins + " min";
-        	}
-        	mins = (int)(diff % 60);
-        	diff /= 60;
-        	if (diff < 24) {
-        		hours = (int)diff;
-        		return hours + "h" + mins + "m";
-        	}
-        	days = (int)(diff % 24);
-        	diff /= 24;
-        	if (diff < 7) {
-        		weeks = (int)diff;
-        		return days + "d" + hours + "h";
-        	}
-        	weeks = (int)(diff % 7);
-        	return weeks + "w" + days + "d";
         }
     }
 
