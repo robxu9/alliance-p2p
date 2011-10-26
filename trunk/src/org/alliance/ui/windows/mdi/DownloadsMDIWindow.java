@@ -70,18 +70,19 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         table = (JTable) xui.getComponent("tableDownload");
         table.setModel(model = new DownloadsTableModel());
         table.setAutoCreateColumnsFromModel(false);
-        table.getColumnModel().getColumn(1).setCellRenderer(new ProgressBarCellRenderer());
-        table.getColumnModel().getColumn(0).setPreferredWidth(300);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(2).setCellRenderer(new ProgressBarCellRenderer());
+        table.getColumnModel().getColumn(1).setPreferredWidth(300);
+        table.getColumnModel().getColumn(2).setPreferredWidth(80);
 
         status = (JLabel) xui.getComponent("status");
         downloadingFromText = (JLabel) xui.getComponent("downloadingfromtext");
         uploadingToText = (JLabel) xui.getComponent("uploadingtotext");
 
-        setFixedColumnSize(table.getColumnModel().getColumn(2), 60);
+        setFixedColumnSize(table.getColumnModel().getColumn(0), 10);
         setFixedColumnSize(table.getColumnModel().getColumn(3), 60);
         setFixedColumnSize(table.getColumnModel().getColumn(4), 60);
-        setFixedColumnSize(table.getColumnModel().getColumn(5), 10);
+        setFixedColumnSize(table.getColumnModel().getColumn(5), 60);
+        setFixedColumnSize(table.getColumnModel().getColumn(6), 10);
 
         downloadGrid = (JDownloadGrid) xui.getComponent("downloadgrid");
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -211,21 +212,24 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
     private void sort(int i) {
   	  switch (i) {
   	  	case 0:
+  	  		model.sortByPriority();
+	  		break;
+  	  	case 1:
   	  		model.sortByFileName();
             break;
-  	  	case 1:
+  	  	case 2:
   	  		model.sortByPercent();
             break;
-  	  	case 2:
+  	  	case 3:
   	  		model.sortBySpeed();
             break;
-  	  	case 3:
+  	  	case 4:
   	  		model.sortByETA();
             break;
-  	  	case 4:
+  	  	case 5:
   	  		model.sortBySize();
             break;
-  	  	case 5:
+  	  	case 6:
   	  		model.sortByConnections();
   	  		break;
   	  }
@@ -347,7 +351,7 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
 
         public Download download;
         public String name, speed, size;
-        public int percentComplete, numberOfConnections;
+        public int percentComplete, numberOfConnections, priority;
         public boolean complete;
         public Download.State state;
         public String eta;
@@ -373,6 +377,7 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                 numberOfConnections = download.getNConnections();
                 speed = download.getBandwidth().getCPSHumanReadable();
                 complete = download.isComplete();
+                priority = ui.getCore().getNetworkManager().getDownloadManager().getQuePos(download);
                 if (complete) {
                     downloadGrid.setDownload(null);
                 }
@@ -411,6 +416,33 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         public int getRowCount() {
             return rows.size();
         }
+
+		public void sortByPriority() {
+			int j = (rows.size()-1);
+        	while(j > 0)
+        		{
+        			for(int i = j; i > 0; i--)				
+        			{
+        				if(sortUp) {
+        					if(rows.get(i).priority > rows.get(i-1).priority)
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        			}
+        				else {
+        					if(rows.get(i).priority < rows.get(i-1).priority)
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        				}
+        			}
+        			j--;
+        		}
+		}
 
 		public void sortBySize() {
         	int j = (rows.size()-1);
@@ -576,23 +608,25 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
 
 		@Override
         public int getColumnCount() {
-            return 6;
+            return 7;
         }
 
         @Override
         public String getColumnName(int columnIndex) {
             switch (columnIndex) {
-                case 0:
+            	case 0:
+            		return Language.getLocalizedString(getClass().getEnclosingClass(), "priority");
+            	case 1:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "name");
-                case 1:
-                    return Language.getLocalizedString(getClass().getEnclosingClass(), "progress");
                 case 2:
-                    return Language.getLocalizedString(getClass().getEnclosingClass(), "size");
+                    return Language.getLocalizedString(getClass().getEnclosingClass(), "progress");
                 case 3:
-                    return Language.getLocalizedString(getClass().getEnclosingClass(), "eta");
+                    return Language.getLocalizedString(getClass().getEnclosingClass(), "size");
                 case 4:
-                    return Language.getLocalizedString(getClass().getEnclosingClass(), "speed");
+                    return Language.getLocalizedString(getClass().getEnclosingClass(), "eta");
                 case 5:
+                    return Language.getLocalizedString(getClass().getEnclosingClass(), "speed");
+                case 6:
                     return "#";
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
@@ -602,17 +636,19 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
-                case 0:
+            	case 0:
+            		return rows.get(rowIndex).priority;
+            	case 1:
                     return rows.get(rowIndex).name;
-                case 1:
-                    return rows.get(rowIndex).percentComplete;
                 case 2:
-                    return rows.get(rowIndex).size;
+                    return rows.get(rowIndex).percentComplete;
                 case 3:
-                    return rows.get(rowIndex).eta;
+                    return rows.get(rowIndex).size;
                 case 4:
-                    return rows.get(rowIndex).speed;
+                    return rows.get(rowIndex).eta;
                 case 5:
+                    return rows.get(rowIndex).speed;
+                case 6:
                     return rows.get(rowIndex).numberOfConnections;
                 default:
                     return Language.getLocalizedString(getClass().getEnclosingClass(), "undefined");
@@ -685,15 +721,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                         ui.getCore().getNetworkManager().getDownloadManager().moveDown(d);
                     }
                 });
-                moveDown(i, dw);
             }
-            model.fireTableStructureChanged();
-            for (int i : selection) {
-                if (i < rows.size() - 1) {
-                    table.getSelectionModel().addSelectionInterval(i + 1, i + 1);
-                }
             }
-        }
+        
     }
 
     public void EVENT_moveup(ActionEvent e) {
@@ -709,13 +739,6 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                         ui.getCore().getNetworkManager().getDownloadManager().moveUp(d);
                     }
                 });
-                moveUp(i, dw);
-            }
-            model.fireTableStructureChanged();
-            for (int i : selection) {
-                if (i > 0) {
-                    table.getSelectionModel().addSelectionInterval(i - 1, i - 1);
-                }
             }
         }
     }
@@ -735,12 +758,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                         ui.getCore().getNetworkManager().getDownloadManager().moveTop(d);
                     }
                 });
-                moveTop(i + offset, dw);
                 offset++;
             }
-            model.fireTableStructureChanged();
-            table.getSelectionModel().addSelectionInterval(0, selection.length - 1);
-        }
+    }
     }
 
     public void EVENT_movebottom(ActionEvent e) {
@@ -758,53 +778,9 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                         ui.getCore().getNetworkManager().getDownloadManager().moveBottom(d);
                     }
                 });
-                moveBottom(i - offset, dw);
                 offset++;
             }
-            model.fireTableStructureChanged();
-            ListSelectionModel sm = table.getSelectionModel();
-            sm.addSelectionInterval(rows.size() - selection.length, rows.size() - 1);
         }
-    }
-
-    private void moveUp(int i, DownloadWrapper dw) {
-        if (i == 0) {
-            return;
-        }
-        rows.remove(i);
-        rows.add(i - 1, dw);
-    }
-
-    private void moveDown(int i, DownloadWrapper dw) {
-        if (i == rows.size() - 1) {
-            return;
-        }
-        rows.remove(dw);
-        rows.add(i + 1, dw);
-    }
-
-    private void moveTop(int i, DownloadWrapper dw) {
-        if (i == 0) {
-            return;
-        }
-        rows.remove(i);
-        rows.add(0, dw);
-    }
-
-    private void movePos(int pos, int i, DownloadWrapper dw) {
-        rows.remove(i);
-        if (pos > i) {
-            pos--;
-        }
-        rows.add(pos, dw);
-    }
-
-    private void moveBottom(int i, DownloadWrapper dw) {
-        if (i == rows.size() - 1) {
-            return;
-        }
-        rows.remove(dw);
-        rows.add(dw);
     }
 
     public void EVENT_openfile(ActionEvent e) {

@@ -422,6 +422,10 @@ public class DownloadManager extends Manager implements Runnable {
         }
         downloadQue.add(pos, d);
     }
+    
+    public int  getQuePos(Download d) {
+    	return downloadQue.indexOf(d) + 1;
+    }
 
     private static class BlockMaskRequest {
 
