@@ -78,11 +78,11 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         downloadingFromText = (JLabel) xui.getComponent("downloadingfromtext");
         uploadingToText = (JLabel) xui.getComponent("uploadingtotext");
 
-        setFixedColumnSize(table.getColumnModel().getColumn(0), 10);
-        setFixedColumnSize(table.getColumnModel().getColumn(3), 60);
-        setFixedColumnSize(table.getColumnModel().getColumn(4), 60);
-        setFixedColumnSize(table.getColumnModel().getColumn(5), 60);
-        setFixedColumnSize(table.getColumnModel().getColumn(6), 10);
+        table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        table.getColumnModel().getColumn(3).setPreferredWidth(60);
+        table.getColumnModel().getColumn(4).setPreferredWidth(60);
+        table.getColumnModel().getColumn(5).setPreferredWidth(60);
+        table.getColumnModel().getColumn(6).setPreferredWidth(10);
 
         downloadGrid = (JDownloadGrid) xui.getComponent("downloadgrid");
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -261,12 +261,6 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
             s = " ";
         }
         return s;
-    }
-
-    private void setFixedColumnSize(TableColumn column, int i) {
-        column.setPreferredWidth(i);
-        column.setMaxWidth(i);
-        column.setMinWidth(i);
     }
 
     public void update() {
