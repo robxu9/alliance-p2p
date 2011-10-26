@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
+import org.alliance.Version;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
@@ -383,12 +384,12 @@ public enum UserCommands {
 				}
 				// your friend was silenced
 				else {
-					if (command.from == null) {
+					if (command.directedAt == null) {
 						command.ignored = true;
 					}
 					else {
-						command.ui.getCore().getSettings().getMy().addIgnore(command.from.getGuid());
-						command.message = Language.getLocalizedString(getClass(), "silenced_friend", command.from.getNickname());
+						command.ui.getCore().getSettings().getMy().addIgnore(command.directedAt.getGuid());
+						command.message = Language.getLocalizedString(getClass(), "silenced_friend", command.directedAt.getNickname());
 					}
 	             }
 				return command;
@@ -416,12 +417,12 @@ public enum UserCommands {
 			}
 			// your friend was unsilenced
 			else {
-				if (command.from == null) {
+				if (command.directedAt == null) {
 					command.ignored = true;
 				}
 				else {
-					command.ui.getCore().getSettings().getMy().removeIgnore(command.from.getGuid());
-					command.message = Language.getLocalizedString(getClass(), "friend_unsilenced", command.from.getNickname());
+					command.ui.getCore().getSettings().getMy().removeIgnore(command.directedAt.getGuid());
+					command.message = Language.getLocalizedString(getClass(), "friend_unsilenced", command.directedAt.getNickname());
 				}
              }
 			return command;
@@ -448,26 +449,83 @@ public enum UserCommands {
 			}
 			// your friend was banned
 			else {
-				if (command.from == null) {
+				if (command.directedAt == null) {
 					command.ignored = true;
 				}
 				else {
 					//Adds banned users IP to Blacklist
 					try {
-						command.ui.getCore().getSettings().getRulelist().add("DENY" + command.from.getFriendConnection().getSocketAddress());
+						command.ui.getCore().getSettings().getRulelist().add("DENY" + command.directedAt.getFriendConnection().getSocketAddress());
 					} catch (Exception e) {
 						//If you can't add to blacklist, remove as friend.
-						command.ui.getCore().getFriendManager().permanentlyRemove(command.from);
+						command.ui.getCore().getFriendManager().permanentlyRemove(command.directedAt);
 						e.printStackTrace();
 					}
-					command.message = Language.getLocalizedString(getClass(), "friend_banned", command.from.getNickname());
+					command.message = Language.getLocalizedString(getClass(), "friend_banned", command.directedAt.getNickname());
 				}
 				}
 			return command;
 			}
 	},
 	
-	// TODO unban
+	UNBAN("unban", true, "* UNBAN: ") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String name = args.trim();
+			Friend friend = ui.getCore().getFriendManager().getFriend(name);
+			if (friend == null) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
+			}
+			else {
+				return getKey() + name;
+			}
+			return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			// you were unbanned
+			if (command.isDirectedAtMe()) {
+				command.message = Language.getLocalizedString(getClass(), "unbanned");
+			}
+			// your friend was unbanned
+			else {
+				if (command.directedAt == null) {
+					command.ignored = true;
+				}
+				else {
+					//Removes unbanned users IP from the Blacklist
+					try {
+						command.ui.getCore().getSettings().getRulelist().remove("DENY" + command.directedAt.getFriendConnection().getSocketAddress());
+					} catch (Exception e) {
+						//Do nothing as it wasn't this person's friend
+					}
+					command.message = Language.getLocalizedString(getClass(), "friend_unbanned", command.directedAt.getNickname());
+				}
+				}
+			return command;
+			}
+	},
+	
+	PLEASEUPDATE("pleaseupdate", true, ""){
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				if(friend.getAllianceBuildNumber() < Version.BUILD_NUMBER){
+				try {
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(SYSTEM.getKey() + Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION));
+				}
+				catch (Exception e) {
+					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
+					e.printStackTrace();
+				}
+				}
+		}
+			return "";
+		}
+		protected Command executeCommand(Command command) {
+			return null;
+		}
+		
+	},
 	
 	EXIT("exit") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
@@ -538,7 +596,7 @@ public enum UserCommands {
 	public static class Command {
 		private int guid;
 		private String message, name = "";
-		private Friend from;
+		private Friend from, directedAt;
 		private UISubsystem ui;
 		private boolean ignored = false;
 		private UserCommands cmd = null;
@@ -558,6 +616,7 @@ public enum UserCommands {
 				for(UserCommands c : UserCommands.values()){
 					if(message.startsWith(c.getKey()) && c.isAdminOnly()){
 						name = message.substring(c.getKey().length()).trim();
+						directedAt = ui.getCore().getFriendManager().getFriend(name);
 						guid = 0;
 						cmd = c;
 						return true;
@@ -569,7 +628,7 @@ public enum UserCommands {
 		}
 		
 		private boolean isDirectedAtMe(){
-			return ui.getCore().getSettings().getMy().getNickname().equals(name);
+			return ui.getCore().getSettings().getMy().getGuid().equals(name);
 		}
 		
 		private void checkIgnored() {
