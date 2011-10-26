@@ -39,6 +39,8 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
 	private UploadsMDIWindow.UploadsTableModel model;
     private JTable table;
     private ArrayList<UploadWrapper> rows = new ArrayList<UploadsMDIWindow.UploadWrapper>();
+    private int sort;
+    private boolean sortUp = false;
 
     public UploadsMDIWindow(UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "uploads", ui);
@@ -60,24 +62,8 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
                 int viewColumn = columnModel.getColumnIndexAtX(e.getX());
                 int column = columnModel.getColumn(viewColumn).getModelIndex();
                 if (column != -1) {
-                    switch (column) {
-                        case 0:
-                        //	model.sortByName();
-                            break;
-                        case 1:
-                        //  model.sortBySize();
-                            break;
-                        case 2:
-                        //	model.sortByDaysAgo();
-                            break;
-                        case 3:
-                        //	model.sortBySources();
-                            break;
-                        case 4:
-                        //	model.sortBySpeed();
-                        	model.sortBySize();
-                            break;
-                    }
+                    sort = column;
+                    sortUp = !sortUp;
                 }
         	}
         }); 
@@ -89,7 +75,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
 
     public void update() {
         boolean structureChanged = false;
-
+        sort(sort);
         for (UploadWrapper w : rows) {
             w.speed = Language.getLocalizedString(getClass(), "complete");
         }
@@ -115,6 +101,27 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         }
 
         ((JLabel) xui.getComponent("status")).setText(Language.getLocalizedString(getClass(), "uptotal", TextUtils.formatByteSize(ui.getCore().getNetworkManager().getBandwidthOut().getTotalBytes())));
+    }
+    
+  private void sort(int i) {
+	  switch (i) {
+	  	case 0:
+	  		model.sortByNickname();
+          break;
+	  	case 1:
+	  		model.sortByFileName();
+          break;
+	  	case 2:
+	  		model.sortBySpeed();
+          break;
+	  	case 3:
+	  		model.sortByElapsed();
+          break;
+	  	case 4:
+	  		model.sortBySize();
+          break;
+	  }
+    	
     }
 
     private UploadWrapper getWrapperFor(UploadConnection u) {
@@ -161,7 +168,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         }
 
         public void update() {
-            try {
+        	try {
                 if (upload == null || upload.getRemoteFriend() == null) {
                     return;
                 }
@@ -216,22 +223,140 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         public int getRowCount() {
             return rows.size();
         }
-        public void sortBySize() {
+		
+		public void sortBySize() {
         	int j = (rows.size()-1);
         	while(j > 0)
         		{
         			for(int i = j; i > 0; i--)				
         			{
-        				if(rows.get(i).upload.getBytesSent() > rows.get(i-1).upload.getBytesSent())
-        				{
-        					UploadWrapper temp = rows.get(i);
-        					rows.set(i, rows.get(i-1));
-        					rows.set(i-1, temp);
+        				if(sortUp) {
+        					if(rows.get(i).upload.getBytesSent() > rows.get(i-1).upload.getBytesSent())
+        					{
+        						UploadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        			}
+        				else {
+        					if(rows.get(i).upload.getBytesSent() < rows.get(i-1).upload.getBytesSent())
+        					{
+        						UploadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
         				}
         			}
         			j--;
         		}
-        	model.fireTableStructureChanged();
+		}
+        
+        public void sortByElapsed() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+        		{
+        			for(int i = j; i > 0; i--)				
+        			{
+        				if(sortUp) {
+        					if(rows.get(i).began.before(rows.get(i-1).began))
+        					{
+        						UploadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        			}
+        				else {
+        					if(rows.get(i).began.after(rows.get(i-1).began))
+        					{
+        						UploadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        				}
+        			}
+        			j--;
+        		}
+		}
+        
+        public void sortBySpeed() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).upload.getBandwidthOut().getCPS() > rows.get(i-1).upload.getBandwidthOut().getCPS())
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).upload.getBandwidthOut().getCPS() < rows.get(i-1).upload.getBandwidthOut().getCPS())
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+        
+        public void sortByFileName() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).filename.compareToIgnoreCase(rows.get(i-1).filename) == -1)
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).filename.compareToIgnoreCase(rows.get(i-1).filename) == 1)
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+        
+        public void sortByNickname() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).nickname.compareToIgnoreCase(rows.get(i-1).nickname) == -1)
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).nickname.compareToIgnoreCase(rows.get(i-1).nickname) == 1)
+    					{
+    						UploadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
 		}
 
 		@Override
