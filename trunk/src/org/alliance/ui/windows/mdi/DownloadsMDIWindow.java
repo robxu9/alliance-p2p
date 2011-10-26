@@ -23,8 +23,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.filechooser.FileFilter;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -58,6 +60,8 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
     private JLabel status, downloadingFromText, uploadingToText;
     private ArrayList<DownloadWrapper> rows = new ArrayList<DownloadWrapper>();
     private DownloadWrapper interestingDownloadWrapper;
+    private int sort;
+    private boolean sortUp = false;
 
     public DownloadsMDIWindow(final UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "downloads", ui);
@@ -93,6 +97,19 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
                 updateDownloadingFromAndUploadingToText();
             }
         });
+        
+        table.getTableHeader().addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+                JTableHeader h = (JTableHeader) e.getSource();
+                TableColumnModel columnModel = h.getColumnModel();
+                int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+                int column = columnModel.getColumn(viewColumn).getModelIndex();
+                if (column != -1) {
+                    sort = column;
+                    sortUp = !sortUp;
+                }
+        	}
+        }); 
 
         table.addMouseListener(new MouseAdapter() {
 
@@ -190,6 +207,29 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         }
         return s;
     }
+    
+    private void sort(int i) {
+  	  switch (i) {
+  	  	case 0:
+  	  		model.sortByFileName();
+            break;
+  	  	case 1:
+  	  		model.sortByPercent();
+            break;
+  	  	case 2:
+  	  		model.sortBySpeed();
+            break;
+  	  	case 3:
+  	  		model.sortByETA();
+            break;
+  	  	case 4:
+  	  		model.sortBySize();
+            break;
+  	  	case 5:
+  	  		model.sortByConnections();
+  	  		break;
+  	  }
+    }
 
     private String getUploadingToText(DownloadWrapper w) {
         String text = null;
@@ -227,7 +267,7 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
 
     public void update() {
         boolean structureChanged = false;
-
+        sort(sort);
         ArrayList<Download> al = new ArrayList<Download>(ui.getCore().getNetworkManager().getDownloadManager().downloads());
         for (Download d : al) {
             DownloadWrapper dw = getWrapperFor(d);
@@ -372,7 +412,169 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
             return rows.size();
         }
 
-        @Override
+		public void sortBySize() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+        		{
+        			for(int i = j; i > 0; i--)				
+        			{
+        				if(sortUp) {
+        					if(rows.get(i).download.getFd().getSize() > rows.get(i-1).download.getFd().getSize())
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        			}
+        				else {
+        					if(rows.get(i).download.getFd().getSize() < rows.get(i-1).download.getFd().getSize())
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        				}
+        			}
+        			j--;
+        		}
+		}
+        
+        public void sortByETA() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+        		{
+        			for(int i = j; i > 0; i--)				
+        			{
+        				if(sortUp) {
+        					if(rows.get(i).download.getETAInMinutes() > rows.get(i-1).download.getETAInMinutes())
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        			}
+        				else {
+        					if(rows.get(i).download.getETAInMinutes() < rows.get(i-1).download.getETAInMinutes())
+        					{
+        						DownloadWrapper temp = rows.get(i);
+        						rows.set(i, rows.get(i-1));
+        						rows.set(i-1, temp);
+        					}
+        				}
+        			}
+        			j--;
+        		}
+		}
+        
+        public void sortBySpeed() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).download.getBandwidth().getCPS() > rows.get(i-1).download.getBandwidth().getCPS())
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).download.getBandwidth().getCPS() < rows.get(i-1).download.getBandwidth().getCPS())
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+        
+        public void sortByFileName() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).name.compareToIgnoreCase(rows.get(i-1).name) == -1)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).name.compareToIgnoreCase(rows.get(i-1).name) == 1)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+        
+        public void sortByPercent() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).percentComplete > rows.get(i-1).percentComplete)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).percentComplete < rows.get(i-1).percentComplete)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+        
+        public void sortByConnections() {
+        	int j = (rows.size()-1);
+        	while(j > 0)
+    		{
+    			for(int i = j; i > 0; i--)				
+    			{
+    				if(sortUp) {
+    					if(rows.get(i).numberOfConnections > rows.get(i-1).numberOfConnections)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    			}
+    				else {
+    					if(rows.get(i).numberOfConnections < rows.get(i-1).numberOfConnections)
+    					{
+    						DownloadWrapper temp = rows.get(i);
+    						rows.set(i, rows.get(i-1));
+    						rows.set(i-1, temp);
+    					}
+    				}
+    			}
+    			j--;
+    		}
+		}
+
+		@Override
         public int getColumnCount() {
             return 6;
         }
