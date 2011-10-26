@@ -222,7 +222,7 @@ public class UploadsMDIWindow extends AllianceMDIWindow {
         		{
         			for(int i = j; i > 0; i--)				
         			{
-        				if(Integer.parseInt(rows.get(i).sent) > Integer.parseInt(rows.get(i-1).sent))
+        				if(rows.get(i).upload.getBytesSent() > rows.get(i-1).upload.getBytesSent())
         				{
         					UploadWrapper temp = rows.get(i);
         					rows.set(i, rows.get(i-1));
