@@ -29,7 +29,7 @@ public class ShareScanner extends Thread {
     private boolean restartImmediately = false;
     private ShareManager manager;
     private long bytesScanned;
-    private int filesScanned;
+    private int filesScanned, backup = 2;
     private CoreSubsystem core;
     private boolean shouldBeFastScan = false;
     private boolean scanInProgress = false;
@@ -139,8 +139,15 @@ public class ShareScanner extends Thread {
     }
 
     private void startScanCycle() {
-        manager.getCore().getUICallback().statusMessage(Language.getLocalizedString(getClass(), "backup"), true);
+	//Only backup once every 3 cycles
+    //By default backup = 2 as to avoid the initial backup when starting Alliance
+    if(backup %3 == 0) {
+    	manager.getCore().getUICallback().statusMessage(Language.getLocalizedString(getClass(), "backup"), true);
         manager.getCore().getFileManager().createBackup();
+	}
+	else {
+		backup++;
+	}
         if (isBreakScan()) {
             return;
         }
