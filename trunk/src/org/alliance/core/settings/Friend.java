@@ -18,6 +18,7 @@ public class Friend {
     private String renamednickname; //used to display a different nickname then the "anonymous" one in ones UI
     private String ugroupname = "";
     private Integer trusted = 0; //0 untrusted
+    private Integer ignored = 0; // 0 NOT ignored
 
     public Friend() {
     }
@@ -125,5 +126,32 @@ public class Friend {
 
     public void setFixedhost(String fixedhost) {
         this.fixedhost = fixedhost;
+    }
+    
+    public void ignoreFriend() {
+    	this.ignored = 1;
+    }
+    
+    public boolean unignoreFriend() {
+    	if(ignored == 1) { 
+    		this.ignored = 0;
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public Integer getIgnored() {
+    	return ignored;
+    }
+    
+    public void setIgnored(int ignored) {
+    	this.ignored = ignored;
+    }
+    
+    public boolean isIgnored() {
+    	if(ignored == 1) {
+    		return true;
+    	}
+    	return false;
     }
 }

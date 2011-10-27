@@ -1,6 +1,7 @@
 package org.alliance.misc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -285,14 +286,13 @@ public enum UserCommands {
 	IGNORELIST("ignorelist") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			StringBuilder s = new StringBuilder();
-			Set<Integer> ignoreList = ui.getCore().getSettings().getMy().getIgnoreList();
+			ArrayList<org.alliance.core.settings.Friend> ignoreList = ui.getCore().getSettings().getIgnoreList();
 			if (ignoreList.isEmpty()) {
 				s.append(Language.getLocalizedString(getClass(), "ignorelistempty"));
 			}
 			else {
 				s.append("<b>" + Language.getLocalizedString(getClass(), "ignorelistabout") + "</b>");
-				for (Integer guid : ignoreList) {
-					Friend friend = ui.getCore().getFriendManager().getFriend(guid);
+				for (org.alliance.core.settings.Friend friend : ignoreList) {
 					s.append("<br>&nbsp;&bull; " + friend.getNickname());
 				}
 			}
@@ -318,7 +318,7 @@ public enum UserCommands {
 			else {
 				// TODO why does starting Alliance with a nonempty ignore list
 				// corrupt the settings?
-				ui.getCore().getSettings().getMy().addIgnore(friend.getGuid());
+				ui.getCore().getSettings().getFriend(friend.getGuid()).ignoreFriend();
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "ignored", name));
             }
 			return "";
@@ -336,7 +336,7 @@ public enum UserCommands {
 			if (friend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
-			else if (!ui.getCore().getSettings().getMy().removeIgnore(friend.getGuid())) {
+			else if (!ui.getCore().getSettings().getFriend(friend.getGuid()).unignoreFriend()) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignore_invalid", name));
 			}
 			else {
@@ -352,8 +352,8 @@ public enum UserCommands {
 	
 	UNIGNOREALL("unignoreall") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			int n = ui.getCore().getSettings().getMy().getIgnoreList().size();
-			ui.getCore().getSettings().getMy().getIgnoreList().clear();
+			int n = ui.getCore().getSettings().getIgnoreList().size();
+			ui.getCore().getSettings().getIgnoreList().clear();
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "unignoredall", Integer.toString(n)));
 			return "";
 		}
@@ -388,7 +388,7 @@ public enum UserCommands {
 						command.ignored = true;
 					}
 					else {
-						command.ui.getCore().getSettings().getMy().addIgnore(command.directedAt.getGuid());
+						command.ui.getCore().getSettings().getFriend(command.directedAt.getGuid()).ignoreFriend();
 						command.message = Language.getLocalizedString(getClass(), "silenced_friend", command.directedAt.getNickname());
 					}
 	             }
@@ -421,7 +421,7 @@ public enum UserCommands {
 					command.ignored = true;
 				}
 				else {
-					command.ui.getCore().getSettings().getMy().removeIgnore(command.directedAt.getGuid());
+					command.ui.getCore().getSettings().getFriend(command.directedAt.getGuid()).unignoreFriend();
 					command.message = Language.getLocalizedString(getClass(), "friend_unsilenced", command.directedAt.getNickname());
 				}
              }
@@ -633,7 +633,7 @@ public enum UserCommands {
 		
 		private void checkIgnored() {
 			if (from != null) {
-				this.ignored = ui.getCore().getSettings().getMy().getIgnoreList().contains(from.getGuid());
+				this.ignored = ui.getCore().getSettings().getFriend(from.getGuid()).isIgnored();
 		    }
 		}
 		    

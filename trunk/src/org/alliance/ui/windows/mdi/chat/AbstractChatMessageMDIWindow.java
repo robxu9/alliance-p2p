@@ -21,7 +21,6 @@ package org.alliance.ui.windows.mdi.chat;
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
-import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
 import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;

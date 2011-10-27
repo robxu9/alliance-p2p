@@ -18,8 +18,7 @@ public class My extends SettingClass {
     private Integer cguid = 0; //this is a checksum of the invitations property, disguised so that script kiddies won't find it
     private Integer invitations = 0; //every time this user completes an invitation successfully he gets a point
     private String status = "";
-    private TreeSet<Integer> ignoreList = new TreeSet<Integer>();
-    private boolean silenced = false;
+    private Integer silenced = 0; //0 Not silenced
 
     public My() {
     }
@@ -90,28 +89,17 @@ public class My extends SettingClass {
         this.invitations = invitations;
         cguid = (invitations ^ 234427) * 13;
     }
-    
-	public void addIgnore(int guid) {
-		ignoreList.add(guid);
-	}
-	
-	public boolean removeIgnore(int guid) {
-		return ignoreList.remove(guid);
-	}
-	
-	public TreeSet<Integer> getIgnoreList() {
-		return ignoreList;
-	}
-	
-	public void setIgnoreList(TreeSet<Integer> ignoreList) {
-		this.ignoreList = ignoreList;
-	}
 	
 	public boolean isSilenced(){
-		return silenced;
+		return silenced == 1;
 	}
 	
 	public void setSilenced(boolean silence){
-		this.silenced = silence;
+		if(silence) {
+			this.silenced = 1;
+		}
+		else {
+			this.silenced = 0;
+		}
 	}
 }

@@ -121,4 +121,14 @@ public class Settings {
         }
         sharelist.add(share);
     }
+    
+    public ArrayList<Friend> getIgnoreList() {
+    	ArrayList<Friend> ignoreList = new ArrayList<Friend>();
+    	for(Friend f : friendlist) {
+    		if(f.isIgnored()) {
+    			ignoreList.add(f);
+    		}
+    	}
+    	return ignoreList;
+    }
 }

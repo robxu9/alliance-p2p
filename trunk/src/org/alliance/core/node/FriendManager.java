@@ -416,12 +416,6 @@ public class FriendManager extends Manager {
             core.getNetworkManager().sendPersistently(new PleaseForwardInvitation(getUntrustedNode(guid)), route);
         }
     }
-
-    // Does this really permanently remove someone, so they can't reconnect?
-    // Even if they change their nickname or wait for you to restart or
-    // something? I'd expect banning to require a list of GUIDs to actively
-    // refuse.
-    //TODO: Add unremovable (unless admin) IP to users blacklist
     
     public void permanentlyRemove(Friend f) {
         try {
