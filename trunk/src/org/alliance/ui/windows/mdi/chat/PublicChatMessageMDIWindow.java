@@ -1,5 +1,6 @@
 package org.alliance.ui.windows.mdi.chat;
 
+import org.alliance.Version;
 import org.alliance.core.Language;
 import org.alliance.core.comm.rpc.ChatMessage;
 import org.alliance.core.node.Friend;
@@ -38,6 +39,11 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             public void run() {
                 try {
                     for (Friend f : ui.getCore().getFriendManager().friends()) {
+                    	if(f.getAllianceBuildNumber() < Version.BUILD_NUMBER){
+                    		//If friend is using old Version, send two messages
+                    		//One with the actually message, and another stating to update
+                    		 ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION), true), f);
+                    	}
                         ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(text, true), f);
                     }
                 } catch (IOException e) {
