@@ -1,3 +1,7 @@
+ * Check error reports about ConcurrentModificationExceptions
+ * Remove trusted user distinction
+ * Fix NullPointerExceptions
+
 #summary Feature requests, including changes/bugfixes to current features.
 
 Read through the comments on [http://code.google.com/p/alliancep2pbeta/issues/list issues with the beta] (1.2.0-pre build 1280). Some feature requests and bugfixes were already under development.
@@ -29,6 +33,7 @@ Things on this list are pretty major features, so no need to add them all in one
 These are things that could probably be implemented quickly.
 
  * Assign aliases to shared folders like DC++.
+ * Notify users when tabs contain unread private messages, perhaps by blinking the taskbar icon or changing the window title.
  * Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.
  * Remove the Trusted users feature. It's redundant now with the /ignore command.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
@@ -61,4 +66,6 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Some files marked as 'external' still get unhashed.
  * Though greyed out, the LAN option is still clickable.
  * Your nickname and status are handled in multiple places by Alliance, and don't always stay synchronized. (Example: use /nick and then /me.)
+ * Frequent !ConcurrentModificationExceptions from somewhere.
+ * !NullPointerException when sorting Downloads tab columns.
  * ~~Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.~~
