@@ -1,7 +1,3 @@
- * Check error reports about ConcurrentModificationExceptions
- * Remove trusted user distinction
- * Fix NullPointerExceptions
-
 #summary Feature requests, including changes/bugfixes to current features.
 
 Read through the comments on [http://code.google.com/p/alliancep2pbeta/issues/list issues with the beta] (1.2.0-pre build 1280). Some feature requests and bugfixes were already under development.
