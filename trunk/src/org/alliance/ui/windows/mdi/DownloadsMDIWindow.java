@@ -439,7 +439,8 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
 		}
 
 		public void sortBySize() {
-        	int j = (rows.size()-1);
+        	try{
+			int j = (rows.size()-1);
         	while(j > 0)
         		{
         			for(int i = j; i > 0; i--)				
@@ -463,6 +464,10 @@ public class DownloadsMDIWindow extends AllianceMDIWindow {
         			}
         			j--;
         		}
+        	}
+        	catch (NullPointerException e) {
+        		//Do nothing, let it resort on next update
+        	}
 		}
         
         public void sortByETA() {
