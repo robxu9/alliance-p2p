@@ -426,7 +426,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><i>");
 			italic = true;
 		}
-		else if (cl.from.equals(ui.getCore().getSettings().getMy().getNickname())) {
+		else if (cl.from.equals(ui.getCore().getFriendManager().getMe().getNickname())) {
 			// Your own messages appear specially
 			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
 					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");

@@ -29,7 +29,7 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     @Override
     public void send(final String text) throws Exception {
     //Cannot public chat if silenced
-    if(!ui.getCore().getSettings().getMy().isSilenced()){
+    if(!ui.getCore().getFriendManager().getMe().isSilenced()){
     	if (text == null || text.trim().length() == 0) {
             return;
         }

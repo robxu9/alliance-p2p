@@ -1,7 +1,6 @@
 package org.alliance.core.settings;
 
 import java.util.Random;
-import java.util.TreeSet;
 
 
 
@@ -90,16 +89,11 @@ public class My extends SettingClass {
         cguid = (invitations ^ 234427) * 13;
     }
 	
-	public boolean isSilenced(){
-		return silenced == 1;
+	public void setSilenced(Integer silenced){
+			this.silenced = silenced;
 	}
 	
-	public void setSilenced(boolean silence){
-		if(silence) {
-			this.silenced = 1;
-		}
-		else {
-			this.silenced = 0;
-		}
+	public Integer getSilenced() {
+		return silenced;
 	}
 }
