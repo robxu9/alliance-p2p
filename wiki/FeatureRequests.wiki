@@ -30,11 +30,11 @@ These are things that could probably be implemented quickly.
 
  * Assign aliases to shared folders like DC++.
  * Notify users when tabs contain unread private messages, perhaps by blinking the taskbar icon or changing the window title.
- * Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.
  * Remove the Trusted users feature. It's redundant now with the /ignore command.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
+ * ~~Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.~~
  * ~~Pause and resume downloads.~~
  * ~~User status messages like on DC++.~~
     * ~~Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.~~
@@ -60,8 +60,9 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Chat history file never gets limited, and large ones can freeze Alliance.
  * The automatic database compacting hangs the UI.
  * Some files marked as 'external' still get unhashed.
- * Though greyed out, the LAN option is still clickable.
- * Your nickname and status are handled in multiple places by Alliance, and don't always stay synchronized. (Example: use /nick and then /me.)
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
+ * Some users are being blocked from connecting, figure out why and correct it.
+ * ~~Though greyed out, the LAN option is still clickable.~~
+ * ~~Your nickname and status are handled in multiple places by Alliance, and don't always stay synchronized. (Example: use /nick and then /me.)~~
  * ~~Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.~~
