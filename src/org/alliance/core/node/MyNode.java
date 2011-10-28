@@ -17,7 +17,8 @@ public class MyNode extends Node {
 	public static final int MAX_NICKNAME_LENGTH = 24;
 
     private CoreSubsystem core;
-    private String adminFile; 
+    private String adminFile;
+	private Integer silenced; 
 
     public MyNode(String nickname, int guid, CoreSubsystem core) {
         super(nickname, guid);
@@ -25,6 +26,7 @@ public class MyNode extends Node {
         adminFile = core.getSettings().getInternal().getUserDirectory() + "admin";
         AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), adminFile);
     	this.adminCode = a.generateCode();
+    	this.silenced = core.getSettings().getMy().getSilenced();
     }
 
     @Override
@@ -90,6 +92,10 @@ public class MyNode extends Node {
     	}
     }
     
+    public String getNickname() {
+    	return nickname;
+    }
+    
     public boolean canNickname(String name) {
     	return name.length() <= MAX_NICKNAME_LENGTH
     		&& (testAdmin(name) || !core.getFriendManager().isAdminNickname(name))
@@ -109,4 +115,25 @@ public class MyNode extends Node {
     	AdminChecker a = new AdminChecker(nickname, adminCode);
 		return a.isTrueAdmin();
     }
+    
+	public boolean isSilenced(){
+		return  core.getSettings().getMy().getSilenced() == 1;
+	}
+	
+	public void setStatus(String status) {
+		core.getSettings().getMy().setStatus(status);
+	}
+	
+	public String getStatus() {
+		return core.getSettings().getMy().getStatus();
+	}
+
+	public void setSilenced(Integer silenced) {
+		this.silenced = silenced;
+		core.getSettings().getMy().setSilenced(silenced);
+	}
+	
+	public boolean getSilenced() {
+		return silenced != 0;
+	}
 }

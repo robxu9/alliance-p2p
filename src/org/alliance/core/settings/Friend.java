@@ -127,31 +127,12 @@ public class Friend {
     public void setFixedhost(String fixedhost) {
         this.fixedhost = fixedhost;
     }
-    
-    public void ignoreFriend() {
-    	this.ignored = 1;
-    }
-    
-    public boolean unignoreFriend() {
-    	if(ignored == 1) { 
-    		this.ignored = 0;
-    		return true;
-    	}
-    	return false;
-    }
-    
+   
     public Integer getIgnored() {
     	return ignored;
     }
     
-    public void setIgnored(int ignored) {
+    public void setIgnored(Integer ignored) {
     	this.ignored = ignored;
-    }
-    
-    public boolean isIgnored() {
-    	if(ignored == 1) {
-    		return true;
-    	}
-    	return false;
     }
 }
