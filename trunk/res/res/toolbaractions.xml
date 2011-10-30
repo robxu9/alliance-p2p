@@ -109,6 +109,11 @@
             name="%NAME%"
             description="%DES%"
             toolbarimage="gfx/icons/cleanall.png"/>
+       	<action
+            id="loadmore"
+            name="%NAME%"
+            description="%DES%"
+            toolbarimage="gfx/icons/loadmore.png"/>
         <action filler="true"/>
         <action
             id="close"
