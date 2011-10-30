@@ -27,6 +27,8 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     private ArrayList<String> chatTypes = new ArrayList<String>();
     private final static String PUBLIC_CHAT_ID = "Chat";
     private final int MAX_HISTORY_LINES = ui.getCore().getSettings().getInternal().getChathistorymaxlines();
+    private int loadMore = 0;
+    private boolean keepReading = true;
 
     public HistoryChatMessageMDIWindow(UISubsystem ui) throws Exception {
         super(ui.getMainWindow().getMDIManager(), "historychat", ui);
@@ -57,6 +59,12 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
         ChatLine cl = createChatLine(from, message, tick, true);
         chatLines.add(cl);
     }
+    
+    private void loadMore() {
+    	loadMore = loadMore + MAX_HISTORY_LINES;
+    	keepReading = true;
+        loadHistory(PUBLIC_CHAT_ID, null);
+    }
 
     private synchronized void loadHistory(String chat, String filter) {
         chatLines.clear();
@@ -64,7 +72,6 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
         DataInputStream in = null;
         try {
             File history = new File(ui.getCore().getSettings().getInternal().getHistoryfile());
-            boolean keepReading = true;
             int numReadLines = 0;
             in = new DataInputStream(new FileInputStream(history));
             in.readInt();
@@ -93,7 +100,7 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
                             }
                         }
                     }
-                    if (numReadLines >= MAX_HISTORY_LINES) {
+                    if (numReadLines >= MAX_HISTORY_LINES + loadMore) {
                     	keepReading = false;
                     	String fullMessage = "*** " + Language.getLocalizedString(getClass(), "fullwarning1") + " " + Language.getLocalizedString(getClass(), "fullwarning2") + " ***";
                     	addMessage("ALERT", fullMessage, System.currentTimeMillis(), true);
@@ -144,6 +151,10 @@ public class HistoryChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
     	history.delete();
     	regenerateHtml();
     	needToUpdateHtml = true;
+    }
+    
+    public void EVENT_loadmore(ActionEvent e) {
+    	loadMore();
     }
 
     @Override
