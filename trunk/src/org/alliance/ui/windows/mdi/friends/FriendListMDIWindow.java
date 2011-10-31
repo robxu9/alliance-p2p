@@ -419,6 +419,38 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
             }
         }
     }
+   public void EVENT_blockfriend(ActionEvent e) throws Exception {
+        if (list.getSelectedValue() instanceof Friend) {
+            Object[] friends = list.getSelectedValues();
+            StringBuilder sb = new StringBuilder();
+            for(Object f : friends) {
+            	 if (friends != null && f instanceof Friend) {
+            		 sb.append(((Friend) f).getNickname() + " ");
+            	 }
+            }
+            if (friends != null && friends.length > 0) {
+                Boolean delete = OptionDialog.showQuestionDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "block", sb.toString()));
+                if (delete == null) {
+                    return;
+                }
+                if (delete) {
+                    for (Object friend : friends) {
+                        if (friend instanceof Friend) {
+                            Node f = (Node) friend;
+                            if (f != null && f instanceof Friend) {
+                            	ui.getCore().getSettings().getRulelist().add("DENY" + (((Friend) f).getFriendConnection().getSocketAddress()));
+                                ui.getCore().getFriendManager().permanentlyRemove((Friend) f);
+                            }
+                        }
+                    }
+                    revert();
+                    ui.getFriendListModel().signalFriendChanged();
+                }
+            } else {
+                return;
+            }
+        }
+    }
 
     /**
      * Changes the hostname of a friend you have in your friendlist via the GUI. Can

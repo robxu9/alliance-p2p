@@ -8,6 +8,7 @@ import org.alliance.Version;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
+import org.alliance.core.node.Node;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.windows.mdi.chat.AbstractChatMessageMDIWindow;
@@ -358,6 +359,39 @@ public enum UserCommands {
 		}
 
 		protected Command executeCommand(Command command) {
+			return null;
+		}
+	},
+	
+	BLOCK("block") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+		String name = args.trim();
+		Friend friend = ui.getCore().getFriendManager().getFriend(name);
+		if(friend == null) {
+			return "";
+		}
+		Boolean delete = OptionDialog.showQuestionDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "block", friend.getNickname()));
+        if (delete == null) {
+            return "";
+        }
+        if (delete) {
+                if (friend instanceof Friend) {
+                    Node f = (Node) friend;
+                    if (f != null && f instanceof Friend) {
+                    	try {
+							ui.getCore().getSettings().getRulelist().add("DENY" + (((Friend) f).getFriendConnection().getSocketAddress()));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+                        ui.getCore().getFriendManager().permanentlyRemove((Friend) f);
+                    }
+                }
+            }
+        	return "";
+		}
+
+		protected Command executeCommand(Command command) {
+			// TODO Auto-generated method stub
 			return null;
 		}
 	},
