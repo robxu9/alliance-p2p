@@ -45,6 +45,11 @@
             description="%DES%"
             toolbarimage="gfx/icons/removeconnection.png"/>
         <action
+            id="blockfriend"
+            name="%NAME%"
+            description="%DES%"
+            toolbarimage="gfx/icons/blockfriend.png"/>
+        <action
             id="editgroupname"
             name="%NAME%"
             description="%DES%"
