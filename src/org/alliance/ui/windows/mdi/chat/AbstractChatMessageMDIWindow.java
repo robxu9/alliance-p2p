@@ -451,10 +451,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// user action. Not a big deal, and unavoidable given that we need
 		// to stay backwards-compatible with 1.2.2, so we can't change the
 		// message protocol to add flags for system or action messages.
-		if(cl.message.startsWith("* " + cl.from + " ")){
-		System.out.println(cl.message.startsWith("* " + cl.from + " "));
-		System.out.println(cl.message);
-		}
 		return cl.message.startsWith("* " + cl.from + " ");
 	}
 	
