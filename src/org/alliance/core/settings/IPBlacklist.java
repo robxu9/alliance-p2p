@@ -24,7 +24,7 @@ public class IPBlacklist extends ArrayList<Routerule> {
 
     public boolean checkConnection(int ipaddr) {
         for (Routerule rule : this) {
-        	//TODO: Figure out wtf the Mask is for
+        	//TODO: Figure out wtf the Mask is 
             if (isValid(ipaddr, rule.getAddress(), rule.getMask())) {
                 if (rule.getRuleType().equals(Routerule.ALLOW)) {
                     return true;
