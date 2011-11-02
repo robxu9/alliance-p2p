@@ -16,6 +16,7 @@ import org.alliance.core.node.Friend;
 import org.alliance.core.node.Node;
 import org.alliance.core.SimpleTimer;
 import org.alliance.core.Language;
+import org.alliance.launchers.OSInfo;
 
 import java.awt.Font;
 import java.awt.MenuItem;
@@ -226,7 +227,12 @@ public class Java6TrayIconSubsystem implements Subsystem, Runnable {
             if (size - tray.getTrayIconSize().getWidth() < 0) {
                 continue;
             } else {
+            	if(OSInfo.isMac() && size == 24) {
+            		ti = new TrayIcon(Toolkit.getDefaultToolkit().getImage(rl.getResource("gfx/icons/alliance" + size + "bw.png")), "Alliance", m);	
+            	}
+            	else {
                 ti = new TrayIcon(Toolkit.getDefaultToolkit().getImage(rl.getResource("gfx/icons/alliance" + size + ".png")), "Alliance", m);
+            	}
                 break;
             }
         }

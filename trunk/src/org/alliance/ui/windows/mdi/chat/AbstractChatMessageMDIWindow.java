@@ -247,8 +247,13 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             if (end == -1) {
                 end = text.length();
             }
+            String displayText =  text.substring(i, end);
+            //Shorten long links as to not create side scrolling chat.
+            if(displayText.length() > 75) {
+            	displayText = displayText.substring(i, 75) + "&hellip;";
+            }
             String s = text.substring(0, i);
-            s += "<a href=\"" + text.substring(i, end) + "\">" + text.substring(i, end) + "</a>";
+            s += "<a href=\"" + text.substring(i, end) + "\">" + displayText + "</a>";
             i = s.length();
             if (end < text.length() - 1) {
                 s += text.substring(end);
