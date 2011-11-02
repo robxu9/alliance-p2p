@@ -6,6 +6,7 @@
             <menuitem image="gfx/icons/reconnect.png" text="%text%" eventid="reconnect"/>
             <menuitem image="gfx/icons/connections.png" text="%text%" eventid="changesort"/>
             <menuitem image="gfx/icons/removeconnection.png" text="%text%" eventid="removefriend"/>
+            <menuitem image="gfx/icons/blockfriend.png" text="%text%" eventid="blockfriend"/>
             <menuitem image="gfx/icons/editgroup.png" text="%text%" eventid="editgroupname"/>
             <menuitem image="gfx/icons/edittrusted.png" text="%text%" eventid="edittrusted"/>
             <menuitem image="gfx/icons/forwardinvite.png" text="%text%" eventid="viewvia"/>
