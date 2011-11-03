@@ -455,7 +455,7 @@ public enum UserCommands {
 				}
 				else {
 					command.directedAt.unignoreFriend();
-					command.message = Language.getLocalizedString(getClass(), "friend_unsilenced", command.directedAt.getNickname());
+					command.message = Language.getLocalizedString(getClass(), "unsilenced_friend", command.directedAt.getNickname());
 				}
              }
 			return command;
@@ -494,7 +494,7 @@ public enum UserCommands {
 						command.ui.getCore().getFriendManager().permanentlyRemove(command.directedAt);
 						e.printStackTrace();
 					}
-					command.message = Language.getLocalizedString(getClass(), "friend_banned", command.directedAt.getNickname());
+					command.message = Language.getLocalizedString(getClass(), "banned_friend", command.directedAt.getNickname());
 				}
 				}
 			return command;
@@ -531,7 +531,7 @@ public enum UserCommands {
 					} catch (Exception e) {
 						//Do nothing as it wasn't this person's friend
 					}
-					command.message = Language.getLocalizedString(getClass(), "friend_unbanned", command.directedAt.getNickname());
+					command.message = Language.getLocalizedString(getClass(), "unbanned_friend", command.directedAt.getNickname());
 				}
 				}
 			return command;
