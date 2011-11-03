@@ -440,6 +440,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
+		if(cl.message.contains("@" + ui.getCore().getFriendManager().getMe().getNickname())) {
+			cl.message = cl.message.replace("@" + ui.getCore().getFriendManager().getMe().getNickname(),
+					"<SPAN style=\"BACKGROUND-COLOR: #ffff00\">" + "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</SPAN>");
+		} 
 		s.append(cl.message);
 		// conclude
 		if (italic) {
