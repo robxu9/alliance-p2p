@@ -22,6 +22,7 @@ public enum UserCommands {
 			for (UserCommands cmd : UserCommands.values()) {
 				if (cmd.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin())
 					continue;
+				//TODO Fix block command to show correct text
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 			}
 			chat.addSystemMessage(s.toString());
@@ -364,6 +365,7 @@ public enum UserCommands {
 	},
 	
 	BLOCK("block") {
+		//TODO make this work
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		String name = args.trim();
 		Friend friend = ui.getCore().getFriendManager().getFriend(name);
@@ -487,6 +489,7 @@ public enum UserCommands {
 				}
 				else {
 					//Adds banned users IP to Blacklist
+					//TODO MAKE THIS WORK
 					try {
 						command.ui.getCore().getSettings().getRulelist().add("DENY" + command.directedAt.getFriendConnection().getSocketAddress());
 					} catch (Exception e) {

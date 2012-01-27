@@ -42,7 +42,8 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
                     	if(f.getAllianceBuildNumber() < Version.BUILD_NUMBER){
                     		//If friend is using old Version, send two messages
                     		//One with the actually message, and another stating to update
-                    		 ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION), true), f);
+                    		//TODO ENABLE UPDATE MESSAGE
+                    		//ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION), true), f);
                     	}
                         ui.getCore().getFriendManager().getNetMan().sendPersistently(new ChatMessage(text, true), f);
                     }
