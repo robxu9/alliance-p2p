@@ -357,7 +357,7 @@ public class NetworkTab extends XUIDialog implements TabHelper {
         rdnsMode.setEnabled(false); // Disabled    
         changeDnsState();
         changeBinsState();
-        lanMode.setEnabled(false);
-        //fillIp(lanMode.isSelected()); disabled
+        // lanMode.setEnabled(false); Do NOT force LAN
+        fillIp(lanMode.isSelected());
     }
 }
