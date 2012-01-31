@@ -438,8 +438,8 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
                         if (friend instanceof Friend) {
                             Node f = (Node) friend;
                             if (f != null && f instanceof Friend) {
-                            	ui.getCore().getSettings().getRulelist().add("DENY" + (((Friend) f).getFriendConnection().getSocketAddress()));
-                                ui.getCore().getFriendManager().permanentlyRemove((Friend) f);
+                            	String friendIP = (((Friend) f).getFriendConnection().getSocketAddress()).toString().substring(1);
+    							ui.getCore().getSettings().getRulelist().add("DENY    " + friendIP + "/32");
                             }
                         }
                     }
