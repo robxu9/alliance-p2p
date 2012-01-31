@@ -22,7 +22,6 @@ public enum UserCommands {
 			for (UserCommands cmd : UserCommands.values()) {
 				if (cmd.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin())
 					continue;
-				//TODO Fix block command to show correct text
 				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
 			}
 			chat.addSystemMessage(s.toString());
@@ -365,14 +364,13 @@ public enum UserCommands {
 	},
 	
 	BLOCK("block") {
-		//TODO make this work
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 		String name = args.trim();
 		Friend friend = ui.getCore().getFriendManager().getFriend(name);
 		if(friend == null) {
 			return "";
 		}
-		Boolean delete = OptionDialog.showQuestionDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "block", friend.getNickname()));
+		Boolean delete = OptionDialog.showQuestionDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "block_friend", friend.getNickname()));
         if (delete == null) {
             return "";
         }
@@ -381,7 +379,8 @@ public enum UserCommands {
                     Node f = (Node) friend;
                     if (f != null && f instanceof Friend) {
                     	try {
-							ui.getCore().getSettings().getRulelist().add("DENY" + (((Friend) f).getFriendConnection().getSocketAddress()));
+                    		String friendIP = (((Friend) f).getFriendConnection().getSocketAddress()).toString().substring(1);
+							ui.getCore().getSettings().getRulelist().add("DENY    " + friendIP + "/32");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -393,7 +392,6 @@ public enum UserCommands {
 		}
 
 		protected Command executeCommand(Command command) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	},
@@ -488,10 +486,8 @@ public enum UserCommands {
 					command.ignored = true;
 				}
 				else {
-					//Adds banned users IP to Blacklist
-					//TODO MAKE THIS WORK
 					try {
-						command.ui.getCore().getSettings().getRulelist().add("DENY" + command.directedAt.getFriendConnection().getSocketAddress());
+						command.ui.getCore().getSettings().getRulelist().add("DENY    " + command.directedAt.getFriendConnection().getSocketAddress().toString().substring(1) + "/32");
 					} catch (Exception e) {
 						//If you can't add to blacklist, remove as friend.
 						command.ui.getCore().getFriendManager().permanentlyRemove(command.directedAt);
@@ -530,7 +526,7 @@ public enum UserCommands {
 				else {
 					//Removes unbanned users IP from the Blacklist
 					try {
-						command.ui.getCore().getSettings().getRulelist().remove("DENY" + command.directedAt.getFriendConnection().getSocketAddress());
+						command.ui.getCore().getSettings().getRulelist().remove("DENY    " + command.directedAt.getFriendConnection().getSocketAddress() + "/32");
 					} catch (Exception e) {
 						//Do nothing as it wasn't this person's friend
 					}
