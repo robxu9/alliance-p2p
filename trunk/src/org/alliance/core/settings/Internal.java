@@ -105,7 +105,7 @@ public class Internal extends SettingClass {
     //This is here because if we download the last block of a 4Gb file we seek to 4Gb into
     //an empry file. This makes XP grind to a halt. 100 means expand 100mb per block at most
     private Integer uploadthrottle = 0; //zero to disable
-    private Integer enableiprules = 0;
+    private Integer enableiprules = 1;
     private String guiskin = "Alliance";
     private String language = "en";
     private String globalfont = "";
