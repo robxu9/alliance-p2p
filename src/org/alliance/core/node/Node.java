@@ -149,9 +149,13 @@ public abstract class Node {
         return "1:" + ((double) Math.round(((double) download) / upload * 10)) / 10;
     }
     
-    public String getInfoString() {
+    public String getInfoString(String lvlName) {
     	StringBuilder sb = new StringBuilder("<html>");
-    	sb.append("<b>" + getNickname() + ": </b>");
+    	if(lvlName != null) {
+    		sb.append("<b>" + getNickname() + "</b> (" + lvlName + "):");
+    	} else {
+    		sb.append("<b>" + getNickname() + "</b>:");
+    	}
     	if (hasNotBeenOnlineForLongTime() && getLastSeenOnlineAt() != 0){
     		sb.append(Language.getLocalizedString(getClass(), "seen", Long.toString((System.currentTimeMillis() - getLastSeenOnlineAt()) / 1000 / 60 / 60 / 24))).append("<br>");
     	}

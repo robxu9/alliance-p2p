@@ -469,8 +469,8 @@ public class Friend extends Node {
 		this.adminCode = code;
 	}
 	
-	public String getInfoString() {
-		String s = super.getInfoString();
+	public String getInfoString(String lvlName) {
+		String s = super.getInfoString(lvlName);
 		return s.substring(0, s.indexOf("</html>")) + Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(getAllianceBuildNumber())) + "</html>";
 	}
 	
