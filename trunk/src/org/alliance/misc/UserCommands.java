@@ -260,7 +260,11 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
-				OptionDialog.showInformationDialog(ui.getMainWindow(), friend.getInfoString());
+				String level = null;
+				if(friend.isAdmin()) {
+					level = "Admin";
+				}
+				OptionDialog.showInformationDialog(ui.getMainWindow(), friend.getInfoString(level));
 			}
 			return "";
 		}

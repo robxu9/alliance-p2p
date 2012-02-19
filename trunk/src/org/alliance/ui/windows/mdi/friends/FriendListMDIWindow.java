@@ -339,13 +339,13 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
     public void EVENT_friendinfo(ActionEvent e) {
         	if (list.getSelectedValue() instanceof MyNode){
         		MyNode n = (MyNode) list.getSelectedValue();
-        		String s = n.getInfoString();
+        		String s = n.getInfoString(getLevelName(getLevel(n.getNickname(), n.getNumberOfInvitedFriends())));
         		s = s.substring(0, s.indexOf("</html>"))+ Language.getLocalizedString(getClass(), "buildnumber", Integer.toString(Version.BUILD_NUMBER)) + "</html>";
         		OptionDialog.showInformationDialog(ui.getMainWindow(), s);
         	}
         	else{
         		Friend n = (Friend) list.getSelectedValue();
-        		OptionDialog.showInformationDialog(ui.getMainWindow(), n.getInfoString());
+        		OptionDialog.showInformationDialog(ui.getMainWindow(), n.getInfoString(getLevelName(getLevel(n.getNickname(), n.getNumberOfInvitedFriends()))));;
         	}
         	
     }
