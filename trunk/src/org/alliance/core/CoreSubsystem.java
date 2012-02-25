@@ -669,8 +669,8 @@ public class CoreSubsystem implements Subsystem {
     	if (OSInfo.isWindows()) {
     		slash = "\\";
     		targetDir = targetDir.substring(0,targetDir.lastIndexOf(slash))+slash;
-    		targetJar = targetDir+"update.exe";
-    		updaterJar = "update.exe";
+    		targetJar = targetDir+"alliance.jar";
+    		updaterJar = "alliance.jar";
         } 
     	
     	else {
@@ -724,7 +724,7 @@ public class CoreSubsystem implements Subsystem {
            		}
             		
            			//Delete Updater Files after they've been copied/ignored
-           			if(fileList[i].endsWith(".exe"))
+           			if(fileList[i].endsWith(".jar"))
            			{
            				//DO NOTHING
            			}
