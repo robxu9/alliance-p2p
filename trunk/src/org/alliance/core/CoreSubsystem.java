@@ -669,8 +669,8 @@ public class CoreSubsystem implements Subsystem {
     	if (OSInfo.isWindows()) {
     		slash = "\\";
     		targetDir = targetDir.substring(0,targetDir.lastIndexOf(slash))+slash;
-    		targetJar = targetDir+"updater.bat";
-    		updaterJar = "updater.bat";
+    		targetJar = targetDir+"update.exe";
+    		updaterJar = "update.exe";
         } 
     	
     	else {
@@ -724,7 +724,7 @@ public class CoreSubsystem implements Subsystem {
            		}
             		
            			//Delete Updater Files after they've been copied/ignored
-           			if(fileList[i].endsWith(".msi"))
+           			if(fileList[i].endsWith(".exe"))
            			{
            				//DO NOTHING
            			}
@@ -739,7 +739,7 @@ public class CoreSubsystem implements Subsystem {
        }
     		//If Windows, run installer file
     		if(OSInfo.isWindows()){        		      		
-    		Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "updater.bat"});        
+    		Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "update.exe"});        
     		System.exit(0);
     		}
     		
