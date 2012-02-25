@@ -650,12 +650,15 @@ public enum UserCommands {
 			}
 			else {
 				for(UserCommands c : UserCommands.values()){
-					if(message.startsWith(c.getKey()) && c.isAdminOnly()){
-						name = message.substring(c.getKey().length()).trim();
-						directedAt = ui.getCore().getFriendManager().getFriend(name);
-						guid = 0;
-						cmd = c;
-						return true;
+					if(c.getKey() != null)
+					{
+						if(c.isAdminOnly() && message.startsWith(c.getKey())){
+							name = message.substring(c.getKey().length()).trim();
+							directedAt = ui.getCore().getFriendManager().getFriend(name);
+							guid = 0;
+							cmd = c;
+							return true;
+						}
 					}
 				}
 			}
