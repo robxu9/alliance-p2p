@@ -77,7 +77,7 @@ public class ViewShareMDIWindow extends AllianceMDIWindow {
         iconLoading = new ImageIcon(ui.getRl().getResource("gfx/icons/loadingsharenode.png"));
         iconDown = new ImageIcon(ui.getRl().getResource("gfx/icons/download.png"));
         //@todo: this is done in other places too. AND it's a waste of reasources to load these every time
-        fileTypeIcons = new ImageIcon[16];
+        fileTypeIcons = new ImageIcon[17];
         for (int i = 0; i < fileTypeIcons.length; i++) {
             fileTypeIcons[i] = new ImageIcon(ui.getRl().getResource("gfx/filetypes/" + i + ".png"));
         }
