@@ -710,7 +710,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             for (NeedsUserInteraction nui : ui.getCore().getAllUserInteractionsInQue()) {
                 if (userInteractionsInProgress == 0 || nui.canRunInParallelWithOtherInteractions()) {
                     if (nui instanceof NewFriendConnectedUserInteraction && isConnectedToNewFriendDialogShowing) {
-                        continue; //wait til the dialog is no longer displayed
+                        continue; //wait till the dialog is no longer displayed
                     }
                     if (T.t) {
                         T.info("running user interaction: " + nui);
@@ -746,10 +746,16 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         try {
             if (nui instanceof PostMessageInteraction) {
                 PostMessageInteraction pmi = (PostMessageInteraction) nui;
-                Command cmd = new Command(pmi.getFromGuid(), pmi.getMessage(), ui).execute();
+                Command cmd = new Command(pmi.getFromGuid(), pmi.getMessage(), ui);
+                cmd.execute();
                 try {
                 if(!cmd.isIgnored()){	
-                    if (pmi instanceof PostMessageToAllInteraction) {
+                	if(cmd.isSystem()){
+                		publicChat.addSystemMessage(cmd.getMessage());
+                		UISound Sound = new UISound(new File(ui.getCore().getSettings().getInternal().getPmsound()));
+                		Sound.start();
+                	}
+                	else if (pmi instanceof PostMessageToAllInteraction) {
                         publicChatMessage(pmi.getFromGuid(), pmi.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
                     } else {
                         chatMessage(pmi.getFromGuid(), pmi.getMessage(), pmi.getSentAtTick(), pmi.isMessageWasPersisted());
