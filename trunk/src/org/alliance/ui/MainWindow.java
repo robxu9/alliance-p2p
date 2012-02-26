@@ -740,7 +740,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         }
     }
 
-    // @todo: move this logic in separate class - it's getting too big
+    //TODO: move this logic in separate class - it's getting too big
     private void handleNeedsUserInteraction(NeedsUserInteraction nui) {
         userInteractionsInProgress++;
         try {
