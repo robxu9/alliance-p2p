@@ -227,17 +227,13 @@ public enum UserCommands {
 	
 	SYSTEM("system", true, "* SYSTEM: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
-			// On 1.3.0, system messages should be displayed with a * instead of
-			// a username, and should be in the system color. Like:
-			// * message goes here
-			// This won't be possible on 1.2.2, so the only option would be
-			// something like:
-			// Spiderman: * SYSTEM: message goes here
-			return getKey() + args.trim();
+			chat.addSystemMessage(args.trim());
+			return "";
 		}
 
 		protected Command executeCommand(Command command) {
 			command.message = command.message.substring(command.cmd.getKey().length());
+			command.isSystem = true;
 			return command;
 		}
 	},
@@ -634,7 +630,7 @@ public enum UserCommands {
 		private String message, name = "";
 		private Friend from, directedAt;
 		private UISubsystem ui;
-		private boolean ignored = false;
+		private boolean ignored = false, isSystem = false;
 		private UserCommands cmd = null;
 		public Command(int guid, String message, UISubsystem ui){
 			this.guid = guid;
@@ -687,7 +683,11 @@ public enum UserCommands {
 			}
 			return this;
 		}
-
+		
+		public boolean isSystem(){
+			return isSystem;
+		}
+		
 		public int getGuid() {
 			return guid;
 		}
