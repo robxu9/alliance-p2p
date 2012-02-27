@@ -59,7 +59,9 @@ public class PrivateChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             }
         });
         chat.setText("");
-        addMessage(ui.getCore().getFriendManager().getMe().getNickname(), text, System.currentTimeMillis(), false);
+        if(!(text.startsWith("* SYSTEM: "))){
+        	addMessage(ui.getCore().getFriendManager().getMe().getNickname(), text, System.currentTimeMillis(), false);
+        }
     }
 
     @Override

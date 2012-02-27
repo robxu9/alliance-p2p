@@ -93,7 +93,7 @@ public class MyNode extends Node {
     }
     
     public String getNickname() {
-    	return nickname;
+    	return core.getSettings().getMy().getNickname();
     }
     
     public boolean canNickname(String name) {
