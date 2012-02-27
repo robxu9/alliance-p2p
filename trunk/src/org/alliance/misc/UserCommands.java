@@ -228,7 +228,7 @@ public enum UserCommands {
 	SYSTEM("system", true, "* SYSTEM: ") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.addSystemMessage(args.trim());
-			return "";
+			return getKey() + args.trim();
 		}
 
 		protected Command executeCommand(Command command) {

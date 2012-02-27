@@ -53,7 +53,9 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             }
         });
         chat.setText("");
-        ui.getMainWindow().publicChatMessage(ui.getCore().getFriendManager().getMe().getGuid(), text, System.currentTimeMillis(), false);
+        if(!(text.startsWith("* SYSTEM: "))){
+        	ui.getMainWindow().publicChatMessage(ui.getCore().getFriendManager().getMe().getGuid(), text, System.currentTimeMillis(), false);
+        }
     }
     else{
 		addSystemMessage(Language.getLocalizedString(getClass(), "silenced"));
