@@ -278,7 +278,7 @@ public enum UserCommands {
 			ArrayList<Friend> ignoreList = new ArrayList<Friend>();
 			for(org.alliance.core.settings.Friend f : friendlist) {
 				Friend friend = ui.getCore().getFriendManager().getFriend(f.getGuid());
-				if(friend.isIgnored()) {
+				if(friend != null && friend.isIgnored()) {
 	    			ignoreList.add(friend);
 	    		}
 	    	}
