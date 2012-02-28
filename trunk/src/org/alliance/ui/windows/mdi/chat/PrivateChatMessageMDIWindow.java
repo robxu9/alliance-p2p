@@ -2,6 +2,7 @@ package org.alliance.ui.windows.mdi.chat;
 
 import org.alliance.core.Language;
 import org.alliance.core.comm.rpc.ChatMessage;
+import org.alliance.misc.UserCommands;
 import org.alliance.ui.UISubsystem;
 import org.alliance.ui.UISound;
 
@@ -59,9 +60,12 @@ public class PrivateChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             }
         });
         chat.setText("");
-        if(!(text.startsWith("* SYSTEM: "))){
-        	addMessage(ui.getCore().getFriendManager().getMe().getNickname(), text, System.currentTimeMillis(), false);
+        for(UserCommands cmd : UserCommands.values()){
+        	if(cmd.isAdminOnly() && cmd.getKey() != null && text.startsWith(cmd.getKey())){
+        		return;
+        	}
         }
+        	addMessage(ui.getCore().getFriendManager().getMe().getNickname(), text, System.currentTimeMillis(), false);
     }
 
     @Override
