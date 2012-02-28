@@ -5,6 +5,7 @@ import org.alliance.core.Language;
 import org.alliance.core.comm.rpc.ChatMessage;
 import org.alliance.core.node.Friend;
 import org.alliance.ui.UISubsystem;
+import org.alliance.misc.UserCommands;
 
 import java.io.IOException;
 
@@ -53,9 +54,12 @@ public class PublicChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
             }
         });
         chat.setText("");
-        if(!(text.startsWith("* SYSTEM: "))){
-        	ui.getMainWindow().publicChatMessage(ui.getCore().getFriendManager().getMe().getGuid(), text, System.currentTimeMillis(), false);
+        for(UserCommands cmd : UserCommands.values()){
+        	if(cmd.isAdminOnly() && cmd.getKey() != null && text.startsWith(cmd.getKey())){
+        		return;
+        	}
         }
+        ui.getMainWindow().publicChatMessage(ui.getCore().getFriendManager().getMe().getGuid(), text, System.currentTimeMillis(), false);
     }
     else{
 		addSystemMessage(Language.getLocalizedString(getClass(), "silenced"));

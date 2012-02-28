@@ -138,6 +138,15 @@ public enum UserCommands {
 		}
 
 		protected Command executeCommand(Command command) {
+			Collection<Friend> friends = command.ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				try {
+					friend.reconnect();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			return null;
 		}
 	},
@@ -414,6 +423,7 @@ public enum UserCommands {
 				if (command.isDirectedAtMe()) {
 					command.ui.getCore().getFriendManager().getMe().setSilenced(1);
 					command.message = Language.getLocalizedString(getClass(), "silenced");
+					command.isSystem = true;
 				}
 				// your friend was silenced
 				else {
@@ -423,6 +433,7 @@ public enum UserCommands {
 					else {
 						command.directedAt.ignoreFriend();
 						command.message = Language.getLocalizedString(getClass(), "silenced_friend", command.directedAt.getNickname());
+						command.isSystem = true;
 					}
 	             }
 				return command;
@@ -447,6 +458,7 @@ public enum UserCommands {
 			if (command.isDirectedAtMe()){
 				command.ui.getCore().getFriendManager().getMe().setSilenced(0);
 				command.message = Language.getLocalizedString(getClass(), "unsilenced");
+				command.isSystem = true;
 			}
 			// your friend was unsilenced
 			else {
@@ -456,6 +468,7 @@ public enum UserCommands {
 				else {
 					command.directedAt.unignoreFriend();
 					command.message = Language.getLocalizedString(getClass(), "unsilenced_friend", command.directedAt.getNickname());
+					command.isSystem = true;
 				}
              }
 			return command;
@@ -470,6 +483,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "banned_friend", friend.getNickname()));
 				return getKey() + name;
 			}
 			return "";
@@ -479,6 +493,8 @@ public enum UserCommands {
 			// you were banned
 			if (command.isDirectedAtMe()) {
 				command.message = Language.getLocalizedString(getClass(), "banned");
+				command.isSystem = true;
+				UserCommands.RECONNECTALL.executeCommand(command);
 			}
 			// your friend was banned
 			else {
@@ -488,12 +504,15 @@ public enum UserCommands {
 				else {
 					try {
 						command.ui.getCore().getSettings().getRulelist().add("DENY    " + command.directedAt.getFriendConnection().getSocketAddress().toString().substring(1) + "/32");
+						command.directedAt.reconnect();
+						command.ui.getCore().getSettings().getInternal().setEnableiprules(1);
 					} catch (Exception e) {
 						//If you can't add to blacklist, remove as friend.
 						command.ui.getCore().getFriendManager().permanentlyRemove(command.directedAt);
 						e.printStackTrace();
 					}
 					command.message = Language.getLocalizedString(getClass(), "banned_friend", command.directedAt.getNickname());
+					command.isSystem = true;
 				}
 				}
 			return command;
@@ -508,6 +527,7 @@ public enum UserCommands {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "unbanned_friend", friend.getNickname()));
 				return getKey() + name;
 			}
 			return "";
@@ -517,6 +537,7 @@ public enum UserCommands {
 			// you were unbanned
 			if (command.isDirectedAtMe()) {
 				command.message = Language.getLocalizedString(getClass(), "unbanned");
+				command.isSystem = true;
 			}
 			// your friend was unbanned
 			else {
@@ -526,11 +547,19 @@ public enum UserCommands {
 				else {
 					//Removes unbanned users IP from the Blacklist
 					try {
-						command.ui.getCore().getSettings().getRulelist().remove("DENY    " + command.directedAt.getFriendConnection().getSocketAddress() + "/32");
+						System.out.println("DENY    " + command.directedAt.getLastKnownHost() + "/32");
+						for(int i = 0; i < command.ui.getCore().getSettings().getRulelist().size(); i++) {
+							if(command.ui.getCore().getSettings().getRulelist().get(i).toString().equals("DENY    " + command.directedAt.getLastKnownHost() + "/32")) {
+								command.ui.getCore().getSettings().getRulelist().remove(i);
+								break;
+							}
+						}
+						command.directedAt.reconnect();
 					} catch (Exception e) {
 						//Do nothing as it wasn't this person's friend
 					}
 					command.message = Language.getLocalizedString(getClass(), "unbanned_friend", command.directedAt.getNickname());
+					command.isSystem = true;
 				}
 				}
 			return command;
@@ -540,6 +569,7 @@ public enum UserCommands {
 	PLEASEUPDATE("pleaseupdate", true, ""){
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION));
 			for (Friend friend : friends) {
 				if(friend.getAllianceBuildNumber() < Version.BUILD_NUMBER){
 				try {
