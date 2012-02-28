@@ -349,7 +349,7 @@ public enum UserCommands {
 			ArrayList<org.alliance.core.settings.Friend> friendlist = ui.getCore().getSettings().getFriendlist();
 			for(org.alliance.core.settings.Friend f : friendlist) {
 				Friend friend = ui.getCore().getFriendManager().getFriend(f.getGuid());
-	    		if(friend.isIgnored()) {
+	    		if(friend != null && friend.isIgnored()) {
 	    			friend.unignoreFriend();
 	    			n++;
 	    		}
@@ -610,6 +610,9 @@ public enum UserCommands {
 			}
 			else if (message.startsWith("/" + "quit" + " ") || message.endsWith("/" + "quit")) {
 				return UserCommands.EXIT;
+			}
+			else if (message.startsWith("/" + "chat" + " ") || message.endsWith("/" + "chat")) {
+				return UserCommands.MESSAGE;
 			}
 		}
 		return null;
