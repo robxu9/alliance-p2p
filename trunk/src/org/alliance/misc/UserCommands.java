@@ -570,6 +570,18 @@ public enum UserCommands {
 		protected Command executeCommand(Command command) {
 			return null;
 		}
+	},
+	QUIT("quit") {
+			protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+				chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
+				ui.getCore().shutdown();
+		        System.exit(0);
+				return "";
+			}
+
+			protected Command executeCommand(Command command) {
+				return null;
+			}
 	};
 	
 	private final String name;
