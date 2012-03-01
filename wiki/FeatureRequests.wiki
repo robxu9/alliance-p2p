@@ -13,9 +13,9 @@ Things on this list are pretty major features, so no need to add them all in one
  * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot].
  * Allow admins to appoint moderators who get some admin powers.
  * Let clients with different encryption levels communicate (as per [http://code.google.com/p/alliancep2pbeta/issues/detail?id=6 this issue]), which would also let us easily transition to the "experimental" AES option.
- * Fix the LAN option so only on-campus people can connect; somehow COner is still connecting despite being off-campus.
  * Monitor selected users for new files
     * There's a [http://code.google.com/p/alliancep2pbeta/issues/detail?id=36 plugin] being developed for that.
+ * Put all Offline members in their own group
  * ~~Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.~~
     * ~~Silence users from chat or ban them entirely. A banlist should get propagated to all users.~~
     * ~~Send mass PMs to everyone.~~
@@ -34,6 +34,7 @@ These are things that could probably be implemented quickly.
  * If the user scrolls the chat window up to read old entries, don't scroll it back down when a new message appears
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
+ * Use RPC's to send commands rather than messages
  * ~~Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.~~
  * ~~Pause and resume downloads.~~
  * ~~User status messages like on DC++.~~
