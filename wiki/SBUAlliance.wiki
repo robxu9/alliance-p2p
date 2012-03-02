@@ -49,7 +49,7 @@ First download the program: [http://alliance-p2p.googlecode.com/files/AllianceP2
       
       * gvXHPFFXnjfv/w (11/6/11) 
 
-*Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being fixed ASAP, check back for updates.*
+==Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being fixed ASAP, check back for updates.==
 
 10. After you've connected, click the "Select all" button in the bottom right, you'll now connect to everyone. 
 
