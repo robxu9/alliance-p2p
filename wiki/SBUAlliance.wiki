@@ -1,69 +1,80 @@
-#How to install and connect to SBU Alliance Network
+#summary How to install and connect to SBU Alliance Network
+#labels SBU,SBUAlliance,Setup
 
-= Introduction =
-
+<h1>Introduction</h1>
+<blockquote>
 Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac. 
+</blockquote>
+<h1>Connecting</h1>
+<b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/AllianceP2P-v1.2.2.pkg">Mac</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/alliancev1.2.2.msi">PC</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip">Linux</a>
+<ol>
+<li>Once installed, run the program.</li>
+  <dd>- Windows users who receive the error “unable to access jarfile alliance.tmp”</dd>
+  <dd>- Navigate to: C:\Program Files\Alliance</dd> 
+  <dd>- Right click Alliance and run as administrator</dd>
 
-= Connecting =
+<li>Once the program loads you’ll be presented with this screen:</li>
+<dd>Enter a username</dd>
+  <img src="http://imgur.com/KczFD.png" alt="Screenshot">
+  
+<li>Then click the “Transfers” tab, you’ll be brought to this screen:</li>
 
-First download the program: [http://alliance-p2p.googlecode.com/files/AllianceP2P-v1.2.2.pkg Mac] or [http://alliance-p2p.googlecode.com/files/alliancev1.2.2.msi PC] or [http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip Linux]
+<dd>- Here select a download folder.</dd>
+  <img src="http://imgur.com/bGJ55.png" alt="Screenshot">
+  
+<li>Then from the "Tools" menu select “Shares":</li>
+  <img src="http://imgur.com/KJ9Ue.png" alt="Screenshot">
 
-1. Once installed run the program,
-  * Windows users who receive the error “unable to access jarfile alliance.tmp”
-  * Navigate to: C:\Program Files\Alliance 
-  * Right click Alliance and run as administrator.
+<li>This window will Pop-up where you should select files to share:</li>
+  <img src="http://imgur.com/5v8Yu.png" alt="Screenshot">
 
-2. Once the program loads you’ll be presented with this screen: 
-  [http://imgur.com/KczFD.png]
-  * Enter a username.
+<li>If you're using an external drive, set it by right clicking:</li>
+  <img src="http://imgur.com/AeRzx.png" alt="Screenshot">
 
-3. Then click the “Transfers” tab, you’ll be brought to this screen: 
-  [http://imgur.com/bGJ55.png]
-  * Here select a download folder.
+<li>Click "ADD FRIENDS" in the top toolbar:</li>
+  <img src="http://imgur.com/zTQ7s.png" alt="Screenshot">
 
-4. Then from the "Tools" menu select “Shares": 
-  [http://imgur.com/KJ9Ue.png]
+<li> When the window pops up, select "I have a code I received from a friend":</li>
+  <img src="http://imgur.com/sOTH7.png" alt="Screenshot">
 
-5. This window will Pop-up where you should select files to share: 
-  [http://imgur.com/5v8Yu.png]
+<li> Enter one of the codes listed below: </li>
+  <img src="http://imgur.com/jIToM.png" alt="Screenshot">
 
-6. If you're using an external drive, set it by right clicking:
-  [http://imgur.com/AeRzx.png]
+<dd><table border="1">
+<tr>    
+   <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
+</tr>
+<tr>
+    <td align="center"><i>gvXbBCDx8n77yw</i></td> <td align="center">2/6/12</td>
+</tr>
+<tr>
+    <td align="center"><i>gvXHPFFXuo!6Wg</i></td> <td align="center">1/25/12</td>
+</tr>   
+<tr>    
+    <td align="center"><i>gvXbBCDxMbnBvA</i></td> <td align="center">1/31/12</td>
+</tr>  
+<tr>      
+    <td align="center"><i>gvXHPFFXnjfv/w</i></td> <td align="center">11/6/11</td>
+</tr>
+</table></dd>
 
-7. Click "ADD FRIENDS" in the top toolbar:
-  [http://imgur.com/zTQ7s.png]
+<b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being solved, check back for updates.</b>
+<li>After you've connected, click the "Select all" button in the bottom right, you'll now connect to everyone.</li>
 
-8. When the window pops up, select "I have a code I received from a friend":
-  [http://imgur.com/sOTH7.png]
+    <dd>- If you miss this, click the "Add Friends" button, and select the last option. If the last option is greyed out, you're currently connected to everyone that's online.</dd>
 
-9. Enter one of the codes listed below: 
-  [http://imgur.com/jIToM.png]
+<li>You may want to choose to click the "Do not show this message again" on the first popup, then click "yes"</li>
 
-* Enter a code: 
+<li>Once in click the blue circling arrows in the bottom right if your files don't automatically begin to hash.</li>
 
-      * gvXbBCDx8n77yw (Updated 2/6/12)
- 
-      * gvXHPFFXuo!6Wg (1/25/12) 
-      
-      * gvXbBCDxMbnBvA (1/31/12) 
-      
-      * gvXHPFFXnjfv/w (11/6/11) 
+<li>Please leave the program running at all times, even if it's minimized in the background.</li>
 
-==Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being fixed ASAP, check back for updates.==
+<li>Issues/Feature Requests should be reported <a href="http://code.google.com/p/alliance-p2p/issues/entry">here</a>, connection issues should be reported below.</li>
 
-10. After you've connected, click the "Select all" button in the bottom right, you'll now connect to everyone. 
 
-    * If you miss this, click the "Add Friends" button, and select the last option. If the last option is greyed out, you're currently connected to everyone that's online.
-
-11. You may want to choose to click the "Do not show this message again" on the first popup, then click "yes"
-
-12. Once in click the blue circling arrows in the bottom right if your files don't automatically begin to hash.
-
-13. Please leave the program running at all times, even if it's minimized in the background.
-
-14. Issues/Feature Requests should be reported here, connection issues should be reported below.
-
-Thats it, you're connected! Tell your friends, and share what you download, the link to this post is: www.sbushare.com
+<b>Thats it, you're connected! Tell your friends, and share what you download, the link to this post is: <a href="http://www.sbushare.com">www.sbushare.com</a></b>
 
 ------
 *WARNING:* _Peer-to-peer networks, particularly those accessible via AllianceP2P, may contain material which you may be legally prohibited from downloading or redistributing. It is your responsibility to verify that any material you download from any peer-to-peer network is being made available to you lawfully. It is also your responsibility to verify that you have the legal right to redistribute any material which you make available to others via any peer-to-peer networks. In short, it is your personal responsibility to verify that you use this software in compliance with applicable copyright and other intellectual property laws._
