@@ -1,0 +1,64 @@
+#How to install and connect to SBU Alliance Network
+
+= Introduction =
+
+Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac. 
+
+= Connecting =
+
+First download the program Alliance (v1.2.2): Mac v1.2.2 or PC v1.2.2 or Linux v1.2.2
+
+1. Once installed run the program,
+  * Windows users who receive the error “unable to access jarfile alliance.tmp”
+  * Navigate to: C:\Program Files\Alliance 
+  * Right click Alliance and run as administrator.
+
+2. Once the program loads you’ll be presented with this screen: SCREENSHOT
+  * Enter a username.
+
+3. Then click the “Transfers” tab, you’ll be brought to this screen: SCREENSHOT
+  * Here select a download folder.
+
+4. Then from the "Tools" menu select “Shares": SCREENSHOT
+
+5. This window will Pop-up where you should select files to share: SCREENSHOT 
+
+6. If you're using an external drive, set it by right clicking: SCREENSHOT
+
+7. Click "ADD FRIENDS" in the top toolbar: SCREENSHOT
+
+8. When the window pops up, select "I have a code I received from a friend": SCREENSHOT
+
+9. Enter one of the codes listed below: SCREENSHOT
+
+* Enter this code: *gvXbBCDx8n77yw* (Updated 2/6/12)
+ Or one of these: 
+     
+      gvXHPFFXuo!6Wg (1/25/12) 
+      
+      gvXbBCDxMbnBvA (1/31/12) 
+      
+      gvXHPFFXnjfv/w (11/6/11) 
+
+*Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being fixed ASAP, check back for updates.*
+
+10.After you've connected, click the "Select all" button in the bottom right, you'll now connect to everyone. 
+
+If you miss this, click the "Add Friends" button, and select the last option. If the last option is greyed out, you're currently connected to everyone that's online.
+
+11.You may want to choose to click the "Do not show this message again" on the first popup, then click "yes"
+
+12.Once in click the blue circling arrows in the bottom right if your files don't automatically begin to hash.
+
+13.Please leave the program running at all times, even if it's minimized in the background.
+
+14.Issues/Feature Requests should be reported here, connection issues should be reported below.
+
+Thats it, you're connected! Tell your friends, and share what you download, the link to this post is: www.sbushare.com
+
+------
+*WARNING:* _Peer-to-peer networks, particularly those accessible via AllianceP2P, may contain material which you may be legally prohibited from downloading or redistributing. It is your responsibility to verify that any material you download from any peer-to-peer network is being made available to you lawfully. It is also your responsibility to verify that you have the legal right to redistribute any material which you make available to others via any peer-to-peer networks. In short, it is your personal responsibility to verify that you use this software in compliance with applicable copyright and other intellectual property laws._
+
+*Copyright Infringement:* _Copyright laws and laws pertaining to patents and inventions protect original works of authorship and inventions. Individuals who reproduce, distribute copies, receive copies, publicly perform or display works or inventions other than their own and without the consent of the owners or holders of rights, or their authorized agents, in original works of authorship or inventions, may be in violation of copyright, patent or other intellectual property infringement. I do not encourage or condone the illegal copying of copyrighted material. This is not intended to be legal counsel or advice. If you have any questions, consult your attorney._
+
+* Leave any questions/comments below.
