@@ -6,6 +6,10 @@
 Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac. 
 </blockquote>
 <h1>Connecting</h1>
+<blockquote>
+<font color="red" size="3"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
+</blockquote>
+
 <b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/AllianceP2P-v1.2.2.pkg">Mac</a> or 
 <a href="http://alliance-p2p.googlecode.com/files/alliancev1.2.2.msi">PC</a> or 
 <a href="http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip">Linux</a>
@@ -40,7 +44,8 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
   <img src="http://imgur.com/sOTH7.png" alt="Screenshot">
 
 <li> Enter one of the codes listed below: </li>
-  <img src="http://imgur.com/jIToM.png" alt="Screenshot">
+ 
+<font color="red"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
 
 <dd><table border="1">
 <tr>    
@@ -60,7 +65,8 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 </tr>
 </table></dd>
 
-<b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. This is being solved, check back for updates.</b>
+ <img src="http://imgur.com/jIToM.png" alt="Screenshot">
+
 <li>After you've connected, click the "Select all" button in the bottom right, you'll now connect to everyone.</li>
 
     <dd>- If you miss this, click the "Add Friends" button, and select the last option. If the last option is greyed out, you're currently connected to everyone that's online.</dd>
