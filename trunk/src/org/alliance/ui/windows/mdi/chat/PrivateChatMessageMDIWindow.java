@@ -64,7 +64,7 @@ public class PrivateChatMessageMDIWindow extends AbstractChatMessageMDIWindow {
         	if(cmd.isAdminOnly() && cmd.getKey() != null && text.startsWith(cmd.getKey())){
         		return;
         	}
-        }
+        } 
         	addMessage(ui.getCore().getFriendManager().getMe().getNickname(), text, System.currentTimeMillis(), false);
     }
 

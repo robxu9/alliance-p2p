@@ -503,7 +503,8 @@ public enum UserCommands {
 				}
 				else {
 					try {
-						command.ui.getCore().getSettings().getRulelist().add("DENY    " + command.directedAt.getFriendConnection().getSocketAddress().toString().substring(1) + "/32");
+						String s = "DENY    " + command.directedAt.getFriendConnection().getSocketAddress().toString().substring(1) + "/32";
+						command.ui.getCore().getSettings().getRulelist().add(s);
 						command.directedAt.reconnect();
 						command.ui.getCore().getSettings().getInternal().setEnableiprules(1);
 					} catch (Exception e) {
@@ -547,7 +548,6 @@ public enum UserCommands {
 				else {
 					//Removes unbanned users IP from the Blacklist
 					try {
-						System.out.println("DENY    " + command.directedAt.getLastKnownHost() + "/32");
 						for(int i = 0; i < command.ui.getCore().getSettings().getRulelist().size(); i++) {
 							if(command.ui.getCore().getSettings().getRulelist().get(i).toString().equals("DENY    " + command.directedAt.getLastKnownHost() + "/32")) {
 								command.ui.getCore().getSettings().getRulelist().remove(i);
@@ -565,8 +565,7 @@ public enum UserCommands {
 			return command;
 			}
 	},
-	
-	PLEASEUPDATE("pleaseupdate", true, ""){
+	PLEASEUPDATE("pleaseupdate", true, null){
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION));
