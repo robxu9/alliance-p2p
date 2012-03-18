@@ -53,12 +53,17 @@ public class IPBlacklist extends ArrayList<Routerule> {
     }
 
     public boolean add(String human) throws Exception {
-        String temp = human;
+    	String temp = human;
     	int divider = human.indexOf(':');
     	int maskDiv = human.indexOf('/');
         if(divider != -1 && maskDiv != -1) {
         	temp = human.substring(0, divider);
         	human = temp + human.substring(maskDiv);	
+        }
+        for(int i = 0; i < this.size(); i++) {
+        	if(this.get(i).toString().equals(human)){
+        		return false;
+        	}
         }
     	return this.add(new Routerule(human));
     }
