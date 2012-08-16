@@ -5,6 +5,9 @@
 <blockquote>
 Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac. 
 </blockquote>
+<blockquote>
+<b>Questions can be asked below or directly to Spiderman through Reddit: <a href = "http://www.reddit.com/message/compose/?to=Spiderman_&subject=SBUAlliance%20Issue">here</a></b>
+</blockquote>
 <h1>Connecting</h1>
 <blockquote>
 <font color="red" size="3"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
@@ -80,11 +83,11 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 <li>Issues/Feature Requests should be reported <a href="http://code.google.com/p/alliance-p2p/issues/entry">here</a>, connection issues should be reported below.</li>
 
 
-<b>Thats it, you're connected! Tell your friends, and share what you download, the link to this post is: <a href="http://www.sbushare.com">www.sbushare.com</a></b>
+<b>Thats it, you're connected! Tell your friends, and share what you download, the link to this post is: <a href="http://code.google.com/p/alliance-p2p/wiki/SBUAlliance">http://code.google.com/p/alliance-p2p/wiki/SBUAlliance</a></b>
 
 ------
 *WARNING:* _Peer-to-peer networks, particularly those accessible via AllianceP2P, may contain material which you may be legally prohibited from downloading or redistributing. It is your responsibility to verify that any material you download from any peer-to-peer network is being made available to you lawfully. It is also your responsibility to verify that you have the legal right to redistribute any material which you make available to others via any peer-to-peer networks. In short, it is your personal responsibility to verify that you use this software in compliance with applicable copyright and other intellectual property laws._
 
 *Copyright Infringement:* _Copyright laws and laws pertaining to patents and inventions protect original works of authorship and inventions. Individuals who reproduce, distribute copies, receive copies, publicly perform or display works or inventions other than their own and without the consent of the owners or holders of rights, or their authorized agents, in original works of authorship or inventions, may be in violation of copyright, patent or other intellectual property infringement. I do not encourage or condone the illegal copying of copyrighted material. This is not intended to be legal counsel or advice. If you have any questions, consult your attorney._
 
-* Leave any questions/comments below.
+* Leave any questions/comments below or message Spiderman through Reddit: <a href = "http://www.reddit.com/message/compose/?to=Spiderman_&subject=SBUAlliance%20Issue">here</a>
