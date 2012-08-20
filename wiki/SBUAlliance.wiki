@@ -13,15 +13,15 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 <font color="red" size="3"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
 </blockquote>
 
-<b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/AllianceP2P-v1.2.2.pkg">Mac</a> or 
-<a href="http://alliance-p2p.googlecode.com/files/alliancev1.2.2.msi">PC</a> or 
-<a href="http://alliance-p2p.googlecode.com/files/alliance-v1.2.2.b1418%20%28Linux%29.zip">Linux</a>
+<b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/AllianceP2P.dmg">Mac</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/Alliance%201.3.0.msi">Windows</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/AllianceP2P.zip">Linux</a>
 <ol>
 <li>Once installed, run the program.</li>
+  <font color="red"><dd>- Mountain Lion Users (Mac OSX 10.8+) <b>must</b> read the README file to load Alliance</dd></font>
   <dd>- Windows users who receive the error “unable to access jarfile alliance.tmp”</dd>
   <dd>- Navigate to: C:\Program Files\Alliance</dd> 
   <dd>- Right click Alliance and run as administrator</dd>
-
 <li>Once the program loads you’ll be presented with this screen:</li>
 <dd>Enter a username</dd>
   <img src="http://imgur.com/KczFD.png" alt="Screenshot">
