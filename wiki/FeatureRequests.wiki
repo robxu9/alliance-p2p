@@ -16,13 +16,6 @@ Things on this list are pretty major features, so no need to add them all in one
  * Monitor selected users for new files
     * There's a [http://code.google.com/p/alliancep2pbeta/issues/detail?id=36 plugin] being developed for that.
  * Put all Offline members in their own group
- * ~~Admin-only powers. This is difficult since Alliance isn't centralized; if we add IRC, that uses a central server so we could identify admins that way.~~
-    * ~~Silence users from chat or ban them entirely. A banlist should get propagated to all users.~~
-    * ~~Send mass PMs to everyone.~~
-      * ~~It looks like this was already started; look in !MessageBoard.java.~~
-    * ~~Admins can ban users~~
-    * ~~Silence users~~
-      * ~~For the above 3 we need to create a ban/silence list for each specific user that'll save locally on their machine.~~
 
 = Minor features =
 
@@ -35,21 +28,6 @@ These are things that could probably be implemented quickly.
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
  * Use RPC's to send commands rather than messages
- * ~~Resizing and sorting the columns in the Uploads, Downloads, and Search tabs doesn't always work.~~
- * ~~Pause and resume downloads.~~
- * ~~User status messages like on DC++.~~
-    * ~~Lots of user information is currently visible as a tooltip; maybe we could move it into a popup dialog, along with a status message, opened via one of the context menu items.~~
-    * ~~The "offline for N days" text could also go in this popup. Right now it makes the user list too wide and it scrolls horizontally.~~
- * ~~More filetype icons for common extensions:~~
-    * ~~These still need icons to be drawn instead of the placeholders.~~
-    * ~~Programs: exe, com, bin, app, bat, jar~~
-    * ~~Comics: cbr, cbz~~
-    * ~~Games: rom, n64, nes, sav~~
-    * ~~Installers: msi, pkg, deb, rpm, torrent~~
-    * ~~Bad files: tmp, part~~
- * ~~In search results, show which users are sharing the files (as a tooltip?).~~
-    * ~~Oh, this is already shown when you hover over a file name (not a directory name). It's not a great display though.~~
- * ~~Add a "Time started" column to the Uploads tab.~~
 
 = Bugs =
 
@@ -64,6 +42,4 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
  * Some users are being blocked from connecting, figure out why and correct it.
- * ~~Though greyed out, the LAN option is still clickable.~~
- * ~~Your nickname and status are handled in multiple places by Alliance, and don't always stay synchronized. (Example: use /nick and then /me.)~~
- * ~~Your own status doesn't appear until after you've opened the Options dialog, and I haven't tested other users' status.~~
+ 
