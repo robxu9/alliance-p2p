@@ -18,7 +18,7 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 <a href="http://alliance-p2p.googlecode.com/files/AllianceP2P.zip">Linux</a>
 <ol>
 <li>Once installed, run the program.</li>
-  <font color="red"><dd>- Mountain Lion Users (Mac OSX 10.8+) <b>must</b> read the README file to load Alliance</dd></font>
+  <font color="red"><dd>- Mountain Lion Users (Mac OSX 10.8+) <b>must</b> read the <a href="http://alliance-p2p.googlecode.com/files/OSX%20-%20README%201.3.0.rtf">README</a> file to load Alliance</dd></font>
   <dd>- Windows users who receive the error “unable to access jarfile alliance.tmp”</dd>
   <dd>- Navigate to: C:\Program Files\Alliance</dd> 
   <dd>- Right click Alliance and run as administrator</dd>
