@@ -55,7 +55,7 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
    <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
 </tr>
 <tr>
-    <td align="center"><i>BR*+zArBWM6nGQ</i></td><td align="center">8/26/12</td>
+    <td align="center"><i>gvXa8wrBow8maw</i></td><td align="center">8/26/12</td>
 </tr>
 <tr>
     <td align="center"><i>gvXbBCDxuaQDTA</i></td> <td align="center">3/19/12</td>
