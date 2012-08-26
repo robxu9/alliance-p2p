@@ -1,5 +1,16 @@
-#summary How to install and connect to SBU Alliance Network
 #labels SBU,SBUAlliance,Setup
+=Fall 2012 Info=
+<br/>-Reinstall the newest Alliance (remember to save your data folder)  
+<br/>-Connect to the latest codes listed below(8/26/12)  
+  *_gvXa8wrBow8maw_  
+  *_gvX5WVFXiw8VPw_  
+<br/>-Remember to make friends Trusted!
+<br/>-Remember to Share! :)
+
+Have a good Semester
+  * s3nd3r5(r3dph1n3x)
+
+#summary How to install and connect to SBU Alliance Network
 
 <h1>Introduction</h1>
 <blockquote>
