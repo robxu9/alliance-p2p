@@ -1,16 +1,21 @@
-#labels SBU,SBUAlliance,Setup
-=Fall 2012 Info=
-<br/>-Reinstall the newest Alliance (remember to save your data folder)  
-<br/>-Connect to the latest codes listed below(8/26/12)  
-  *_gvXa8wrBow8maw_  
-  *_gvX5WVFXiw8VPw_
-<br/>-Remember to make friends Trusted!
-<br/>-Remember to Share! :)
-
-Have a good Semester
-  * s3nd3r5(r3dph1n3x)
-
 #summary How to install and connect to SBU Alliance Network
+#labels SBU,SBUAlliance,Setup
+<font color="darkblue">
+<h1>Returning Fall 2012 <i>Quick Guide</i></h1>
+<ol>
+<li>Update to the newest Alliance release, a guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
+<li> Connect using the latest codes listed below: (8/26/12)</li>
+<ul>  
+<li>gvXa8wrBow8maw </li>
+<li>gvX5WVFXiw8VPw </li>
+</ul>
+<li>Remember to set your friends as trusted!</li>
+<li>Remember to share! :)</li>
+</ol>
+<b>Thanks, and have a good semester!</b>
+<hr/>
+</font>
+
 
 <h1>Introduction</h1>
 <blockquote>
