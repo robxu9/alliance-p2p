@@ -10,7 +10,7 @@ If you're working on a feature, claim it here so we don't duplicate work. Once y
 
 Things on this list are pretty major features, so no need to add them all in one update.
 
- * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot].
+ * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot] or [http://moepii.sourceforge.net/ IRClib].
  * Allow admins to appoint moderators who get some admin powers.
  * Let clients with different encryption levels communicate (as per [http://code.google.com/p/alliancep2pbeta/issues/detail?id=6 this issue]), which would also let us easily transition to the "experimental" AES option.
  * Monitor selected users for new files
