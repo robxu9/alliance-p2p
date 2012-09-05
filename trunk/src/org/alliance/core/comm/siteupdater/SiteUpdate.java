@@ -38,7 +38,7 @@ public class SiteUpdate implements Runnable {
     private String updateFilePath;
     private String orginalFilePath;
     private String siteVersion = Version.VERSION;
-    private int siteBuild = Version.BUILD_NUMBER;
+    private static int siteBuild = Version.BUILD_NUMBER;
     private String md5;
     private boolean updateAttemptHasBeenMade = false;
 
@@ -48,7 +48,7 @@ public class SiteUpdate implements Runnable {
         orginalFilePath = new File(STARTED_JAR_NAME).getCanonicalPath();
     }
 
-    public int getSiteBuild() {
+    public static int getSiteBuild() {
         return siteBuild;
     }
 

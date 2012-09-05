@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.alliance.Version;
+import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
 import org.alliance.core.node.MyNode;
@@ -568,11 +568,11 @@ public enum UserCommands {
 	PLEASEUPDATE("pleaseupdate", true, null){
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION));
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", ""+SiteUpdate.getSiteBuild()));
 			for (Friend friend : friends) {
-				if(friend.getAllianceBuildNumber() < Version.BUILD_NUMBER){
+				if(friend.getAllianceBuildNumber() < SiteUpdate.getSiteBuild()){
 				try {
-					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(SYSTEM.getKey() + Language.getLocalizedString(getClass(), "pleaseupdate", Version.VERSION));
+					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(SYSTEM.getKey() + Language.getLocalizedString(getClass(), "pleaseupdate", ""+SiteUpdate.getSiteBuild()));
 				}
 				catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));
