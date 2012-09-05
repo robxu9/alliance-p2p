@@ -118,6 +118,7 @@ public class FriendListModel extends DefaultListModel {
         groupsSorted.clear();
         //Draw no groups
         drawGroups(Language.getLocalizedString(getClass(), "nogroup"), true);
+        drawGroups(Language.getLocalizedString(getClass(), "offline"), false);
 
         friends.clear();
         ignoreFires = false;
@@ -129,12 +130,14 @@ public class FriendListModel extends DefaultListModel {
         int totalFriends = 0;
         int onlineFriends = 0;
         for (Friend f : friends) {
-            if (f.getUGroupName().equals(group) || (f.getUGroupName().isEmpty() && noGroup)) {
-                if (!hiddenGroups.contains(group)) {
+        	if(group.equals(Language.getLocalizedString(getClass(), "offline")) && !f.isConnected())
+        	{
+        		addElement(f);
+        	}
+        	else if (f.getUGroupName().equals(group) || (f.getUGroupName().isEmpty() && noGroup)) {
+        		totalFriends++;
+        		if (!hiddenGroups.contains(group) && f.isConnected()) {
                     addElement(f);
-                }
-                totalFriends++;
-                if (f.isConnected()) {
                     onlineFriends++;
                 }
             }

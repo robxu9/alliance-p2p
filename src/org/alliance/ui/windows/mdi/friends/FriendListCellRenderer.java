@@ -128,15 +128,15 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             	nodeString += ": " + status;
             }
             renderer.setText(nodeString);
-        } else if (n.hasNotBeenOnlineForLongTime()) {
-            renderer.setIcon(iconFriendOld);
-            renderer.setForeground(Color.GRAY);
-            renderer.setText(trusted + friendWindow.getNickname(n.getGuid()));
-            
         } else {
-            renderer.setIcon(iconFriendDimmed);
+        	if (n.hasNotBeenOnlineForLongTime()){
+        		renderer.setIcon(iconFriendOld);
+        	}
+        	else {
+        		renderer.setIcon(iconFriendDimmed);
+        	}
             renderer.setForeground(Color.GRAY);
-            renderer.setText(trusted + friendWindow.getNickname(n.getGuid()));
+            renderer.setText(trusted + friendWindow.getNickname(n.getGuid())); 
         }
     }
 
@@ -155,11 +155,7 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         	status = ui.getCore().getSettings().getMy().getStatus();
         	build = Version.BUILD_NUMBER;
         }
-        // TODO This is temporary and for dev purposes, right? It'll become outdated
-        // as soon as people start upgrading to 1.3.0 and 1.3.1 comes out.
-        // And I like the getInfoString() tooltip.
-        // Also, status messages should appear in the list, like DC++, so you can
-        // scan it for stuff like "I'm sharing anime" or "PM for study aids".
+        
         if (build < 1477) {
         	return Language.getLocalizedString(getClass(), "needupgrade", name, "v1.3.0");
         }
