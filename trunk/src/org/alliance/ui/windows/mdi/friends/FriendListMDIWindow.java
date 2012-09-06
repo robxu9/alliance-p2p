@@ -127,7 +127,9 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
                             ui.getFriendListModel().changeHiddenGroups(list.getSelectedValue().toString());
                             return;
                         }
-                        EVENT_viewshare(null);
+                    }
+                    else if (e.getClickCount() == 2) {
+                    	EVENT_viewshare(null);
                     }
                 } catch (Exception ex) {
                     ui.handleErrorInEventLoop(ex);
