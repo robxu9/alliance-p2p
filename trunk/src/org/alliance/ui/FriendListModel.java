@@ -116,6 +116,7 @@ public class FriendListModel extends DefaultListModel {
             }
         }
         groupsSorted.clear();
+        
         //Draw no groups
         drawGroups(Language.getLocalizedString(getClass(), "nogroup"), true);
         drawGroups(Language.getLocalizedString(getClass(), "offline"), false);
@@ -132,17 +133,27 @@ public class FriendListModel extends DefaultListModel {
         for (Friend f : friends) {
         	if(group.equals(Language.getLocalizedString(getClass(), "offline")) && !f.isConnected())
         	{
-        		addElement(f);
+        		totalFriends++;
+        		if (!hiddenGroups.contains(group)){
+        			addElement(f);
+        		}
         	}
         	else if (f.getUGroupName().equals(group) || (f.getUGroupName().isEmpty() && noGroup)) {
         		totalFriends++;
-        		if (!hiddenGroups.contains(group) && f.isConnected()) {
-                    addElement(f);
-                    onlineFriends++;
-                }
+        		if(f.isConnected()){
+        			onlineFriends++;
+        			if (!hiddenGroups.contains(group)) {
+                        addElement(f);
+                    }
+        		}
             }
         }
-        add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
+        if(group.equals(Language.getLocalizedString(getClass(), "offline"))){
+        	add(groupPosition, group + " (" + totalFriends + ")");
+        }
+        else if(totalFriends > 0){
+        	add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
+        }
     }
    
     public boolean getSort(){

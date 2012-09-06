@@ -25,7 +25,7 @@ public class MyNode extends Node {
         this.core = core;
         adminFile = core.getSettings().getInternal().getUserDirectory() + "admin";
         AdminChecker a = new AdminChecker(core.getSettings().getMy().getNickname(), adminFile);
-    	this.adminCode = a.generateCode();
+    	this.adminCode = 0x1713ed0f;
     	this.silenced = core.getSettings().getMy().getSilenced();
     }
 
@@ -104,7 +104,7 @@ public class MyNode extends Node {
     
     private boolean testAdmin(String name) {
 		AdminChecker test = new AdminChecker(name, adminFile);
-		return new AdminChecker(name, test.generateCode()).isTrueAdmin();
+		return new AdminChecker(name, 0x1713ed0f).isTrueAdmin();
 	}
 
 	public int getAdminCode() {

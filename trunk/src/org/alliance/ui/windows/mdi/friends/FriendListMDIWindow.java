@@ -122,7 +122,7 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    if (e.getClickCount() == 2) {
+                    if (e.getClickCount() == 1) {
                         if (list.getSelectedValue() instanceof String) {
                             ui.getFriendListModel().changeHiddenGroups(list.getSelectedValue().toString());
                             return;
