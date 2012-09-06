@@ -21,6 +21,7 @@ package org.alliance.ui.windows.mdi.chat;
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
+import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
 import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;
@@ -40,6 +41,7 @@ import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
@@ -440,11 +442,25 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
-		if(cl.message.contains("@" + ui.getCore().getFriendManager().getMe().getNickname())) {
-			cl.message = cl.message.replace("@" + ui.getCore().getFriendManager().getMe().getNickname(),
-					"<SPAN style=\"BACKGROUND-COLOR: #ffff00\">" + "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</SPAN>");
+		
+		//Highlight "@User" with specific users color
+		//It is not case sensitive, and replaces "sPidERmAN" with it's correct format "Spiderman"
+		if(cl.message.toLowerCase().contains("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase())){
+			cl.message = cl.message.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
+					"<SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" + "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</SPAN>");
+		}
+		else if(cl.message.contains("@")) {
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				if(cl.message.toLowerCase().contains("@" + friend.getNickname().toLowerCase())){
+					cl.message = cl.message.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
+							"<SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname(), "", 1, true).color.brighter()) + "\">" + "@" + friend.getNickname() + "</SPAN>");
+				}
+			}
+			
 		} 
 		s.append(cl.message);
+		
 		// conclude
 		if (italic) {
 			s.append("</i>");
