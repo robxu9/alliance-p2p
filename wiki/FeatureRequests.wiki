@@ -29,7 +29,7 @@ These are things that could probably be implemented quickly.
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
  * Use RPC's to send commands rather than messages
- * Highlight all `@usernames` with the user's color, and be case-insensitive.
+ * ~~Highlight all `@usernames` with the user's color, and be case-insensitive.~~
 
 = Bugs =
 
@@ -43,5 +43,5 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Some files marked as 'external' still get unhashed.
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
- * Some users are being blocked from connecting, figure out why and correct it.
+ * Implement UDP hole punching to transverse NAT to NAT networks
  * ~~The `/help` command doesn't substitute `%VERSION%` in the description for `/pleaseupdate`.~~
