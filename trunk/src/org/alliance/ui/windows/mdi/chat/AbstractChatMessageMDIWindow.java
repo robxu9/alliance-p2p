@@ -447,14 +447,17 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		//It is not case sensitive, and replaces "sPidERmAN" with it's correct format "Spiderman"
 		if(cl.message.toLowerCase().contains("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase())){
 			cl.message = cl.message.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
-					"<SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" + "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</SPAN>");
+					"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" 
+							+ "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</span></SPAN>");
 		}
-		else if(cl.message.contains("@")) {
+		if(cl.message.contains("@")) {
+			
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			for (Friend friend : friends) {
 				if(cl.message.toLowerCase().contains("@" + friend.getNickname().toLowerCase())){
 					cl.message = cl.message.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
-							"<SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname(), "", 1, true).color.brighter()) + "\">" + "@" + friend.getNickname() + "</SPAN>");
+							"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname(), "", 1, true).color.brighter()) + "\">" 
+									+ "@" + friend.getNickname() + "</SPAN></span>");
 				}
 			}
 			
