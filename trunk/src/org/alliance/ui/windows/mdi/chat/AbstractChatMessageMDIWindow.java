@@ -559,7 +559,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 							realFriend = true;
 							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
 										"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
-												+ "@" + friend.getNickname().toLowerCase() + "</span></SPAN>"));
+												+ "@" + friend.getNickname() + "</span></SPAN>"));
 							}
 						}
 					}
@@ -613,7 +613,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 							realFriend = true;
 							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
 									"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
-											+ "@" + friend.getNickname().toLowerCase() + "</span></SPAN>"));
+											+ "@" + friend.getNickname() + "</span></SPAN>"));
 							}
 						}
 					}
