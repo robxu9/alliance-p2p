@@ -536,6 +536,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 				}
 				else
 				{
+					boolean realFriend = false;
 					for (Friend friend : friends) {
 						boolean canPrint = true;
 						String friendName = friend.getNickname().toLowerCase();
@@ -555,11 +556,16 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 							}
 						if(canPrint)
 							{
+							realFriend = true;
 							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
 										"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
 												+ "@" + friend.getNickname().toLowerCase() + "</span></SPAN>"));
 							}
 						}
+					}
+					if(!realFriend)
+					{
+						wholeMessage.add(substring);
 					}
 				}
 			}
@@ -584,6 +590,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 				}
 				else
 				{
+					boolean realFriend = false;
 					for (Friend friend : friends) {
 						boolean canPrint = true;
 						String friendName = friend.getNickname().toLowerCase();
@@ -603,11 +610,16 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 							}
 						if(canPrint)
 							{
+							realFriend = true;
 							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
 									"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
 											+ "@" + friend.getNickname().toLowerCase() + "</span></SPAN>"));
 							}
 						}
+					}
+					if(!realFriend)
+					{
+						wholeMessage.add(substring);
 					}
 				}
 				cl.message = "";
