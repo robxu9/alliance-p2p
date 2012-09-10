@@ -22,6 +22,7 @@ Things on this list are pretty major features, so no need to add them all in one
 
 These are things that could probably be implemented quickly.
 
+ * Make rearranging the tabs take more initial movement.
  * Assign aliases to shared folders like DC++.
  * Notify users when tabs contain unread private messages, perhaps by blinking the taskbar icon or changing the window title.
  * Remove the Trusted users feature. It's redundant now with the /ignore command.
