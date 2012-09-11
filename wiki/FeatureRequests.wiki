@@ -36,6 +36,7 @@ These are things that could probably be implemented quickly.
 
 Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] might still not be fixed.
 
+ * Attempting to hash "会意.txt" (and probably other Unicode files) freezes Alliance.
  * People don't connect to everyone, at least not quickly.
  * !BufferUnderflowException when someone connects to you.
  * !NullPointerException when you try to connect to your own connection code.
