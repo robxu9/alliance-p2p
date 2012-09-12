@@ -22,6 +22,7 @@ Things on this list are pretty major features, so no need to add them all in one
 
 These are things that could probably be implemented quickly.
 
+ * Multiperson PM/Private Chatrooms
  * Make rearranging the tabs take more initial movement.
  * Assign aliases to shared folders like DC++.
  * Notify users when tabs contain unread private messages, perhaps by blinking the taskbar icon or changing the window title.
@@ -46,5 +47,5 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
  * Implement UDP hole punching to transverse NAT to NAT networks.
- * The /whois command is case sensitive, make it case insensitive.
+ * The `/whois` command is case sensitive, make it case insensitive.
  * ~~The `/help` command doesn't substitute `%VERSION%` in the description for `/pleaseupdate`.~~
