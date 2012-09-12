@@ -46,6 +46,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -444,6 +446,20 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
+		
+		
+		// Highlight @username with Username's color
+		// In progress -- rewrite of code below with fewer nested loops
+		/*
+		if (cl.message.contains("@")) {
+			Pattern usernames = Pattern.compile("@(\\S+)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+			Matcher matchUsernames = usernames.matcher(cl.message);
+			while (matchUsernames.find()) {
+				
+			}
+		}
+		*/
+		
 		
 		//Highlight "@User" with specific users color
 		//It is not case sensitive, and replaces "sPidERmAN" with it's correct format "Spiderman"
