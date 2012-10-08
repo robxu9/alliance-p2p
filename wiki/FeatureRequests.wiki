@@ -31,6 +31,7 @@ These are things that could probably be implemented quickly.
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
  * Use RPC's to send commands rather than messages
+ * NSFW tag red bold text, black background
  * ~~Highlight all `@usernames` with the user's color, and be case-insensitive.~~
 
 = Bugs =
