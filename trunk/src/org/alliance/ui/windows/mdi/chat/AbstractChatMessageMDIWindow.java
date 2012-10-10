@@ -45,7 +45,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -447,228 +446,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
 		}
 		
-		
-		// Highlight @username with Username's color
-		// In progress -- rewrite of code below with fewer nested loops
-		/*
-		if (cl.message.contains("@")) {
-			Pattern usernames = Pattern.compile("@(\\S+)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-			Matcher matchUsernames = usernames.matcher(cl.message);
-			while (matchUsernames.find()) {
-				
-			}
-		}
-		*/
-		
-		
-		//Highlight "@User" with specific users color
-		//It is not case sensitive, and replaces "sPidERmAN" with it's correct format "Spiderman"
-		if(cl.message.contains("@")){
-			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
-			String myName =ui.getCore().getFriendManager().getMe().getNickname().toLowerCase();
-			if(cl.message.indexOf('@') == cl.message.lastIndexOf('@'))
-			{
-				if(cl.message.toLowerCase().contains("@" + myName)){
-					//Does a friend's name contain my name?
-					boolean doesAFriendsNameContainMine = false;
-					for(Friend friend : friends)
-					{
-						if(friend.getNickname().toLowerCase().contains(myName))
-						{
-							doesAFriendsNameContainMine = true;
-						}
-					}
-					if(!doesAFriendsNameContainMine)
-					{
-						cl.message = cl.message.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
-								"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" 
-										+ "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</span></SPAN>");
-					}
-				}
-				else
-				{
-					for (Friend friend : friends) {
-						boolean canPrint = true;
-						String friendName = friend.getNickname().toLowerCase();
-						if(cl.message.toLowerCase().contains("@" + friendName)){
-							for(Friend fr : friends)
-							{
-								if(!fr.equals(friend))
-								{
-									if(fr.getNickname().contains(friendName))
-									{
-										if(cl.message.toLowerCase().contains("@" + fr.getNickname().toLowerCase()))
-											{
-												canPrint = false;
-											}
-									}
-								}
-							}
-						if(canPrint)
-						{
-							cl.message = cl.message.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
-									"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname(), "", 1, true).color.brighter()) + "\">" 
-											+ "@" + friend.getNickname() + "</SPAN></span>");
-						}
-						}
-					}
-				}
-			
-		}//End Single @
-		else
-		{
-			String message = cl.message;
-			Vector<Integer>locations = new Vector<Integer>();
-			Vector<String> wholeMessage = new Vector<String>();
-			for(int x = message.indexOf('@'); x<=message.lastIndexOf('@'); x++)
-			{
-				if(message.charAt(x) == '@')
-				{
-					locations.add(x);
-				}
-			}
-			wholeMessage.add(cl.message.substring(0,locations.get(0)));
-			for(int x = 0; x < locations.size()-1; x++)
-			{
-				String substring = message.substring(locations.get(x), locations.get(x+1));
-
-				if(substring.toLowerCase().contains("@" + myName)){
-					//Does a friend's name contain my name?
-					boolean doesAFriendsNameContainMine = false;
-					for(Friend friend : friends)
-					{
-						if(friend.getNickname().toLowerCase().contains(myName))
-						{
-							doesAFriendsNameContainMine = true;
-						}
-					}
-					if(!doesAFriendsNameContainMine)
-					{
-						
-						wholeMessage.add(substring.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
-								"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" 
-										+ "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</span></SPAN>"));
-					}
-				}
-				else
-				{
-					boolean realFriend = false;
-					for (Friend friend : friends) {
-						boolean canPrint = true;
-						String friendName = friend.getNickname().toLowerCase();
-						if(substring.toLowerCase().contains("@" + friendName)){
-							for(Friend fr : friends)
-							{
-								if(!fr.equals(friend))
-								{
-									if(fr.getNickname().contains(friendName))
-									{
-										if(substring.toLowerCase().contains("@" + fr.getNickname().toLowerCase()))
-											{
-												canPrint = false;
-											}
-									}
-								}
-							}
-						if(canPrint)
-							{
-							realFriend = true;
-							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
-										"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
-												+ "@" + friend.getNickname() + "</span></SPAN>"));
-							}
-						}
-					}
-					if(!realFriend)
-					{
-						wholeMessage.add(substring);
-					}
-				}
-			}
-				String substring = message.substring(locations.get(locations.size()-1));
-
-				if(substring.toLowerCase().contains("@" + myName)){
-					//Does a friend's name contain my name?
-					boolean doesAFriendsNameContainMine = false;
-					for(Friend friend : friends)
-					{
-						if(friend.getNickname().toLowerCase().contains(myName))
-						{
-							doesAFriendsNameContainMine = true;
-						}
-					}
-					if(!doesAFriendsNameContainMine)
-					{
-						wholeMessage.add(substring.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
-								"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" 
-										+ "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</span></SPAN>"));
-					}
-				}
-				else
-				{
-					boolean realFriend = false;
-					for (Friend friend : friends) {
-						boolean canPrint = true;
-						String friendName = friend.getNickname().toLowerCase();
-						if(substring.toLowerCase().contains("@" + friendName)){
-							for(Friend fr : friends)
-							{
-								if(!fr.equals(friend))
-								{
-									if(fr.getNickname().contains(friendName))
-									{
-										if(substring.toLowerCase().contains("@" + fr.getNickname().toLowerCase()))
-											{
-												canPrint = false;
-											}
-									}
-								}
-							}
-						if(canPrint)
-							{
-							realFriend = true;
-							wholeMessage.add(substring.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
-									"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname().toLowerCase(), "", 1, true).color.brighter()) + "\">" 
-											+ "@" + friend.getNickname() + "</span></SPAN>"));
-							}
-						}
-					}
-					if(!realFriend)
-					{
-						wholeMessage.add(substring);
-					}
-				}
-				cl.message = "";
-				for(int x = 0; x < wholeMessage.size(); x++)
-				{
-					cl.message += wholeMessage.get(x);
-				}
-		}//Multiple @'s :X
-			
-			
-			
-			
-			/*		THE OLD CODE FOR THIS 
-			//CHECK for their substring and if none, do me
-			if(cl.message.toLowerCase().contains("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase())){
-				cl.message = cl.message.toLowerCase().replace("@" + ui.getCore().getFriendManager().getMe().getNickname().toLowerCase(),
-						"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(ui.getCore().getFriendManager().getMe().getNickname(), "", 1, true).color.brighter()) + "\">" 
-								+ "@" + ui.getCore().getFriendManager().getMe().getNickname() + "</span></SPAN>");
-			}
-			//DoFriends
-			if(cl.message.contains("@")) {
-				
-				for (Friend friend : friends) {
-					if(cl.message.toLowerCase().contains("@" + friend.getNickname().toLowerCase())){
-						cl.message = cl.message.toLowerCase().replace("@" + friend.getNickname().toLowerCase(),
-								"<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" + toHexColor(createChatLine(friend.getNickname(), "", 1, true).color.brighter()) + "\">" 
-										+ "@" + friend.getNickname() + "</SPAN></span>");
-					}
-				}
-			} 
-			*/
-		}
-		s.append(cl.message);
+		s.append(createChatlineEffects(cl.message));
 		
 		// conclude
 		if (italic) {
@@ -679,6 +457,34 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		return s.toString();
 	}
 
+	private String createChatlineEffects(String message) {
+		//Highlight "@User" with specific users color
+		//It is not case sensitive, and replaces "sPidERmAN" with it's correct format "Spiderman"
+		if(message.contains("@")) {
+			Matcher matchUsername = Pattern.compile(Pattern.quote("@"+ui.getCore().getFriendManager().getMe().getNickname()), Pattern.CASE_INSENSITIVE).matcher(message);
+			ArrayList<String> mentionedFriends = new ArrayList<String>();
+			if(matchUsername.find()){
+				mentionedFriends.add(ui.getCore().getFriendManager().getMe().getNickname());
+			}
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				matchUsername = Pattern.compile(Pattern.quote("@" + friend.getNickname()), Pattern.CASE_INSENSITIVE).matcher(message);
+				if(matchUsername.find()){
+					mentionedFriends.add(friend.getNickname());
+				}
+			}
+			if(!(mentionedFriends.isEmpty())){
+				for(int i = 0; i < mentionedFriends.size(); i++) {	
+					message = message.replaceFirst("(?i)@"+mentionedFriends.get(i)+"(\\s|$)", "<span style=\"color:#000000\"><SPAN style=\"BACKGROUND-COLOR:" 
+							+ toHexColor(createChatLine(mentionedFriends.get(i), "", 1, true).color.brighter()) + "\">" + "@" + mentionedFriends.get(i) + "</SPAN></span> ");
+				}
+			} 
+		} 
+		
+		
+		return message;
+	}
+
 	private boolean isUserAction(ChatLine cl) {
 		// These can be done with /me or entered manually.
 		// So if Joe types "* Joe is hungry.", it will be interpreted as a
@@ -687,6 +493,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// message protocol to add flags for system or action messages.
 		return cl.message.startsWith("* " + cl.from + " ");
 	}
+	
 	
 	protected String toHexColor(Color color) {
         return "#" + Integer.toHexString(color.getRGB() & 0xFFFFFF);
@@ -742,5 +549,4 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
     public void EVENT_cleanscreen(ActionEvent a) throws Exception {
         chatClear();
     }
-
 }
