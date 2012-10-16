@@ -118,14 +118,17 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             }
             nodeString += " (" + TextUtils.formatByteSize(n.getShareSize()) + ")";
             String status = n.getStatus();
-            if(n.getGuid() == ui.getCore().getSettings().getMy().getGuid()){
+            if (n.getGuid() == ui.getCore().getSettings().getMy().getGuid()) {
             	status = ui.getCore().getSettings().getMy().getStatus();
             }
-            if (status != null && status.length() > 0) {
-            	if(status.length() > 80) {
+            if (status != null) {
+            	status = status.trim();
+            	if (status.length() > 80) {
             		status = status.substring(0, 80) + "&hellip;";
             	}
-            	nodeString += ": " + status;
+            	if (status.length() > 0) {
+            	    nodeString += ": " + status;
+            	}
             }
             renderer.setText(nodeString);
         } else {
