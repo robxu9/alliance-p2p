@@ -297,8 +297,12 @@ public class ViewShareMDIWindow extends AllianceMDIWindow {
         if (T.t) {
             T.info("Sending link: " + link);
         }
+        if(numberOfFiles > 0 && totalSize > 0) {
         ui.getMainWindow().getPublicChat().send(link);
         ui.getMainWindow().getMDIManager().selectWindow(ui.getMainWindow().getPublicChat());
+        } else {
+        	 OptionDialog.showErrorDialog(ui.getMainWindow(), Language.getLocalizedString(getClass(), "zerofile"));
+        }
     }
 
     public void EVENT_linktohdd(ActionEvent e) throws IOException {
