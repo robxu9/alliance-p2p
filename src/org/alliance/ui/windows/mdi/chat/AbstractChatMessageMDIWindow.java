@@ -257,21 +257,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
                 end = text.length();
             }
             String displayText = text.substring(i, end);
-            String urlTitle;
             //Shorten long links as to not create side scrolling chat.
             if(displayText.length() > 75) {
             	displayText = displayText.substring(i, 75) + "&hellip;";
             }
-			try {
-				urlTitle = getPageTitle(new URL(text.substring(i, end)));
-				if(!urlTitle.isEmpty()) {
-					addMessage("&lt;Link Bot&gt;", urlTitle, System.currentTimeMillis(), false, true, false);
-				}
-			} catch (MalformedURLException e) {
-				//Do nothing
-			} catch (Exception e) {
-				//Do nothing
-			}
             String s = text.substring(0, i);
             s += "<a href=\"" + text.substring(i, end) + "\">" + displayText + "</a>";
             i = s.length();
@@ -476,9 +465,32 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("</i>");
 		}
 		s.append("</SPAN><br>");
+		if(cl.containsURL){
+			String urlTitle;
+			urlTitle = linkBot(cl.message);
+			if(!urlTitle.isEmpty()){
+				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "<b>[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]</b>&lt;Link Bot&gt; "
+					+ urlTitle + "<br>");
+			}
+		}
 		previousChatLine = cl;
 		return s.toString();
 	}
+
+	private String linkBot(String text) {
+            String urlTitle = text.substring(text.indexOf("<a href")+"<a href=".length()+1, text.indexOf(">")-1);
+			try {
+				urlTitle = getPageTitle(new URL(urlTitle));
+				if(!urlTitle.isEmpty()) {
+					return urlTitle;
+				}
+			} catch (MalformedURLException e) {
+				return "";
+			} catch (Exception e) {
+				return "";
+			}
+			return "";
+		}
 
 	private String createChatlineEffects(String message) {
 		//Highlight "@User" with specific users color
@@ -582,6 +594,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		String message;
         long tick;
         Color color;
+        boolean containsURL;
 
         public ChatLine(String from, String message, long tick, Color color) {
             this(from, message, tick, color, true);
@@ -592,6 +605,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             this.message = escape ? escapeHTML(message) : message;
             this.tick = tick;
             this.color = color;
+            this.containsURL = (message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1);
         }
     }
 
