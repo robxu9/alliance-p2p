@@ -35,9 +35,13 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -252,7 +256,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             if (end == -1) {
                 end = text.length();
             }
-            String displayText =  text.substring(i, end);
+            String displayText;
+			try {
+				displayText = getPageTitle(new URL(text.substring(i, end)));
+			} catch (MalformedURLException e) {
+				displayText = text.substring(i, end);
+			} catch (Exception e) {
+				displayText = text.substring(i, end);
+			}
             //Shorten long links as to not create side scrolling chat.
             if(displayText.length() > 75) {
             	displayText = displayText.substring(i, 75) + "&hellip;";
@@ -503,6 +514,51 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// message protocol to add flags for system or action messages.
 		return cl.message.startsWith("* " + cl.from + " ");
 	}
+	
+	private String getPageTitle(URL url) throws Exception {
+		 
+	      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+	 
+	      Pattern pHead = Pattern.compile("(?i)</HEAD>");
+	      Matcher mHead;
+	      Pattern pTitle = Pattern.compile("(?i)</TITLE>");
+	      Matcher mTitle;
+	       
+	      String inputLine;
+	      boolean found=false;
+	      boolean notFound=false;
+	      String html = "";
+	      String title=new String();
+	      try{
+	          while (!(((inputLine = in.readLine()) == null) || found || notFound)){
+	              html=html+inputLine;
+	              mHead=pHead.matcher(inputLine);
+	              if(mHead.find()){
+	                  notFound=true;
+	                  }
+	              else{
+	                  mTitle=pTitle.matcher(inputLine);
+	                  if(mTitle.find()){
+	                      found=true;
+	                      //System.out.println(inputLine);
+	                  }
+	              }                                       
+	          }
+	          in.close();
+	      
+	          html = html.replaceAll("\\s+", " ");
+	          if(found){
+	              Pattern p = Pattern.compile("(?i)<TITLE.*?>(.*?)</TITLE>");
+	              Matcher m = p.matcher(html);            
+	              while (m.find() == true) {
+	                  title=m.group(1);
+	                //System.out.println("Title "+title); 
+	              }
+	          }
+	      }catch(Exception e){
+	      }
+	      return title;
+	    }
 	
 	
 	protected String toHexColor(Color color) {
