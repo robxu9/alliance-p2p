@@ -473,6 +473,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 					+ urlTitle + "</SPAN><br>");
 			}
 		}
+		if(cl.containsTV){
+			String tvString = tvBot(cl.message);
+			if(!tvString.isEmpty()){
+				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]&lt;TV Bot&gt; "
+					+ tvString + "</SPAN><br>");
+			}
+		}
+		
 		previousChatLine = cl;
 		return s.toString();
 	}
@@ -491,6 +499,51 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			}
 			return "";
 		}
+	
+	private String tvBot(String text) {
+		String show = text.substring(text.indexOf("!tv")+"!tv".length()).trim();
+		StringBuilder showString = new StringBuilder();
+		URL showURL;
+		try {
+			showURL = new URL("http://services.tvrage.com/tools/quickinfo.php?show="+show.replaceAll("\\s", "%20"));
+		} catch (MalformedURLException e1) {
+			return "";
+		}
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new InputStreamReader(showURL.openStream()));
+		} catch (IOException e1) {
+			return "";
+		}
+		 
+		String showName = "";
+		String airtime = ""; 
+		String network = "" ;
+		String nextEpisode = "";
+	       
+	      String inputLine;
+	      try{
+	          while (!(((inputLine = in.readLine()) == null))){
+	              if(inputLine.startsWith("Show Name@")){
+	            	  showName = inputLine.substring(inputLine.indexOf("Show Name@")+"Show Name@".length());
+	                  }
+	              if(inputLine.startsWith("Airtime@")){
+	            	  airtime = inputLine.substring(inputLine.indexOf("Airtime@")+"Airtime@".length());
+	              }
+	              if(inputLine.startsWith("Network@")){
+	            	  network = inputLine.substring(inputLine.indexOf("Network@")+"Network@".length());
+	              } 
+	              if(inputLine.startsWith("Next Episode@")){
+	            	  nextEpisode = inputLine.substring(inputLine.indexOf("Next Episode@")+"Next Episode@".length(), inputLine.lastIndexOf("^"));
+                  }
+	          }
+	          in.close();
+	      } catch(Exception e){
+	      
+	      }
+	      return ("[" + showName + "] :: " +"[Airs: " + airtime + " on " + network + "] :: " + "[" + nextEpisode + "]").replaceAll("\\^", "&nbsp;");
+	    
+	}
 
 	private String createChatlineEffects(String message) {
 		//Highlight "@User" with specific users color
@@ -594,7 +647,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		String message;
         long tick;
         Color color;
-        boolean containsURL;
+        boolean containsURL, containsTV;
 
         public ChatLine(String from, String message, long tick, Color color) {
             this(from, message, tick, color, true);
@@ -606,6 +659,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             this.tick = tick;
             this.color = color;
             this.containsURL = (message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1);
+            this.containsTV = message.toLowerCase().startsWith("!tv");
         }
     }
 
