@@ -256,18 +256,22 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             if (end == -1) {
                 end = text.length();
             }
-            String displayText;
-			try {
-				displayText = getPageTitle(new URL(text.substring(i, end)));
-			} catch (MalformedURLException e) {
-				displayText = text.substring(i, end);
-			} catch (Exception e) {
-				displayText = text.substring(i, end);
-			}
+            String displayText = text.substring(i, end);
+            String urlTitle;
             //Shorten long links as to not create side scrolling chat.
             if(displayText.length() > 75) {
             	displayText = displayText.substring(i, 75) + "&hellip;";
             }
+			try {
+				urlTitle = getPageTitle(new URL(text.substring(i, end)));
+				if(!urlTitle.isEmpty()) {
+					addMessage("&lt;Link Bot&gt;", urlTitle, System.currentTimeMillis(), false, true, false);
+				}
+			} catch (MalformedURLException e) {
+				//Do nothing
+			} catch (Exception e) {
+				//Do nothing
+			}
             String s = text.substring(0, i);
             s += "<a href=\"" + text.substring(i, end) + "\">" + displayText + "</a>";
             i = s.length();
@@ -443,7 +447,11 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		boolean italic = false;
 		if (cl.from == null) {
 			// * System message or admin command
-			s.append("<font color=\"" + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
+			s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\"><i>* ");
+			italic = true;
+		}
+		else if(cl.from.startsWith("&lt")) {
+			s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + cl.from +"<i> ");
 			italic = true;
 		}
 		else if (isUserAction(cl)) {
@@ -453,12 +461,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		else if (cl.from.equals(ui.getCore().getFriendManager().getMe().getNickname())) {
 			// Your own messages appear specially
-			s.append("<font color=\"" + toHexColor(cl.color) + "\"><b>" + name +
-					":</b></font> <font color=\"" + toHexColor(OWN_TEXT_COLOR) + "\">");
+			s.append("<b><SPAN STYLE = \"color:" + toHexColor(cl.color) + "\">" + name +
+					":</SPAN></b> <SPAN STYLE = \"color:" + toHexColor(OWN_TEXT_COLOR) + "\">");
 		}
 		else {
-			s.append("<font color=\"" + toHexColor(cl.color) + "\">" + name +
-					":</font> <font color=\"" + toHexColor(cl.color.darker()) + "\">");
+			s.append("<SPAN STYLE = \"COLOR: " + toHexColor(cl.color) + "\">" + name +
+					":</SPAN> <SPAN STYLE = \"COLOR: " + toHexColor(cl.color.darker()) + "\">");
 		}
 		
 		s.append(createChatlineEffects(cl.message));
@@ -467,7 +475,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if (italic) {
 			s.append("</i>");
 		}
-		s.append("</font><br>");
+		s.append("</SPAN><br>");
 		previousChatLine = cl;
 		return s.toString();
 	}
@@ -496,12 +504,15 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 						symbol = message.substring(message.toLowerCase().indexOf("@"+friend)+friend.length()+1, 
 								message.toLowerCase().indexOf("@"+friend)+friend.length()+2);
 					}
-					message = message.replaceFirst("(?i)@"+mentionedFriends.get(i)+"(\\s|$|[@!#%^*()_&-])", "<span style=\"COLOR:#000000; BACKGROUND-COLOR:" 
+					message = message.replaceFirst("(?i)@"+mentionedFriends.get(i)+"(\\s|$|[@!#%^*()_&-])", "<span style=\"COLOR: #000000; BACKGROUND:" 
 							+ toHexColor(createChatLine(mentionedFriends.get(i), "", 1, true).color.brighter()) + "\">" + "@" + mentionedFriends.get(i) + "</span>" + symbol);
 				}
 			} 
-		} 
+		}
 		
+ 		if(Pattern.compile("(?i)nsfw").matcher(message).find()) {
+			message = message.replaceFirst("(?i)nsfw", "<span style=\"COLOR: #FF0000; BACKGROUND: #000000\"><b>NSFW</b></span>");
+		}
 		
 		return message;
 	}
