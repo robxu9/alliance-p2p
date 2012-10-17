@@ -593,7 +593,7 @@ public enum UserCommands {
 		
 	},
 	
-	TVBOT("tv") {
+	TV("tv") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 				String tvString = tvBot(args);
 				if(!tvString.isEmpty()){
@@ -728,7 +728,7 @@ public enum UserCommands {
 	public static UserCommands getCommand(String message) {
 		message = message.trim().toLowerCase();
 		for (UserCommands cmd : UserCommands.values()) {
-			if (message.startsWith("/" + cmd.getName() + " ") || message.endsWith("/" + cmd.getName())) {
+			if (message.startsWith("/" + cmd.getName() + " ") || message.endsWith("/" + cmd.getName()) || message.startsWith("!" + cmd.getName() + " ")) {
 				return cmd;
 			}
 			else if (message.startsWith("/" + "quit" + " ") || message.endsWith("/" + "quit")) {
