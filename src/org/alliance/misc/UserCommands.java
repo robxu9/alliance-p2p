@@ -1,8 +1,13 @@
 package org.alliance.misc;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.Language;
@@ -588,6 +593,19 @@ public enum UserCommands {
 		
 	},
 	
+	TVBOT("tv") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+				String tvString = tvBot(args);
+				if(!tvString.isEmpty()){
+					chat.addMessage("&lt;TV Bot&gt;", "<SPAN STYLE = \"COLOR: #458B00; BACKGROUND: #000000\">" + tvString + "</SPAN>", System.currentTimeMillis(), false, false, false);
+				}
+			return "";
+		}
+		protected Command executeCommand(Command command) {
+			return null;
+		}
+	},
+	
 	EXIT("exit") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "exiting"));
@@ -626,6 +644,82 @@ public enum UserCommands {
 	public String getKey() {
 		return commandKey;
 	}
+	
+	public String tvBot(String show) {
+		StringBuilder showString = new StringBuilder();
+		URL showURL;
+		try {
+			showURL = new URL("http://services.tvrage.com/tools/quickinfo.php?show="+show.replaceAll("\\s", "%20"));
+		} catch (MalformedURLException e1) {
+			return "";
+		}
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new InputStreamReader(showURL.openStream()));
+		} catch (IOException e1) {
+			return "";
+		}
+		 
+		String showName = "<SPAN STYLE = \"COLOR: #FF6600\">";
+		String airtime = "<SPAN STYLE = \"COLOR: #FF6600\">"; 
+		String network = "<SPAN STYLE = \"COLOR: #FF6600\">";
+		String nextEpisode = "<SPAN STYLE = \"COLOR: #FF6600\">";
+		String nextEpisodeDate = "<SPAN STYLE = \"COLOR: #FF6600\">";
+		String ended = "";
+		String linkURL = "";
+		int daysUntilAirs = 0;
+		int hoursUntilAirs = 0;
+		int minutesUntilAirs = 0;
+	       
+	      String inputLine;
+	      try{
+	          while (!(((inputLine = in.readLine()) == null))){
+	        	  if(inputLine.startsWith("No Show")){
+	        		  return "<SPAN STYLE = \"COLOR: #FF6600\">"+inputLine+"</SPAN>";
+	        	  }
+	              if(inputLine.startsWith("Show Name@")){
+	            	  showName += inputLine.substring(inputLine.indexOf("Show Name@")+"Show Name@".length())+"</SPAN>";
+	                  }
+	              if(inputLine.startsWith("Airtime@")){
+	            	  airtime += inputLine.substring(inputLine.indexOf("Airtime@")+"Airtime@".length())+"</SPAN>";
+	              }
+	              if(inputLine.startsWith("Network@")){
+	            	  network += inputLine.substring(inputLine.indexOf("Network@")+"Network@".length())+"</SPAN>";
+	              } 
+	              if(inputLine.startsWith("Next Episode@")){
+	            	  nextEpisode += inputLine.substring(inputLine.indexOf("Next Episode@")+"Next Episode@".length(), inputLine.lastIndexOf("^")).replaceAll("\\^", "&nbsp;")+"</SPAN>";
+	            	  nextEpisodeDate += inputLine.substring(inputLine.lastIndexOf("^")).trim().replaceAll("\\^", "&nbsp;")+"</SPAN>";
+                  }
+	              if(inputLine.startsWith("GMT+0 NODST@")){
+	            	  long epochAirtime = Integer.parseInt(inputLine.substring(inputLine.indexOf("GMT+0 NODST@")+"GMT+0 NODST@".length()));
+	            	  long currentTime = (System.currentTimeMillis()/1000)-(2*60*60);
+	            	  daysUntilAirs = (int) Math.floor(((epochAirtime - currentTime) / (60*60*24)));
+	            	  hoursUntilAirs = (int) (Math.floor(((epochAirtime - currentTime) / (60*60))) - (24*daysUntilAirs));
+	            	  minutesUntilAirs = (int) (Math.floor(((epochAirtime - currentTime) / (60)) - (24*60*daysUntilAirs) - (60*hoursUntilAirs)));
+	              }
+	              if(inputLine.startsWith("Ended@")){
+	            	  ended = inputLine.substring(inputLine.indexOf("Ended@")+"Ended@".length()).trim();
+	              }
+	              if(inputLine.startsWith("Show URL@")){
+	            	  linkURL = inputLine.substring(inputLine.indexOf("Show URL@")+"Show URL@".length());
+	              }
+	          }
+	          in.close();
+	      } catch(Exception e){
+	      
+	      }
+	      
+	      StringBuilder sb = new StringBuilder();
+	      sb.append("[<a href=\""+ linkURL+ "\">" + showName + "</a>] :: ");
+	     if(!ended.equals("")){
+	    	  sb.append("[Ended: <SPAN STYLE = \"COLOR: #FF6600\">"+ ended + "</SPAN>]");
+	    	  return sb.toString();
+	      }
+	      sb.append("[Airs: " + airtime + " on " + network + "] :: " + "[" + nextEpisodeDate + " <SPAN STYLE = \"COLOR: #FF6600\">" 
+	      + daysUntilAirs +  "</SPAN>d <SPAN STYLE = \"COLOR: #FF6600\">" + hoursUntilAirs + "</SPAN>h <SPAN STYLE = \"COLOR: #FF6600\">" + minutesUntilAirs + "</SPAN>m <SPAN STYLE = \"COLOR: #FF6600\">" +  "</SPAN>from now] :: " + "[" + nextEpisode + "]");
+	      
+	      return sb.toString();
+		}
 	
 	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
 	
