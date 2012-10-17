@@ -470,7 +470,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			urlTitle = linkBot(cl.message);
 			if(!urlTitle.isEmpty()){
 				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "<b>[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]</b>&lt;Link Bot&gt; "
-					+ urlTitle + "<br>");
+					+ urlTitle + "</SPAN><br>");
 			}
 		}
 		previousChatLine = cl;
