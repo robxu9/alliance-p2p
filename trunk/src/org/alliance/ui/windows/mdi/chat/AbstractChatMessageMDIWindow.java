@@ -417,7 +417,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		// Kind of like the <%PARAMETERS%> in the language files.
 		StringBuilder s = new StringBuilder();
 		// date
-		s.append("<font color=\"" + toHexColor(DATE_COLOR) + "\">");
+		s.append("<SPAN STYLE = \"COLOR: " + toHexColor(DATE_COLOR) + "\">");
 		DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		if (previousChatLine != null &&
 				f.format(new Date(cl.tick)).equals(
@@ -427,7 +427,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		else {
 			s.append("<b>[" + FORMAT.format(new Date(cl.tick)) + "]</b>");
 		}
-		s.append("</font> ");
+		s.append("</SPAN> ");
 		// name
 		String name = cl.from;
 		if (name != null && name.length() > MAX_NAME_DISPLAY_LENGTH) {
@@ -445,7 +445,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		else if (isUserAction(cl)) {
 			// * Username is actioning.
-			s.append("<font color=\"" + toHexColor(cl.color) + "\"><i>");
+			s.append("<SPAN STYLE = \"COLOR: " + toHexColor(cl.color) + "\"><i>");
 			italic = true;
 		}
 		else if (cl.from.equals(ui.getCore().getFriendManager().getMe().getNickname())) {
@@ -469,7 +469,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			String urlTitle;
 			urlTitle = linkBot(cl.message);
 			if(!urlTitle.isEmpty()){
-				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "<b>[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]</b>&lt;Link Bot&gt; "
+				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]&lt;Link Bot&gt; "
 					+ urlTitle + "</SPAN><br>");
 			}
 		}
