@@ -598,8 +598,7 @@ public enum UserCommands {
 			}
 			catch (Exception ex) {}
 			if (tv.isEmpty()) {
-				// TODO: localize this string
-				tv = "Could not retrieve data for \"" + args + "\"!";
+				tv = Language.getLocalizedString(getClass(), "tv_error", args);
 			}
 			chat.addMessage("&lt;TV&gt;", tv, System.currentTimeMillis(), false, false, false);
 			return "";
