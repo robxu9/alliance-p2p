@@ -1,16 +1,8 @@
 package org.alliance.misc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-
 import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
