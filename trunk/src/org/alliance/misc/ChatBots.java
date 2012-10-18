@@ -20,11 +20,12 @@ import org.alliance.core.Language;
 
 public class ChatBots {
 	private static String botMessage(Object message) {
-		return "<SPAN STYLE=\"COLOR: #458B00; BACKGROUND: #000000\">" + message.toString() + "</SPAN>";
+		return "<SPAN STYLE=\"COLOR: #E0E0E0; BACKGROUND: #303030\">" + message.toString() + "</SPAN>";
 	}
 	
 	private static String botValue(Object value) {
-		return "<SPAN STYLE=\"COLOR: #FF6600\">" + value.toString() + "</SPAN>";
+		// Most of the message was highlighted anyway, so the non-highlighted parts ended up standing out
+		return /*"<SPAN STYLE=\"COLOR: #FF6600\">" +*/ value.toString() /*+ "</SPAN>"*/;
 	}
 	
 	public static String tvBot(String show) throws IOException {
@@ -40,14 +41,14 @@ public class ChatBots {
 		String nextEpisodeDate = "";
 		String ended = "";
 		String linkURL = "";
-		int daysUntilAirs = 0;
-		int hoursUntilAirs = 0;
-		int minutesUntilAirs = 0;
+		String daysUntilAirs = "";
+		String hoursUntilAirs = "";
+		String minutesUntilAirs = "";
 		// Parse fields from data
 		String line;
 		while (!(((line = in.readLine()) == null))) {
 			if (line.startsWith("No Show")) {
-				return botMessage(botValue(Language.getLocalizedString(ChatBots.class, "noshow", show)));
+				return botMessage(Language.getLocalizedString(ChatBots.class, "noshow", botValue(show)));
 			}
 			else if (line.startsWith("Show Name@")) {
 				showName = botValue(line.substring(line.indexOf("Show Name@") + "Show Name@".length()));
@@ -61,14 +62,20 @@ public class ChatBots {
 			else if (line.startsWith("Next Episode@")) {
 				nextEpisode = botValue(line.substring(line.indexOf("Next Episode@") + "Next Episode@".length(),
 						line.lastIndexOf("^")).replaceAll("\\^", "&nbsp;"));
-				nextEpisodeDate = botValue(line.substring(line.lastIndexOf("^")).trim().replaceAll("\\^", "&nbsp;"));
+				nextEpisodeDate = botValue(line.substring(line.lastIndexOf("^")).replaceAll("\\^", " ").replaceAll("/", " ").trim());
 			}
 			else if (line.startsWith("GMT+0 NODST@")) {
-				long epochAirtime = Integer.parseInt(line.substring(line.indexOf("GMT+0 NODST@") + "GMT+0 NODST@".length()));
-				long currentTime = (System.currentTimeMillis() / 1000) - (2 * 60 * 60);
-				daysUntilAirs = (int)Math.floor(((epochAirtime - currentTime) / (60 * 60 * 24)));
-				hoursUntilAirs = (int)(Math.floor(((epochAirtime - currentTime) / (60 * 60))) - (24 * daysUntilAirs));
-				minutesUntilAirs = (int)(Math.floor(((epochAirtime - currentTime) / (60)) - (24 * 60 * daysUntilAirs) - (60 * hoursUntilAirs)));
+				try {
+					long epochAirtime = Integer.parseInt(line.substring(line.indexOf("GMT+0 NODST@") + "GMT+0 NODST@".length()));
+					long currentTime = (System.currentTimeMillis() / 1000) - (2 * 60 * 60);
+					int d = (int)Math.floor(((epochAirtime - currentTime) / (60 * 60 * 24)));
+					int h = (int)(Math.floor(((epochAirtime - currentTime) / (60 * 60))) - (24 * d));
+					int m = (int)(Math.floor(((epochAirtime - currentTime) / (60)) - (24 * 60 * d) - (60 * h)));
+					daysUntilAirs = botValue(d + "d");
+					hoursUntilAirs = botValue(h + "h");
+					minutesUntilAirs = botValue(m + "m");
+				}
+				catch (NumberFormatException ex) {}
 			}
 			else if (line.startsWith("Ended@")) {
 				ended = line.substring(line.indexOf("Ended@") + "Ended@".length()).trim();
@@ -80,15 +87,16 @@ public class ChatBots {
 		in.close();
 		// Build output string from fields
 		StringBuilder sb = new StringBuilder();
-		sb.append("[<a href=\"" + linkURL + "\">" + showName + "</a>]");
+		sb.append("<a href=\"" + linkURL + "\">" + showName + "</a>");
 		if (!ended.isEmpty()) {
-			sb.append(" :: [Ended on " + botValue(ended) + "]");
+			sb.append(": Ended on " + botValue(ended));
 		}
 		else {
-			sb.append(" :: [Airs at " + airTime + " on " + network + "]");
-			sb.append(" :: [" + botValue(nextEpisodeDate) + " " + botValue(daysUntilAirs) + "d" + botValue(hoursUntilAirs) + "h" +
-					botValue(minutesUntilAirs) + "m from now]");
-			sb.append(" :: [" + nextEpisode + "]");
+			sb.append(": Airs " + airTime + " on " + network);
+			sb.append("; " + nextEpisode + " airs " + nextEpisodeDate);
+			if (!(daysUntilAirs.isEmpty() || hoursUntilAirs.isEmpty() || minutesUntilAirs.isEmpty())) {
+				sb.append(" (" + daysUntilAirs + hoursUntilAirs + minutesUntilAirs + " from now)");
+			}
 		}
 		return botMessage(sb.toString());
 	}

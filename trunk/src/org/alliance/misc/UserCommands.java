@@ -566,7 +566,8 @@ public enum UserCommands {
 			return command;
 			}
 	},
-	PLEASEUPDATE("pleaseupdate", true, null){
+	
+	PLEASEUPDATE("pleaseupdate", true, null) {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
 			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", ""+SiteUpdate.getSiteBuild()));
@@ -592,15 +593,16 @@ public enum UserCommands {
 	
 	TV("tv") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String show = args.trim();
 			String tv = "";
 			try {
-				tv = ChatBots.tvBot(args);
+				tv = ChatBots.tvBot(show);
 			}
 			catch (Exception ex) {}
 			if (tv.isEmpty()) {
-				tv = Language.getLocalizedString(getClass(), "tv_error", args);
+				tv = Language.getLocalizedString(getClass(), "tvbot_error", show);
 			}
-			chat.addSystemMessage("&lt;TV&gt;", tv, false);
+			chat.addSystemMessage("&lt;TV&gt; ", tv, false);
 			return "";
 		}
 		
@@ -647,6 +649,7 @@ public enum UserCommands {
 	public String getKey() {
 		return commandKey;
 	}
+	
 	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
 	
 	protected abstract Command executeCommand(Command command);
@@ -687,7 +690,8 @@ public enum UserCommands {
 		private UISubsystem ui;
 		private boolean ignored = false, isSystem = false;
 		private UserCommands cmd = null;
-		public Command(int guid, String message, UISubsystem ui){
+		
+		public Command(int guid, String message, UISubsystem ui) {
 			this.guid = guid;
 			this.message = message;
 			this.ui = ui;
@@ -717,7 +721,7 @@ public enum UserCommands {
 			return false;
 		}
 		
-		private boolean isDirectedAtMe(){
+		private boolean isDirectedAtMe() {
 			return ui.getCore().getFriendManager().getMe().getNickname().equals(name) 
 				|| ui.getCore().getSettings().getMy().getNickname().equals(name);
 		}
