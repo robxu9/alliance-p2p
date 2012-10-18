@@ -129,6 +129,18 @@
                                     </panel>
                                 </cell>
                             </row>
+                            <row>
+                            	<cell>
+                                  <panel border="0" axis="x" expand="horiz">
+                                	<strut width="5"/>
+                                    <checkbox id="internal.linkbotBool" text="%text%"/>
+                                    <filler/>
+								</panel>
+                                </cell>
+                             </row>   
+                           
+                            
+                            
                         </form>
                         <panel axis="x">
                             <mlabel id="guinote" html="true">%text%
@@ -140,6 +152,9 @@
                             <label id="bubble" text="%text%"/>
                             <filler/>
                         </panel>
+                        
+                 
+                        
                         <panel border="0" axis="x" expand="horiz">
                             <strut width="5"/>
                             <checkbox id="internal.showpublicchatmessagesintray" text="%text%"/>
