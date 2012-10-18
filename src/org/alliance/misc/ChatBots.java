@@ -7,6 +7,15 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 
+/**
+ * TV Bot has been implemented with the TVRage API:
+ * http://services.tvrage.com/tools/quickinfo.php?show=QUERY
+ * Other possibilities include IMDB for movies:
+ * http://www.omdbapi.com/?t=QUERY
+ * and MAL API for anime:
+ * http://mal-api.com/anime/search?q=QUERY
+ */
+
 public class ChatBots {
 	private static String botMessage(Object message) {
 		return "<SPAN STYLE=\"COLOR: #458B00; BACKGROUND: #000000\">" + message.toString() + "</SPAN>";
