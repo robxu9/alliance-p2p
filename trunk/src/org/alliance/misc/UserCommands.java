@@ -600,7 +600,7 @@ public enum UserCommands {
 			if (tv.isEmpty()) {
 				tv = Language.getLocalizedString(getClass(), "tv_error", args);
 			}
-			chat.addMessage("&lt;TV&gt;", tv, System.currentTimeMillis(), false, false, false);
+			chat.addSystemMessage("&lt;TV&gt;", tv, false);
 			return "";
 		}
 		
@@ -647,7 +647,6 @@ public enum UserCommands {
 	public String getKey() {
 		return commandKey;
 	}
-	
 	protected abstract String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat);
 	
 	protected abstract Command executeCommand(Command command);

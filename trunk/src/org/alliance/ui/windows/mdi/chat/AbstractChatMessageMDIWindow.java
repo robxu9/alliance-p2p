@@ -312,14 +312,19 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
         return new ChatLine(from, message, tick, c, escape);
     }
     
-    public void addSystemMessage(String message) {
+    public void addSystemMessage(String message){
+    	addSystemMessage(null, message ,true);
+    }
+    public void addSystemMessage(String botName, String message, boolean linkCheck) {
     	// from=null for system messages
     	// system messages are local 
     	//Enable hyperlinks in system messages
+    	if(linkCheck) {
     	message = checkLinks(message, "https://");
         message = checkLinks(message, "http://");
         message = checkLinks(message, "ftp://");
-    	addMessage(null, "<i>" + message + "</i>", System.currentTimeMillis(), false, false, false);
+    	}
+    	addMessage(botName, message, System.currentTimeMillis(), false, false, false);
     }
     
     public void addMessage(String from, String message, long tick, boolean messageHasBeenQueuedAwayForAWhile) {
