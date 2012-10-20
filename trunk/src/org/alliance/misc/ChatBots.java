@@ -6,17 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.alliance.core.Language;
-
-/**
- * TV Bot has been implemented with the TVRage API:
- * http://services.tvrage.com/tools/quickinfo.php?show=QUERY
- * Other possibilities include IMDB for movies:
- * http://www.omdbapi.com/?t=QUERY
- * and MAL API for anime:
- * http://mal-api.com/anime/search?q=QUERY
- */
 
 public class ChatBots {
 	private static String botMessage(Object message) {
@@ -100,4 +93,61 @@ public class ChatBots {
 		}
 		return botMessage(sb.toString());
 	}
+	
+	public static String movieBot(String movie) throws IOException {
+		// Get movie data via IMDB API
+		// If this ever breaks, we can use OMDB: http://www.omdbapi.com/?t=QUERY
+		URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
+		InputStream data = movieURL.openStream();
+		// Initialize fields
+		BufferedReader in = new BufferedReader(new InputStreamReader(data));
+		// Parse fields from data
+		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"").matcher((CharSequence)data);
+		if (errorRegex.find()) {
+			String error = errorRegex.group(1);
+			return botMessage(Language.getLocalizedString(ChatBots.class, "nomovie", botValue(movie), botValue(error)));
+		}
+		String linkURL = "";
+		Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"").matcher((CharSequence)data);
+		if (linkURLRegex.find()) {
+			linkURL = linkURLRegex.group(1).replace("\\", "");
+		}
+		String title = "";
+		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"").matcher((CharSequence)data);
+		if (titleRegex.find()) {
+			title = titleRegex.group(1).replace("\\", "").replace("&#x27;", "'").replace("&amp;", "&");
+		}
+		String runtime = "";
+		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"").matcher((CharSequence)data);
+		if (runtimeRegex.find()) {
+			runtime = runtimeRegex.group(1).replace("min", "m").replace(" ",  "");
+		}
+		String year = "";
+		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher((CharSequence)data);
+		if (yearRegex.find()) {
+			year = yearRegex.group(1);
+		}
+		boolean screening = false;
+		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher((CharSequence)data);
+		if (yearRegex.find()) {
+			screening = Integer.parseInt(screensRegex.group(1)) > 0;
+		}
+		in.close();
+		// Build output string from fields
+		StringBuilder sb = new StringBuilder();
+		sb.append("<a href=\"" + linkURL + "\">" + title + "</a>");
+		sb.append(": Released in " + year);
+		sb.append("; runtime " + runtime);
+		sb.append(screening ? "; now in theaters" : "");
+		return botMessage(sb.toString());
+	}
+	
+	/*public static String animeBot(String anime) throws IOException {
+		// Get anime data via MAL API
+		URL animeURL = new URL("http://mal-api.com/anime/search?q=" + URLEncoder.encode(anime, "ISO-8859-1"));
+		InputStream data = animeURL.openStream();
+		// Initialize fields
+		BufferedReader in = new BufferedReader(new InputStreamReader(data));
+		return "";
+	}*/
 }

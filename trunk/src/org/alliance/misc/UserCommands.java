@@ -594,15 +594,35 @@ public enum UserCommands {
 	TV("tv") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			String show = args.trim();
-			String tv = "";
+			String result = "";
 			try {
-				tv = ChatBots.tvBot(show);
+				result = ChatBots.tvBot(show);
 			}
 			catch (Exception ex) {}
-			if (tv.isEmpty()) {
-				tv = Language.getLocalizedString(getClass(), "tvbot_error", show);
+			if (result.isEmpty()) {
+				result = Language.getLocalizedString(getClass(), "bot_error", show);
 			}
-			chat.addSystemMessage("&lt;TV&gt; ", tv, false);
+			chat.addSystemMessage("&lt;TV&gt; ", result, false);
+			return "";
+		}
+		
+		protected Command executeCommand(Command command) {
+			return null;
+		}
+	},
+	
+	MOVIE("movie") {
+		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
+			String movie = args.trim();
+			String result = "";
+			try {
+				result = ChatBots.movieBot(movie);
+			}
+			catch (Exception ex) {}
+			if (result.isEmpty()) {
+				result = Language.getLocalizedString(getClass(), "bot_error", movie);
+			}
+			chat.addSystemMessage("&lt;Movie&gt; ", result, false);
 			return "";
 		}
 		
