@@ -86,7 +86,7 @@ public class ChatBots {
 		}
 		else {
 			sb.append(": Airs " + airTime + " on " + network);
-			sb.append("; " + nextEpisode + " airs " + nextEpisodeDate);
+			sb.append(" | " + nextEpisode + " airs " + nextEpisodeDate);
 			if (!(daysUntilAirs.isEmpty() || hoursUntilAirs.isEmpty() || minutesUntilAirs.isEmpty())) {
 				sb.append(" (" + daysUntilAirs + hoursUntilAirs + minutesUntilAirs + " from now)");
 			}
@@ -123,23 +123,29 @@ public class ChatBots {
 		if (runtimeRegex.find()) {
 			runtime = runtimeRegex.group(1).replace("min", "m").replace(" ",  "");
 		}
+		if(runtime.isEmpty() || runtime.equals("n\\/a")){
+			runtime = "N/A";
+		}
 		String year = "";
 		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher(line);
 		if (yearRegex.find()) {
 			year = yearRegex.group(1);
 		}
+		if(year.isEmpty() || year.equals("n\\/a")){
+			year = "N/A";
+		}
 		boolean screening = false;
 		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher(line);
-		if (yearRegex.find()) {
+		if (screensRegex.find()) {
 			screening = Integer.parseInt(screensRegex.group(1)) > 0;
 		}
 		in.close();
 		// Build output string from fields
 		StringBuilder sb = new StringBuilder();
 		sb.append("<a href=\"" + linkURL + "\">" + title + "</a>");
-		sb.append(": Released in " + year);
-		sb.append("; runtime " + runtime);
-		sb.append(screening ? "; now in theaters" : "");
+		sb.append(": Released in: " + year);
+		sb.append("; runtime: " + runtime);
+		sb.append(screening ? "; Now in Theaters" : "");
 		return botMessage(sb.toString());
 	}
 	
