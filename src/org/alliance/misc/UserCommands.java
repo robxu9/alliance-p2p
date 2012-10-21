@@ -618,7 +618,9 @@ public enum UserCommands {
 			try {
 				result = ChatBots.movieBot(movie);
 			}
-			catch (Exception ex) {}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			if (result.isEmpty()) {
 				result = Language.getLocalizedString(getClass(), "bot_error", movie);
 			}

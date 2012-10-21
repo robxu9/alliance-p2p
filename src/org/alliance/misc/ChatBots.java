@@ -101,34 +101,35 @@ public class ChatBots {
 		InputStream data = movieURL.openStream();
 		// Initialize fields
 		BufferedReader in = new BufferedReader(new InputStreamReader(data));
+		String line = in.readLine();
 		// Parse fields from data
-		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"").matcher((CharSequence)data);
+		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"").matcher(line);
 		if (errorRegex.find()) {
 			String error = errorRegex.group(1);
 			return botMessage(Language.getLocalizedString(ChatBots.class, "nomovie", botValue(movie), botValue(error)));
 		}
 		String linkURL = "";
-		Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"").matcher((CharSequence)data);
+		Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"").matcher(line);
 		if (linkURLRegex.find()) {
 			linkURL = linkURLRegex.group(1).replace("\\", "");
 		}
 		String title = "";
-		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"").matcher((CharSequence)data);
+		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"").matcher(line);
 		if (titleRegex.find()) {
 			title = titleRegex.group(1).replace("\\", "").replace("&#x27;", "'").replace("&amp;", "&");
 		}
 		String runtime = "";
-		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"").matcher((CharSequence)data);
+		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"").matcher(line);
 		if (runtimeRegex.find()) {
 			runtime = runtimeRegex.group(1).replace("min", "m").replace(" ",  "");
 		}
 		String year = "";
-		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher((CharSequence)data);
+		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher(line);
 		if (yearRegex.find()) {
 			year = yearRegex.group(1);
 		}
 		boolean screening = false;
-		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher((CharSequence)data);
+		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher(line);
 		if (yearRegex.find()) {
 			screening = Integer.parseInt(screensRegex.group(1)) > 0;
 		}
