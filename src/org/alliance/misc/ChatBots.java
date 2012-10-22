@@ -39,7 +39,7 @@ public class ChatBots {
 		String minutesUntilAirs = "";
 		// Parse fields from data
 		String line;
-		while (!(((line = in.readLine()) == null))) {
+		while ((line = in.readLine()) != null) {
 			if (line.startsWith("No Show")) {
 				return botMessage(Language.getLocalizedString(ChatBots.class, "noshow", botValue(show)));
 			}
@@ -101,41 +101,54 @@ public class ChatBots {
 		InputStream data = movieURL.openStream();
 		// Initialize fields
 		BufferedReader in = new BufferedReader(new InputStreamReader(data));
-		String line = in.readLine();
 		// Parse fields from data
-		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"").matcher(line);
+		String lines = "";
+		String line;
+		while ((line = in.readLine()) != null) {
+			lines += line;
+		}
+		// Check for error
+		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"").matcher(lines);
 		if (errorRegex.find()) {
 			String error = errorRegex.group(1);
 			return botMessage(Language.getLocalizedString(ChatBots.class, "nomovie", botValue(movie), botValue(error)));
 		}
+		// Parse link URL
 		String linkURL = "";
-		Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"").matcher(line);
+		Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"").matcher(lines);
 		if (linkURLRegex.find()) {
 			linkURL = linkURLRegex.group(1).replace("\\", "");
 		}
+		// Parse title
 		String title = "";
-		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"").matcher(line);
+		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"").matcher(lines);
 		if (titleRegex.find()) {
 			title = titleRegex.group(1).replace("\\", "").replace("&#x27;", "'").replace("&amp;", "&");
 		}
+		title = botValue(title);
+		// Parse runtime
 		String runtime = "";
-		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"").matcher(line);
+		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"").matcher(lines);
 		if (runtimeRegex.find()) {
 			runtime = runtimeRegex.group(1).replace("min", "m").replace(" ",  "");
 		}
-		if(runtime.isEmpty() || runtime.equals("n\\/a")){
+		if (runtime.isEmpty() || runtime.equals("n\\/a")) {
 			runtime = "N/A";
 		}
+		runtime = botValue(runtime);
+		// Parse year
 		String year = "";
-		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher(line);
+		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher(lines);
 		if (yearRegex.find()) {
 			year = yearRegex.group(1);
 		}
-		if(year.isEmpty() || year.equals("n\\/a")){
+		if (year.isEmpty() || year.equals("n\\/a")) {
 			year = "N/A";
 		}
+		year = botValue(year);
+		// Parse screening
 		boolean screening = false;
-		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher(line);
+		Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher(lines);
 		if (screensRegex.find()) {
 			screening = Integer.parseInt(screensRegex.group(1)) > 0;
 		}
@@ -143,9 +156,11 @@ public class ChatBots {
 		// Build output string from fields
 		StringBuilder sb = new StringBuilder();
 		sb.append("<a href=\"" + linkURL + "\">" + title + "</a>");
-		sb.append(": Released in: " + year);
-		sb.append("; runtime: " + runtime);
-		sb.append(screening ? "; Now in Theaters" : "");
+		sb.append(": Released in " + year);
+		sb.append(" | Runtime: " + runtime);
+		if (screening) {
+			sb.append(" | Now in theaters");
+		}
 		return botMessage(sb.toString());
 	}
 	

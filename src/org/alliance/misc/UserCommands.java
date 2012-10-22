@@ -598,7 +598,9 @@ public enum UserCommands {
 			try {
 				result = ChatBots.tvBot(show);
 			}
-			catch (Exception ex) {}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 			if (result.isEmpty()) {
 				result = Language.getLocalizedString(getClass(), "bot_error", show);
 			}
@@ -618,8 +620,8 @@ public enum UserCommands {
 			try {
 				result = ChatBots.movieBot(movie);
 			}
-			catch (Exception ex) {
-				ex.printStackTrace();
+			catch (IOException e) {
+				e.printStackTrace();
 			}
 			if (result.isEmpty()) {
 				result = Language.getLocalizedString(getClass(), "bot_error", movie);
