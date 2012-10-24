@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.alliance.core.Language;
+
+// @TODO: This should be ENUM'ed like the UserCommands class.
 
 public class ChatBots {
 	private static String botMessage(Object message) {
@@ -24,7 +27,10 @@ public class ChatBots {
 	public static String tvBot(String show) throws IOException {
 		// Get show data via TVRage API
 		URL showURL = new URL("http://services.tvrage.com/tools/quickinfo.php?show=" + URLEncoder.encode(show, "ISO-8859-1"));
-		InputStream data = showURL.openStream();
+		URLConnection con = showURL.openConnection();
+	    con.setConnectTimeout(10000); //10 second connection timeout
+	    con.setReadTimeout(5000); //5 second read timeout
+		InputStream data = con.getInputStream();
 		// Initialize fields
 		BufferedReader in = new BufferedReader(new InputStreamReader(data));
 		String showName = "";
@@ -98,7 +104,10 @@ public class ChatBots {
 		// Get movie data via IMDB API
 		// If this ever breaks, we can use OMDB: http://www.omdbapi.com/?t=QUERY
 		URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
-		InputStream data = movieURL.openStream();
+		URLConnection con = movieURL.openConnection();
+	    con.setConnectTimeout(10000); //10 second connection timeout
+	    con.setReadTimeout(5000); //5 second read timeout
+		InputStream data = con.getInputStream();
 		// Initialize fields
 		BufferedReader in = new BufferedReader(new InputStreamReader(data));
 		// Parse fields from data
