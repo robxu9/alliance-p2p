@@ -37,7 +37,7 @@ public class SiteUpdate implements Runnable {
     private boolean alive = true;
     private String updateFilePath;
     private String orginalFilePath;
-    private String siteVersion = Version.VERSION;
+    private static String siteVersion = Version.VERSION;
     private static int siteBuild = Version.BUILD_NUMBER;
     private String md5;
     private boolean updateAttemptHasBeenMade = false;
@@ -52,7 +52,7 @@ public class SiteUpdate implements Runnable {
         return siteBuild;
     }
 
-    public String getSiteVersion() {
+    public static String getSiteVersion() {
         return siteVersion;
     }
 
