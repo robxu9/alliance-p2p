@@ -3,6 +3,9 @@ package org.alliance.misc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.alliance.core.comm.siteupdater.SiteUpdate;
 import org.alliance.core.Language;
 import org.alliance.core.node.Friend;
@@ -21,7 +24,13 @@ public enum UserCommands {
 			for (UserCommands cmd : UserCommands.values()) {
 				if (cmd.isAdminOnly() && !ui.getCore().getFriendManager().getMe().isAdmin())
 					continue;
-				s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
+				if(cmd.equals(PLEASEUPDATE)){
+					s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(),
+							"pleaseupdate", "v"+SiteUpdate.getSiteVersion()));
+				}
+				else{
+					s.append("<br>&nbsp;&bull; " + cmd.getName() + " &mdash; " + Language.getLocalizedString(getClass(), cmd.getName()));
+				}
 			}
 			chat.addSystemMessage(s.toString());
 			return "";
@@ -259,16 +268,24 @@ public enum UserCommands {
 	WHOIS("whois") {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
             String name = args.trim();
-			Friend friend = ui.getCore().getFriendManager().getFriend(name);
-			if (friend == null) {
+            Friend whoisFriend = null;
+			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
+			for (Friend friend : friends) {
+				Matcher matchUsername = Pattern.compile(Pattern.quote(friend.getNickname()), Pattern.CASE_INSENSITIVE).matcher(name);
+				if(matchUsername.find()){
+					whoisFriend = friend;
+					break;
+				}
+			}
+			if (whoisFriend == null) {
 				chat.addSystemMessage(Language.getLocalizedString(getClass(), "no_such_friend", name));
 			}
 			else {
 				String level = null;
-				if(friend.isAdmin()) {
+				if(whoisFriend.isAdmin()) {
 					level = "Admin";
 				}
-				OptionDialog.showInformationDialog(ui.getMainWindow(), friend.getInfoString(level));
+				OptionDialog.showInformationDialog(ui.getMainWindow(), whoisFriend.getInfoString(level));
 			}
 			return "";
 		}
@@ -570,12 +587,12 @@ public enum UserCommands {
 	PLEASEUPDATE("pleaseupdate", true, null) {
 		protected String execute(String args, UISubsystem ui, AbstractChatMessageMDIWindow chat) {
 			Collection<Friend> friends = ui.getCore().getFriendManager().friends();
-			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", ""+SiteUpdate.getSiteBuild()));
+			chat.addSystemMessage(Language.getLocalizedString(getClass(), "pleaseupdate", "v"+SiteUpdate.getSiteVersion()));
 			for (Friend friend : friends) {
 				if(friend.getAllianceBuildNumber() < SiteUpdate.getSiteBuild()){
 				try {
 					new PrivateChatMessageMDIWindow(ui, friend.getGuid()).sendMessage(SYSTEM.getKey() + Language.getLocalizedString(getClass(),
-							"pleaseupdate", Integer.toString(SiteUpdate.getSiteBuild())));
+							"pleaseupdate", "v"+SiteUpdate.getSiteVersion()));
 				}
 				catch (Exception e) {
 					chat.addSystemMessage(Language.getLocalizedString(getClass(), "msg_invalid", friend.getNickname()));

@@ -512,12 +512,12 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			if(!(mentionedFriends.isEmpty())){
 				for(int i = 0; i < mentionedFriends.size(); i++) {	
 					String symbol = " ";
-					if(Pattern.compile("(?i)@"+mentionedFriends.get(i)+"([@!#%^*()_&-])").matcher(message).find()){
+					if(Pattern.compile("(?i)@"+mentionedFriends.get(i)+"([\\-%.;/?:@&=+$_.!~*'()#,])").matcher(message).find()){
 						String friend = mentionedFriends.get(i).toLowerCase();
 						symbol = message.substring(message.toLowerCase().indexOf("@"+friend)+friend.length()+1, 
 								message.toLowerCase().indexOf("@"+friend)+friend.length()+2);
 					}
-					message = message.replaceFirst("(?i)@"+mentionedFriends.get(i)+"(\\s|$|[@!#%^*()_&-])", "<span style=\"COLOR: #000000; BACKGROUND:" 
+					message = message.replaceFirst("(?i)@"+mentionedFriends.get(i)+"(\\s|$|[\\-%.;/?:@&=+$_.!~*'()#,])", "<span style=\"COLOR: #000000; BACKGROUND:" 
 							+ toHexColor(createChatLine(mentionedFriends.get(i), "", 1, true).color.brighter()) + "\">" + "@" + mentionedFriends.get(i) + "</span>" + symbol);
 				}
 			} 
