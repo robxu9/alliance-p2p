@@ -469,36 +469,26 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 			s.append("</i>");
 		}
 		s.append("</SPAN><br>");
-		if(cl.containsURL){
-			String urlTitle;
-			urlTitle = linkBot(cl.message);
-			if(!urlTitle.isEmpty()){
-				s.append("<SPAN STYLE = \"COLOR: " + toHexColor(SYSTEM_COLOR) + "\">" + "[" + SHORT_FORMAT.format(new Date(System.currentTimeMillis())) + "]&lt;Link Bot&gt; "
-					+ urlTitle + "</SPAN><br>");
-			}
-		}
 		
 		previousChatLine = cl;
 		return s.toString();
 	}
 
-	private String linkBot(String text) {
-            String urlTitle = text.substring(text.indexOf("<a href")+"<a href=".length()+1, text.indexOf(">")-1);
+	public void linkBot(String text) {
+            String urlTitle = escapeHTML(text);
+            urlTitle = urlTitle.substring(urlTitle.indexOf("<a href")+"<a href=".length()+1, urlTitle.indexOf(">")-1);
 			try {
 				urlTitle = getPageTitle(new URL(urlTitle));
 				if(!urlTitle.isEmpty()) {
-					return urlTitle;
+					addSystemMessage("&lt;Link&gt; ", urlTitle, false);
 				}
 			} catch (MalformedURLException e) {
-				return "";
+				e.printStackTrace();
 			} catch (Exception e) {
-				return "";
+				e.printStackTrace();
 			}
-			return "";
 		}
-	      
-	    
-	
+
 
 	private String createChatlineEffects(String message) {
 		//Highlight "@User" with specific users color
