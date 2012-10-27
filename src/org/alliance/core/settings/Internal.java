@@ -115,7 +115,7 @@ public class Internal extends SettingClass {
     private Integer firststart = 1;
     private Integer skipportcheck = 0;
     private Integer autosortshares = 1;
-    private Integer linkbotBool = 1;
+    private Integer linkbot = 1;
 
     public Internal() {
     }
@@ -693,12 +693,12 @@ public class Internal extends SettingClass {
     public void setAutosortshares(Integer autosortshares) {
         this.autosortshares = autosortshares;
     }  
-    public Integer getLinkbotBool()
+    public Integer getLinkbot()
     {
-    	return linkbotBool;
+    	return linkbot;
     }
-    public void setLinkbotBool(Integer l)
+    public void setLinkbot(Integer l)
     {
-    	linkbotBool = l;
+    	linkbot = l;
     }
 }

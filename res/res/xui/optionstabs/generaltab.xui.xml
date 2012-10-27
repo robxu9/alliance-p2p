@@ -133,7 +133,7 @@
                             	<cell>
                                   <panel border="0" axis="x" expand="horiz">
                                 	<strut width="5"/>
-                                    <checkbox id="internal.linkbotBool" text="%text%"/>
+                                    <checkbox id="internal.linkbot" text="%text%"/>
                                     <filler/>
 								</panel>
                                 </cell>
