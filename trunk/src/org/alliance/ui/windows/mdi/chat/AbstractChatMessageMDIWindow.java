@@ -475,6 +475,9 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	}
 
 	public void linkBot(String text) {
+		if(!(ui.getCore().getSettings().getInternal().getLinkbot() > 0)){
+			return;
+		}
             String urlTitle = escapeHTML(text);
             urlTitle = urlTitle.substring(urlTitle.indexOf("<a href")+"<a href=".length()+1, urlTitle.indexOf(">")-1);
 			try {
