@@ -182,7 +182,7 @@ public class ChatBots {
 	private static String movieBotv2 (String movie) throws IOException{
 			// Get movie data via IMDB API
 			// If this ever breaks, we can use OMDB: http://www.deanclatworthy.com/imdb/?q=
-			URL movieURL = new URL("http://www.omdbapi.com/?t=" + URLEncoder.encode(movie, "ISO-8859-1"));
+			URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
 			URLConnection con = movieURL.openConnection();
 		    con.setConnectTimeout(10000); //10 second connection timeout
 		    con.setReadTimeout(5000); //5 second read timeout
