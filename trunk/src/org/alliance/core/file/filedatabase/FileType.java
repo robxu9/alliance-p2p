@@ -125,7 +125,8 @@ public enum FileType {
 		@Override
 		public boolean matches(String s) {
 			return super.matches(s) || s.endsWith("~")
-					|| s.equals("desktop.ini") || s.equals("thumbs.db");
+					|| s.equals("desktop.ini") || s.equals("thumbs.db") || s.equals(".TemporaryItems")
+					|| s.equals(".cedata") || s.startsWith(".");
 		}
 	});
 	
