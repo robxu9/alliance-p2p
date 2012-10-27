@@ -72,6 +72,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -522,6 +523,9 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         }
         if (message != null) {
             w.addMessage(ui.getCore().getFriendManager().nickname(guid), message, tick, messageHasBeenQueuedAwayForAWhile);
+            if(message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1){
+        		w.linkBot(message);
+            }
         }
     }
 
@@ -536,6 +540,9 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             }
             publicChat.addMessage(ui.getCore().getFriendManager().nickname(guid), message, tick, messageHasBeenQueuedAwayForAWhile);
             ui.getCore().getPublicChatHistory().addMessage(tick, guid, message, ui.getCore());
+            if(message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1){
+        		publicChat.linkBot(message);
+            }
         }
     }
 
