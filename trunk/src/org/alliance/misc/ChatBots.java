@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -25,6 +26,7 @@ public class ChatBots {
 	}
 	
 	public static String tvBot(String show) throws IOException {
+		try{
 		// Get show data via TVRage API
 		URL showURL = new URL("http://services.tvrage.com/tools/quickinfo.php?show=" + URLEncoder.encode(show, "ISO-8859-1"));
 		URLConnection con = showURL.openConnection();
@@ -98,12 +100,25 @@ public class ChatBots {
 			}
 		}
 		return botMessage(sb.toString());
+		}
+		catch(SocketTimeoutException e) {
+			return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
+		}
 	}
-	
 	public static String movieBot(String movie) throws IOException {
+		return movieBot(movie, false);
+	}
+	public static String movieBot(String movie, boolean byID) throws IOException {
+		try{
 		// Get movie data via IMDB API
 		// If this ever breaks, we can use OMDB: http://www.deanclatworthy.com/imdb/?q=QUERY
-		URL movieURL = new URL("http://www.omdbapi.com/?t=" + URLEncoder.encode(movie, "ISO-8859-1"));
+		URL movieURL;
+		if(byID){
+			movieURL = new URL("http://www.omdbapi.com/?i=" + URLEncoder.encode(movie, "ISO-8859-1"));
+		}
+		else {
+			movieURL = new URL("http://www.omdbapi.com/?t=" + URLEncoder.encode(movie, "ISO-8859-1"));
+		}
 		URLConnection con = movieURL.openConnection();
 	    con.setConnectTimeout(10000); //10 second connection timeout
 	    con.setReadTimeout(5000); //5 second read timeout
@@ -178,8 +193,13 @@ public class ChatBots {
 	
 		return botMessage(sb.toString());
 	}
+	catch(SocketTimeoutException e) {
+		return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
+	}
+	}
 	
 	private static String movieBotv2 (String movie) throws IOException{
+		try{	
 			// Get movie data via IMDB API
 			// If this ever breaks, we can use OMDB: http://www.deanclatworthy.com/imdb/?q=
 			URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
@@ -201,6 +221,13 @@ public class ChatBots {
 			if (errorRegex.find()) {
 				String error = errorRegex.group(1);
 				return botMessage(Language.getLocalizedString(ChatBots.class, "nomovie", botValue(movie), botValue(error)));
+			}
+			// Parse IMDB ID
+			String imdbID = "";
+			Matcher imdbIDRegex = Pattern.compile("\"imdbid\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (imdbIDRegex.find()) {
+				//Return the ID to be used with omdb, as it gives more data
+				return movieBot(imdbIDRegex.group(1), true);
 			}
 			// Parse link URL
 			String linkURL = "";
@@ -248,8 +275,12 @@ public class ChatBots {
 			sb.append(" | Runtime: " + runtime);
 			if (screening) {
 				sb.append(" | Now in theaters");
-			}
-			return botMessage(sb.toString());
+			} 
+			return botMessage(sb.toString()); 
+		}
+		catch(SocketTimeoutException e) {
+			return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
+		}
 		
 	}
 	
