@@ -151,7 +151,7 @@ public class FriendListModel extends DefaultListModel {
         if(group.equals(Language.getLocalizedString(getClass(), "offline"))){
         	add(groupPosition, group + " (" + totalFriends + ")");
         }
-        else if(totalFriends > 0){
+        else if((totalFriends > 0 && !noGroup) || (noGroup && onlineFriends > 0)){
         	add(groupPosition, group + " (" + onlineFriends + "/" + totalFriends + ")");
         }
     }

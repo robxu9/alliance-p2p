@@ -195,12 +195,7 @@ public class ForwardInvitationNodesList extends JList {
         }
 
         private int checkTrusted(int guid, Collection<Friend> friends) {
-            for (Friend f : friends.toArray(new Friend[friends.size()])) {
-                if (f.getFriendsFriend(guid) != null && f.getTrusted() == 1) {
-                    return f.getTrusted();
-                }
-            }
-            return 0;
+            return 1;
         }
     }
 

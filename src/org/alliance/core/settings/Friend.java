@@ -17,7 +17,6 @@ public class Friend {
     private Integer middlemanguid; //0 if a first degree friend, guid of middleman if introduced by someone to me
     private String renamednickname; //used to display a different nickname then the "anonymous" one in ones UI
     private String ugroupname = "";
-    private Integer trusted = 0; //0 untrusted
     private Integer ignored = 0; // 0 NOT ignored
 
     public Friend() {
@@ -102,14 +101,6 @@ public class Friend {
 
     public String getUgroupname() {
         return ugroupname;
-    }
-
-    public void setTrusted(Integer trusted) {
-        this.trusted = trusted;
-    }
-
-    public Integer getTrusted() {
-        return trusted;
     }
 
     public String getDns() {
