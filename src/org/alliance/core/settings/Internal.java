@@ -74,8 +74,6 @@ public class Internal extends SettingClass {
     private Integer chatmaxlines = 100;
     private Integer chathistorymaxlines = 500;
     private Integer alwaysautomaticallyconnecttoallfriendsoffriend = 1;
-    private Integer alwaysdenyuntrustedinvitations = 1;
-    private Integer alwaysallowfriendsoftrustedfriendstoconnecttome = 0;
     private Integer disablenewuserpopup = 1;
     private Integer rdnsname = 0;
     private Integer secondstoaway = 60 * 5;
@@ -440,22 +438,6 @@ public class Internal extends SettingClass {
 
     public void setDisablenewuserpopup(Integer disablenewuserpopup) {
         this.disablenewuserpopup = disablenewuserpopup;
-    }
-
-    public Integer getAlwaysallowfriendsoftrustedfriendstoconnecttome() {
-        return alwaysallowfriendsoftrustedfriendstoconnecttome;
-    }
-
-    public void setAlwaysallowfriendsoftrustedfriendstoconnecttome(Integer alwaysallowfriendsoftrustedfriendstoconnecttome) {
-        this.alwaysallowfriendsoftrustedfriendstoconnecttome = alwaysallowfriendsoftrustedfriendstoconnecttome;
-    }
-
-    public Integer getAlwaysdenyuntrustedinvitations() {
-        return alwaysdenyuntrustedinvitations;
-    }
-
-    public void setAlwaysdenyuntrustedinvitations(Integer alwaysdenyuntrustedinvitations) {
-        this.alwaysdenyuntrustedinvitations = alwaysdenyuntrustedinvitations;
     }
 
     public Integer getRdnsname() {

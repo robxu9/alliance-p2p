@@ -90,7 +90,6 @@
                 </scrollpanel>
                 <panel border="5,5,0,0" axis="x">
                     <filler expand="horiz"/>
-                    <button text="%text%" eventid="selecttrusted"/>
                     <strut width="5"/>
                     <button text="%text%" eventid="selectall"/>
                     <strut width="5"/>

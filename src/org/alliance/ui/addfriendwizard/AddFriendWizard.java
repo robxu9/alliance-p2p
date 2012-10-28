@@ -520,10 +520,6 @@ public class AddFriendWizard extends JWizard {
         forwardInvitationNodesList.selectAll();
     }
 
-    public void EVENT_selecttrusted(ActionEvent e) {
-        forwardInvitationNodesList.selectTrusted();
-    }
-
     public void EVENT_selectnone(ActionEvent e) {
         forwardInvitationNodesList.selectNone();
     }
