@@ -87,16 +87,16 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
     }
 
     private void paintFriend(DefaultListCellRenderer renderer, Node n, boolean isSelected) {
-        String trusted;
+        String group;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
-            if (f.getTrusted() == 1) {
-                trusted = "(T) ";
+            if (f.getUGroupName().equals("") || f.getUGroupName() == null) {
+                group = " (No Group)";
             } else {
-                trusted = "";
+                group = "";
             }
         } else {
-            trusted = "";
+            group = "";
         }
 
         if (n.isConnected()) {
@@ -112,7 +112,7 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
             }
             String nodeString;
             if (n instanceof Friend) {
-                nodeString = trusted + friendWindow.getNickname(n.getGuid());
+                nodeString = friendWindow.getNickname(n.getGuid()) + group;
             } else {
                 nodeString = n.getNickname();
             }
@@ -139,7 +139,7 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         		renderer.setIcon(iconFriendDimmed);
         	}
             renderer.setForeground(Color.GRAY);
-            renderer.setText(trusted + friendWindow.getNickname(n.getGuid())); 
+            renderer.setText(friendWindow.getNickname(n.getGuid()) + group); 
         }
     }
 

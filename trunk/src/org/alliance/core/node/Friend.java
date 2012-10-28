@@ -42,7 +42,7 @@ public class Friend extends Node {
     private boolean isAway;
     private String nicknameToShowInUI;
     private String ugroupname;
-    private int trusted, ignored;
+    private int ignored;
     private boolean internal;
 
     public Friend(FriendManager manager, org.alliance.core.settings.Friend f) {
@@ -56,7 +56,6 @@ public class Friend extends Node {
         lastSeenOnlineAt = f.getLastseenonlineat() == null ? 0 : f.getLastseenonlineat();
         middlemanGuid = f.getMiddlemanguid() == null ? 0 : f.getMiddlemanguid();
         ugroupname = f.getUgroupname();
-        trusted = f.getTrusted();
         ignored = f.getIgnored();
         changeInternal();
     }
@@ -150,15 +149,6 @@ public class Friend extends Node {
 
     public String getUGroupName() {
         return ugroupname;
-    }
-
-    public void setTrusted(int trusted) {
-        this.trusted = trusted;
-        manager.getSettings().getFriend(guid).setTrusted(trusted);
-    }
-
-    public int getTrusted() {
-        return trusted;
     }
 
     @Override

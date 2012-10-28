@@ -504,33 +504,6 @@ public class FriendListMDIWindow extends AllianceMDIWindow {
         } */
     }
 
-    public void EVENT_edittrusted(ActionEvent e) {
-        if (list.getSelectedValue() instanceof Friend) {
-            Object[] friends = list.getSelectedValues();
-            if (friends != null && friends.length > 0) {
-                for (Object friend : friends) {
-                    if (friend instanceof Friend) {
-                        Friend f = (Friend) friend;
-                        if (f != null) {
-                            if (f.getTrusted() == 0) {
-                                f.setTrusted(1);
-                            } else {
-                                f.setTrusted(0);
-                            }
-                        }
-                    }
-                }
-                try {
-                  //TODO This exception is often getting thrown
-                	ui.getCore().saveSettings();
-                } catch (Exception ex) {
-                }
-            }
-        } else {
-            return;
-        } 
-    }
-
     public void EVENT_editgroupname(ActionEvent e) throws Exception {
         if (list.getSelectedValue() instanceof Friend) {
             Object[] friends = list.getSelectedValues();

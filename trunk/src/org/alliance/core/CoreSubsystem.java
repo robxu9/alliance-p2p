@@ -811,7 +811,7 @@ public class CoreSubsystem implements Subsystem {
                     ForwardedInvitationInteraction fii = (ForwardedInvitationInteraction) ui;
                     Collection<Friend> friends = friendManager.friends();
                     for (Friend f : friends.toArray(new Friend[friends.size()])) {
-                        if (f.getFriendsFriend(fii.getFromGuid()) != null && f.getTrusted() == 1) {
+                        if (f.getFriendsFriend(fii.getFromGuid()) != null) {
                             getInvitationManager().attemptToBecomeFriendWith(fii.getInvitationCode(), fii.getMiddleman(this), fii.getFromGuid());
                             return;
                         }
