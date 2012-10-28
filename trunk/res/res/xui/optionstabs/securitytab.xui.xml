@@ -22,14 +22,6 @@
                                 <filler/>
                             </panel>
                             <panel axis="x" border="0" expand="horiz">
-                                <checkbox id="internal.alwaysallowfriendsoftrustedfriendstoconnecttome" text="%text%"/>
-                                <filler/>
-                            </panel>
-                            <panel axis="x" border="0" expand="horiz">
-                                <checkbox id="internal.alwaysdenyuntrustedinvitations" text="%text%"/>
-                                <filler/>
-                            </panel>
-                            <panel axis="x" border="0" expand="horiz">
                                 <checkbox id="internal.alwaysautomaticallyconnecttoallfriendsoffriend" text="%text%"/>
                                 <filler/>
                             </panel>

@@ -76,18 +76,6 @@ public class ForwardInvitationNodesList extends JList {
         repaint();
     }
 
-    public void selectTrusted() {
-        for (int i = 0; i < getModel().getSize(); i++) {
-            if (((ListRow) getModel().getElementAt(i)).trusted == 1) {
-                ((ListRow) getModel().getElementAt(i)).selected = true;
-            } else {
-                ((ListRow) getModel().getElementAt(i)).selected = false;
-            }
-            addFriendWizard.enableNext();
-        }
-        repaint();
-    }
-
     private static class CheckListRenderer extends JCheckBox implements ListCellRenderer {
 		private static final long serialVersionUID = -7762107889732215752L;
 
@@ -113,13 +101,11 @@ public class ForwardInvitationNodesList extends JList {
         public int guid;
         public String toString;
         public boolean selected;
-        public int trusted;
 
-        public ListRow(String nickname, String connectedThrough, int guid, int trusted) {
+        public ListRow(String nickname, String connectedThrough, int guid) {
             this.nickname = nickname;
             this.connectedThrough = connectedThrough;
             this.guid = guid;
-            this.trusted = trusted;
             toString = "<html>" + Language.getLocalizedString(getClass().getEnclosingClass(), "friend", nickname + " <font color=gray>", connectedThrough) + "</font></html>";
         }
 
@@ -165,7 +151,7 @@ public class ForwardInvitationNodesList extends JList {
 
             removeDoubledInvitation(secondaryNodeGuids);
             for (int guid : secondaryNodeGuids) {
-                addElement(new ListRow(core.getFriendManager().nickname(guid), createConnectedThroughList(guid, friends), guid, checkTrusted(guid, friends)));
+                addElement(new ListRow(core.getFriendManager().nickname(guid), createConnectedThroughList(guid, friends), guid));
             }
         }
 

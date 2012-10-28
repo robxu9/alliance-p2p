@@ -55,11 +55,6 @@
             description="%DES%"
             toolbarimage="gfx/icons/editgroup.png"/>
         <action
-            id="edittrusted"
-            name="%NAME%"
-            description="%DES%"
-            toolbarimage="gfx/icons/edittrusted.png"/>
-        <action
             id="viewvia"
             name="%NAME%"
             description="%DES%"

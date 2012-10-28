@@ -806,22 +806,6 @@ public class CoreSubsystem implements Subsystem {
                 } catch (Exception e) {
                     reportError(e, ui);
                 }
-            } else if (getSettings().getInternal().getAlwaysallowfriendsoftrustedfriendstoconnecttome() > 0) {
-                try {
-                    ForwardedInvitationInteraction fii = (ForwardedInvitationInteraction) ui;
-                    Collection<Friend> friends = friendManager.friends();
-                    for (Friend f : friends.toArray(new Friend[friends.size()])) {
-                        if (f.getFriendsFriend(fii.getFromGuid()) != null) {
-                            getInvitationManager().attemptToBecomeFriendWith(fii.getInvitationCode(), fii.getMiddleman(this), fii.getFromGuid());
-                            return;
-                        }
-                    }
-                    if (getSettings().getInternal().getAlwaysdenyuntrustedinvitations() > 0) {
-                        return;
-                    }
-                } catch (Exception e) {
-                    reportError(e, ui);
-                }
             }
         }
         userInternactionQue.add(ui);
