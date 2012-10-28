@@ -90,7 +90,7 @@ public class FriendListCellRenderer extends AllianceListCellRenderer {
         String group;
         if (n instanceof Friend) {
             Friend f = (Friend) n;
-            if (f.getUGroupName().equals("") || f.getUGroupName() == null) {
+            if ((f.getUGroupName().equals("") || f.getUGroupName() == null) && !f.isConnected()) {
                 group = " (No Group)";
             } else {
                 group = "";
