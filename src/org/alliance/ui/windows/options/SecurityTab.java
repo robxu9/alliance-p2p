@@ -47,6 +47,8 @@ public class SecurityTab extends XUIDialog implements TabHelper {
         tab.setToolTipText(Language.getLocalizedString(getClass(), "tooltip"));
 
         allowFriends = (JCheckBox) xui.getComponent("internal.alwaysallowfriendsoffriendstoconnecttome");
+        denyAll = (JCheckBox) xui.getComponent("internal.automaticallydenyallinvitations");
+
 
         ActionListener al = new ActionListener() {
 
