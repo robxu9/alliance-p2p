@@ -30,11 +30,10 @@ public class ChatBots {
 		// Get show data via TVRage API
 		URL showURL = new URL("http://services.tvrage.com/tools/quickinfo.php?show=" + URLEncoder.encode(show, "ISO-8859-1"));
 		URLConnection con = showURL.openConnection();
-	    con.setConnectTimeout(10000); //10 second connection timeout
-	    con.setReadTimeout(5000); //5 second read timeout
+	    con.setConnectTimeout(10000); // 10 second connection timeout
+	    con.setReadTimeout(5000); // 5 second read timeout
 		InputStream data = con.getInputStream();
 		// Initialize fields
-		BufferedReader in = new BufferedReader(new InputStreamReader(data));
 		String showName = "";
 		String airTime = "";
 		String network = "";
@@ -46,6 +45,7 @@ public class ChatBots {
 		String hoursUntilAirs = "";
 		String minutesUntilAirs = "";
 		// Parse fields from data
+		BufferedReader in = new BufferedReader(new InputStreamReader(data));
 		String line;
 		while ((line = in.readLine()) != null) {
 			if (line.startsWith("No Show")) {
@@ -105,112 +105,115 @@ public class ChatBots {
 			return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
 		}
 	}
+	
 	public static String movieBot(String movie) throws IOException {
 		return movieBot(movie, false);
 	}
+	
 	public static String movieBot(String movie, boolean byID) throws IOException {
-		try{
-		// Get movie data via IMDB API
-		// If this ever breaks, we can use OMDB: http://www.deanclatworthy.com/imdb/?q=QUERY
-		URL movieURL;
-		if(byID){
-			movieURL = new URL("http://www.omdbapi.com/?i=" + URLEncoder.encode(movie, "ISO-8859-1"));
-		}
-		else {
-			movieURL = new URL("http://www.omdbapi.com/?t=" + URLEncoder.encode(movie, "ISO-8859-1"));
-		}
-		URLConnection con = movieURL.openConnection();
-	    con.setConnectTimeout(10000); //10 second connection timeout
-	    con.setReadTimeout(5000); //5 second read timeout
-		InputStream data = con.getInputStream();
-		// Initialize fields
-		BufferedReader in = new BufferedReader(new InputStreamReader(data));
-		// Parse fields from data
-		String lines = "";
-		String line;
-		while ((line = in.readLine()) != null) {
-			lines += line;
-		}
-		in.close();
-		// Check for error
-		Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (errorRegex.find()) {
-			return movieBotv2(movie);
-		}
-		// Parse title
-		String title = "";
-		Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (titleRegex.find()) {
-			title = titleRegex.group(1);
-		}
-		title = botValue(title);
-		// Parse runtime
-		String runtime = "";
-		Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (runtimeRegex.find()) {
-			runtime = runtimeRegex.group(1);
-		}
-		runtime = botValue(runtime);	
-		//Parse MPAA Rating
-		String rating = "";
-		Matcher ratingRegex = Pattern.compile("\"rated\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (ratingRegex.find()) {
-			rating = ratingRegex.group(1);
-		}
-		rating = botValue(rating);
-		//Parse IMDB Rating
-		String imdbRating = "";
-		Matcher imdbRatingRegex = Pattern.compile("\"imdbrating\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (imdbRatingRegex.find()) {
-			imdbRating = imdbRatingRegex.group(1);
-		}
-		imdbRating = botValue(imdbRating);
-		//Parse IMDB ID
-		String imdbID = "";
-		Matcher imdbIDRegex = Pattern.compile("\"imdbid\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (imdbIDRegex.find()) {
-			imdbID = imdbIDRegex.group(1);
-		}
-		imdbID = botValue(imdbID);
-		// Parse year
-		String year = "";
-		Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-		if (yearRegex.find()) {
-			year = yearRegex.group(1);
-			if (year.isEmpty() || year.equals("n\\/a")) {
-				year = "N/A";
+		try {
+			// Get movie data via OMDB API
+			URL movieURL;
+			if (byID) {
+				movieURL = new URL("http://www.omdbapi.com/?i=" + URLEncoder.encode(movie, "ISO-8859-1"));
 			}
-		}
-		year = botValue(year);
-		
-		// Build output string from fields
-		StringBuilder sb = new StringBuilder();
-		sb.append("<a href=\"" + "http://www.imdb.com/title/"+ imdbID + "\">" + title + "</a>");
-		sb.append(": Released in " + year);
-		sb.append(" | Runtime: " + runtime);
-		sb.append(" | Rated: " + rating);
-		sb.append(" | IMDB Rating: " + imdbRating);
-	
-		return botMessage(sb.toString());
-	}
-	catch(SocketTimeoutException e) {
-		return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
-	}
-	}
-	
-	private static String movieBotv2 (String movie) throws IOException{
-		try{	
-			// Get movie data via IMDB API
-			// If this ever breaks, we can use OMDB: http://www.deanclatworthy.com/imdb/?q=
-			URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
+			else {
+				movieURL = new URL("http://www.omdbapi.com/?t=" + URLEncoder.encode(movie, "ISO-8859-1"));
+			}
 			URLConnection con = movieURL.openConnection();
-		    con.setConnectTimeout(10000); //10 second connection timeout
-		    con.setReadTimeout(5000); //5 second read timeout
+			con.setConnectTimeout(10000); // 10 second connection timeout
+			con.setReadTimeout(5000); // 5 second read timeout
 			InputStream data = con.getInputStream();
 			// Initialize fields
-			BufferedReader in = new BufferedReader(new InputStreamReader(data));
-			// Parse fields from data
 			String lines = "";
+			String title = "";
+			String runtime = "";
+			String rating = "";
+			String imdbID = "";
+			String year = "";
+			// Parse fields from data
+			BufferedReader in = new BufferedReader(new InputStreamReader(data));
+			String line;
+			while ((line = in.readLine()) != null) {
+				lines += line;
+			}
+			in.close();
+			// Check for error
+			Matcher errorRegex = Pattern.compile("\"error\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (errorRegex.find()) {
+				return movieBotAlternate(movie);
+			}
+			// Parse title
+			Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (titleRegex.find()) {
+				title = titleRegex.group(1);
+			}
+			title = botValue(title);
+			// Parse runtime
+			Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (runtimeRegex.find()) {
+				runtime = runtimeRegex.group(1);
+			}
+			runtime = botValue(runtime);
+			// Parse MPAA Rating
+			Matcher ratingRegex = Pattern.compile("\"rated\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (ratingRegex.find()) {
+				rating = ratingRegex.group(1);
+			}
+			rating = botValue(rating);
+			// Parse IMDB Rating
+			String imdbRating = "";
+			Matcher imdbRatingRegex = Pattern.compile("\"imdbrating\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (imdbRatingRegex.find()) {
+				imdbRating = imdbRatingRegex.group(1);
+			}
+			imdbRating = botValue(imdbRating);
+			// Parse IMDB ID
+			Matcher imdbIDRegex = Pattern.compile("\"imdbid\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (imdbIDRegex.find()) {
+				imdbID = imdbIDRegex.group(1);
+			}
+			imdbID = botValue(imdbID);
+			// Parse year
+			Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
+			if (yearRegex.find()) {
+				year = yearRegex.group(1);
+				if (year.isEmpty() || year.equals("n\\/a")) {
+					year = "N/A";
+				}
+			}
+			year = botValue(year);
+			// Build output string from fields
+			StringBuilder sb = new StringBuilder();
+			sb.append("<a href=\"" + "http://www.imdb.com/title/" + imdbID + "\">" + title + "</a>");
+			sb.append(": Released in " + year);
+			sb.append(" | Runtime: " + runtime);
+			sb.append(" | Rated: " + rating);
+			sb.append(" | IMDB Rating: " + imdbRating);
+			return botMessage(sb.toString());
+		}
+		catch (SocketTimeoutException e) {
+			return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
+		}
+	}
+
+	private static String movieBotAlternate(String movie) throws IOException {
+		try {
+			// Get movie data via IMDB API
+			URL movieURL = new URL("http://www.deanclatworthy.com/imdb/?q=" + URLEncoder.encode(movie, "ISO-8859-1"));
+			URLConnection con = movieURL.openConnection();
+			con.setConnectTimeout(10000); // 10 second connection timeout
+			con.setReadTimeout(5000); // 5 second read timeout
+			InputStream data = con.getInputStream();
+			// Initialize fields
+			String lines = "";
+			String linkURL = "";
+			String title = "";
+			String runtime = "";
+			String year = "";
+			boolean screening = false;
+			// Parse fields from data
+			BufferedReader in = new BufferedReader(new InputStreamReader(data));
 			String line;
 			while ((line = in.readLine()) != null) {
 				lines += line;
@@ -222,38 +225,27 @@ public class ChatBots {
 				String error = errorRegex.group(1);
 				return botMessage(Language.getLocalizedString(ChatBots.class, "nomovie", botValue(movie), botValue(error)));
 			}
-			// Parse IMDB ID
-			String imdbID = "";
-			Matcher imdbIDRegex = Pattern.compile("\"imdbid\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
-			if (imdbIDRegex.find()) {
-				//Return the ID to be used with omdb, as it gives more data
-				return movieBot(imdbIDRegex.group(1), true);
-			}
 			// Parse link URL
-			String linkURL = "";
 			Matcher linkURLRegex = Pattern.compile("\"imdburl\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
 			if (linkURLRegex.find()) {
 				linkURL = linkURLRegex.group(1).replace("\\", "");
 			}
 			// Parse title
-			String title = "";
 			Matcher titleRegex = Pattern.compile("\"title\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
 			if (titleRegex.find()) {
 				title = titleRegex.group(1).replace("\\", "").replace("&#x27;", "'").replace("&amp;", "&");
 			}
 			title = botValue(title);
 			// Parse runtime
-			String runtime = "";
 			Matcher runtimeRegex = Pattern.compile("\"runtime\":\"([^\"]+)\"", Pattern.CASE_INSENSITIVE).matcher(lines);
 			if (runtimeRegex.find()) {
-				runtime = runtimeRegex.group(1).replace("min", "m").replace(" ",  "");
+				runtime = runtimeRegex.group(1).replace("min", "m").replace(" ", "");
 				if (runtime.isEmpty() || runtime.equals("n\\/a")) {
 					runtime = "N/A";
 				}
 			}
 			runtime = botValue(runtime);
 			// Parse year
-			String year = "";
 			Matcher yearRegex = Pattern.compile("\"year\":\"([^\"]+)\"").matcher(lines);
 			if (yearRegex.find()) {
 				year = yearRegex.group(1);
@@ -263,7 +255,6 @@ public class ChatBots {
 			}
 			year = botValue(year);
 			// Parse screening
-			boolean screening = false;
 			Matcher screensRegex = Pattern.compile("\"usascreens\":(\\d+)").matcher(lines);
 			if (screensRegex.find()) {
 				screening = Integer.parseInt(screensRegex.group(1)) > 0;
@@ -275,13 +266,13 @@ public class ChatBots {
 			sb.append(" | Runtime: " + runtime);
 			if (screening) {
 				sb.append(" | Now in theaters");
-			} 
-			return botMessage(sb.toString()); 
+			}
+			return botMessage(sb.toString());
 		}
-		catch(SocketTimeoutException e) {
+		catch (SocketTimeoutException e) {
 			return botMessage(Language.getLocalizedString(ChatBots.class, "timeout"));
 		}
-		
+
 	}
 	
 	/*public static String animeBot(String anime) throws IOException {
