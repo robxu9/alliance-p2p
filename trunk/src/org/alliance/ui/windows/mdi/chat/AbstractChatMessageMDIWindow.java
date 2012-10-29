@@ -23,6 +23,7 @@ import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
 import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
+import org.alliance.misc.ChatBots;
 import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;
 import org.alliance.ui.UISubsystem;
@@ -37,11 +38,14 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -540,10 +544,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	}
 	
 	private String getPageTitle(URL url) throws Exception {
-		 
-	      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-	 
-	      Pattern pHead = Pattern.compile("(?i)</HEAD>");
+		try{
+	      URLConnection con = url.openConnection();
+		    con.setConnectTimeout(5000); // 5 second connection timeout
+		    con.setReadTimeout(5000); // 5 second read timeout
+			InputStream data = con.getInputStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(data));
+	      
+		  Pattern pHead = Pattern.compile("(?i)</HEAD>");
 	      Matcher mHead;
 	      Pattern pTitle = Pattern.compile("(?i)</TITLE>");
 	      Matcher mTitle;
@@ -582,6 +590,10 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	      }catch(Exception e){
 	      }
 	      return title;
+		}
+		catch(SocketTimeoutException e) {
+			return "";
+		}
 	    }
 	
 	
