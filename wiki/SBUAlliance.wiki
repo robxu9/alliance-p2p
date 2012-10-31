@@ -7,7 +7,7 @@
 <li> Connect using the latest codes listed below: (8/26/12)</li>
 <ul>  
 <li>gvXa8wrBow8maw </li>
-<li>gvXbWiDxvhB?rA (10/1/12)</li>
+<li>gvXasCDx5hfFQg (10/30/12)</li>
 <li>gvX5WVFXiw8VPw </li>
 </ul>
 <li>Remember to set your friends as trusted!</li>
@@ -72,22 +72,13 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
    <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
 </tr>
 <tr>
-    <td align="center"><i>gvXa8wrBow8maw</i></td><td align="center">8/26/12</td>
+    <td align="center"><i>gvXasCDx5hfFQg</i></td><td align="center">10/30/12</td>
 </tr>
 <tr>
-    <td align="center"><i>gvX5WVFXiw8VPw</i></td><td align="center">8/26/12</td>
+    <td align="center"><i>gvXa8wrBow8maw</i></td><td align="center">9/1/12</td>
 </tr>
 <tr>
-    <td align="center"><i>gvXbBCDxuaQDTA</i></td> <td align="center">3/19/12</td>
-</tr>
-<tr>
-    <td align="center"><i>gvXHPFFX28LhFA</i></td> <td align="center">3/19/12</td>
-</tr>   
-<tr>    
-    <td align="center"><i>gvXbBCDxMbnBvA</i></td> <td align="center">1/31/12</td>
-</tr>  
-<tr>      
-    <td align="center"><i>gvXHPFFXnjfv/w</i></td> <td align="center">11/6/11</td>
+    <td align="center"><i>gvX5WVFXiw8VPw</i></td><td align="center">9/1/12</td>
 </tr>
 </table></dd>
 
