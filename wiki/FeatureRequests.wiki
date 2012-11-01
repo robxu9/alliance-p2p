@@ -22,7 +22,7 @@ Things on this list are pretty major features, so no need to add them all in one
 
 These are things that could probably be implemented quickly.
 
- * Change text for highlighter @_username_s to black or white, depending on the background color.
+ * Change text for highlighted @usernames to black or white, depending on the background color.
  * Make rearranging the tabs take more initial movement.
  * Assign aliases to shared folders like DC++.
  * Notify users when tabs contain unread private messages, perhaps by blinking the taskbar icon or changing the window title.
@@ -43,6 +43,6 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * !NullPointerException when you try to connect to your own connection code.
  * Chat history file never gets limited, and large ones can freeze Alliance.
  * The automatic database compacting hangs the UI.
- * Some files marked as 'external' still get unhashed.
+ * Some files marked as "external" still get unhashed.
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
