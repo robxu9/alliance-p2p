@@ -10,14 +10,13 @@ If you're working on a feature, claim it here so we don't duplicate work. Once y
 
 Things on this list are pretty major features, so no need to add them all in one update.
 
+ * Implement UDP hole punching to transverse NAT to NAT networks.
  * Replace the chat system with the [http://www.reddit.com/r/SBU/comments/jb9jx/there_is_a_stony_brook_irc_channel_if_anyone_is/ #sbu IRC channel] using [http://www.jibble.org/pircbot.php PircBot] , [http://moepii.sourceforge.net/ IRClib], or [http://martyr.sourceforge.net/ Martyr].
     * In the meantime, implement multi-person PMs/private chatrooms.
  * Allow admins to appoint moderators who get some admin powers.
  * Let clients with different encryption levels communicate (as per [http://code.google.com/p/alliancep2pbeta/issues/detail?id=6 this issue]), which would also let us easily transition to the "experimental" AES option.
- * Monitor selected users for new files
+ * Monitor selected users for new files.
     * There's a [http://code.google.com/p/alliancep2pbeta/issues/detail?id=36 plugin] being developed for that.
- * ~~Put all Offline members in their own group~~
- * ~~Expand/Collapse Groups~~
 
 = Minor features =
 
@@ -31,15 +30,15 @@ These are things that could probably be implemented quickly.
     * http://stackoverflow.com/questions/2039373/maintaing-jtextarea-scroll-position
     * http://www.jguru.com/faq/view.jsp?EID=16674
  * Use RPC's to send commands rather than messages.
- * ~~Highlight all `@usernames` with the user's color, and be case-insensitive.~~
 
 = Bugs =
 
 Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] might still not be fixed.
 
  * Don't highlight an @ sign without text after it.
+ * The `/whois` command should be case-insensitive.
  * Attempting to hash "会意.txt" (and probably other Unicode files) freezes Alliance.
- * People don't connect to everyone, at least not quickly.
+ * People don't connect to everyone in the network, at least not quickly.
  * !BufferUnderflowException when someone connects to you.
  * !NullPointerException when you try to connect to your own connection code.
  * Chat history file never gets limited, and large ones can freeze Alliance.
@@ -47,6 +46,3 @@ Note that some [http://code.google.com/p/alliancep2pbeta/issues/list old ones] m
  * Some files marked as 'external' still get unhashed.
  * Frequent !ConcurrentModificationExceptions from somewhere.
  * !NullPointerException when sorting Downloads tab columns.
- * Implement UDP hole punching to transverse NAT to NAT networks.
- * The `/whois` command is case sensitive, make it case insensitive.
- * ~~The `/help` command doesn't substitute `%VERSION%` in the description for `/pleaseupdate`.~~
