@@ -5,7 +5,6 @@ import org.alliance.core.CoreSubsystem;
 import org.alliance.core.file.FileManager;
 import org.alliance.core.Language;
 import org.alliance.core.comm.T;
-import org.alliance.ui.dialogs.OptionDialog;
 import org.alliance.ui.util.*;
 import org.alliance.launchers.OSInfo;
 import static org.alliance.core.CoreSubsystem.KB;

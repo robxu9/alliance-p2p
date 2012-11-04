@@ -21,9 +21,7 @@ package org.alliance.ui.windows.mdi.chat;
 import com.stendahls.nif.ui.mdi.MDIManager;
 import com.stendahls.nif.ui.mdi.MDIWindow;
 import org.alliance.core.file.hash.Hash;
-import org.alliance.core.node.Friend;
 import org.alliance.core.Language;
-import org.alliance.misc.ChatBots;
 import org.alliance.misc.UserCommands;
 import org.alliance.ui.T;
 import org.alliance.ui.UISubsystem;
@@ -36,32 +34,33 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Collection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.net.URLConnection;
+import org.alliance.core.node.Friend;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -263,7 +262,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             String displayText = text.substring(i, end);
             //Shorten long links as to not create side scrolling chat.
             if(displayText.length() > 75) {
-            	displayText = displayText.substring(i, 75) + "&hellip;";
+            	displayText = displayText.substring(0, 75) + "&hellip;";
             }
             String s = text.substring(0, i);
             s += "<a href=\"" + text.substring(i, end) + "\">" + displayText + "</a>";
@@ -482,12 +481,14 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		if(!(ui.getCore().getSettings().getInternal().getLinkbot() > 0)){
 			return;
 		}
+		if(text.indexOf("http://") != -1 || text.indexOf("https://") != -1 || text.indexOf("ftp://") != -1){
             String urlTitle = escapeHTML(text);
             urlTitle = urlTitle.substring(urlTitle.indexOf("<a href")+"<a href=".length()+1, urlTitle.indexOf(">")-1);
+            String url = urlTitle;
 			try {
 				urlTitle = getPageTitle(new URL(urlTitle));
 				if(!urlTitle.isEmpty()) {
-					addSystemMessage("&lt;Link&gt; ", urlTitle, false);
+					addSystemMessage("&lt;Link&gt; ", "<a href=\"" + url + "\">" + urlTitle + "</a>", false);
 				}
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -495,7 +496,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 				e.printStackTrace();
 			}
 		}
-
+		}
 
 	private String createChatlineEffects(String message) {
 		//Highlight "@User" with specific users color
@@ -532,7 +533,7 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		}
 		
 		return message;
-	}
+	} 
 
 	private boolean isUserAction(ChatLine cl) {
 		// These can be done with /me or entered manually.
@@ -584,17 +585,18 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 	              Matcher m = p.matcher(html);            
 	              while (m.find() == true) {
 	                  title=m.group(1);
-	                //System.out.println("Title "+title); 
 	              }
 	          }
-	      }catch(Exception e){
+	      } catch(Exception e) {
+	    	  in.close();
 	      }
+	      
 	      return title;
-		}
-		catch(SocketTimeoutException e) {
+		
+		} catch(SocketTimeoutException e) {
 			return "";
 		}
-	    }
+	    } 
 	
 	
 	protected String toHexColor(Color color) {
@@ -607,7 +609,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
 		String message;
         long tick;
         Color color;
-        boolean containsURL;
 
         public ChatLine(String from, String message, long tick, Color color) {
             this(from, message, tick, color, true);
@@ -618,7 +619,6 @@ public abstract class AbstractChatMessageMDIWindow extends AllianceMDIWindow imp
             this.message = escape ? escapeHTML(message) : message;
             this.tick = tick;
             this.color = color;
-            this.containsURL = (message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1)&&(escape);
         }
     }
 

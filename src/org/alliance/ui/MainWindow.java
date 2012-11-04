@@ -72,7 +72,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.TreeMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -523,7 +522,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
         }
         if (message != null) {
             w.addMessage(ui.getCore().getFriendManager().nickname(guid), message, tick, messageHasBeenQueuedAwayForAWhile);
-            if(message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1){
+            if(message.contains("://")){
         		w.linkBot(message);
             }
         }
@@ -540,7 +539,7 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             }
             publicChat.addMessage(ui.getCore().getFriendManager().nickname(guid), message, tick, messageHasBeenQueuedAwayForAWhile);
             ui.getCore().getPublicChatHistory().addMessage(tick, guid, message, ui.getCore());
-            if(message.indexOf("http://") != -1 || message.indexOf("https://") != -1 || message.indexOf("ftp://") != -1){
+            if(message.contains("://")){
         		publicChat.linkBot(message);
             }
         }
@@ -796,10 +795,12 @@ public class MainWindow extends XUIFrame implements MenuItemDescriptionListener,
             } else if (nui instanceof NewVersionAvailableInteraction) {
                 if (!ui.getCore().getAwayManager().isAway()) {
                     try {
-                        OptionDialog updateDialog = new OptionDialog(this, Language.getLocalizedString(getClass(), "newupdateheader"),
+                        ui.getCore().getFileManager().getSiteUpdater();
+						ui.getCore().getFileManager().getSiteUpdater();
+						OptionDialog updateDialog = new OptionDialog(this, Language.getLocalizedString(getClass(), "newupdateheader"),
                                 Language.getLocalizedString(getClass(), "newupdate",
-                                ui.getCore().getFileManager().getSiteUpdater().getSiteVersion(),
-                                Integer.toString(ui.getCore().getFileManager().getSiteUpdater().getSiteBuild()))
+                                SiteUpdate.getSiteVersion(),
+                                Integer.toString(SiteUpdate.getSiteBuild()))
                                 + "[a href='.']" + Language.getLocalizedString(getClass(), "newupdateinfo") + "[/a]", 1, 1, true);
                         JLayeredPane lp = (JLayeredPane) updateDialog.getRootPane().getComponent(1);
                         JPanel p = (JPanel) ((JPanel) lp.getComponent(0)).getComponent(0);

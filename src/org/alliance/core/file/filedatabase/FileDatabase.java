@@ -254,6 +254,8 @@ public class FileDatabase {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }catch (NullPointerException ex) {
+            ex.printStackTrace();
         }
         changeInUseQueue(false);
         return null;
