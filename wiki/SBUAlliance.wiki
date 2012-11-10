@@ -6,8 +6,8 @@
 <li>Update to the newest Alliance release, a guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li> Connect using the latest codes listed below: (8/26/12)</li>
 <ul>  
-<li>gvXa8wrBow8maw </li>
-<li>gvXasCDx5hfFQg (10/30/12)</li>
+<li>gvX5WVFX7dQ2Tg (11/9/12)</li>
+<li>gvXasCDxVpRvkQ (11/9/12)</li>
 <li>gvX5WVFXiw8VPw </li>
 </ul>
 <li>Remember to set your friends as trusted!</li>
@@ -72,13 +72,13 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
    <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
 </tr>
 <tr>
+    <td align="center"><i>gvX5WVFX7dQ2Tg</i></td><td align="center">11/9/12</td>
+</tr>
+<tr>
+    <td align="center"><i>gvXasCDxVpRvkQ</i></td><td align="center">11/9/12</td>
+</tr>
+<tr>
     <td align="center"><i>gvXasCDx5hfFQg</i></td><td align="center">10/30/12</td>
-</tr>
-<tr>
-    <td align="center"><i>gvXa8wrBow8maw</i></td><td align="center">9/1/12</td>
-</tr>
-<tr>
-    <td align="center"><i>gvX5WVFXiw8VPw</i></td><td align="center">9/1/12</td>
 </tr>
 </table></dd>
 
