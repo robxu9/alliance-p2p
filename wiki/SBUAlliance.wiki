@@ -30,9 +30,9 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 <font color="red" size="3"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
 </blockquote>
 
-<b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/AllianceP2P.dmg">Mac</a> or 
-<a href="http://alliance-p2p.googlecode.com/files/Alliance%201.3.0.msi">Windows</a> or 
-<a href="http://alliance-p2p.googlecode.com/files/AllianceP2P.zip">Linux</a>
+<b>First download the program: </b><a href="http://alliance-p2p.googlecode.com/files/OSX-Alliance-v1.3.1.zip">Mac</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/Alliance%201.3.1.msi">Windows</a> or 
+<a href="http://alliance-p2p.googlecode.com/files/Linux-Alliance-v1.3.1.zip">Linux</a>
 <ol>
 <li>Once installed, run the program.</li>
   <font color="red"><dd>- Mountain Lion Users (Mac OSX 10.8+) <b>must</b> read the <a href="http://alliance-p2p.googlecode.com/files/OSX%20-%20README%201.3.0.rtf">README</a> file to load Alliance</dd></font>
