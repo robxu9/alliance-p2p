@@ -8,7 +8,7 @@
 <ul>  
 <li>gvX5WVFX7dQ2Tg (11/9/12)</li>
 <li>gvXasCDxVpRvkQ (11/9/12)</li>
-<li>gvX5WVFXiw8VPw </li>
+<li>gvX5WVFXz3Ae2w (12/9/12)</li>
 </ul>
 <li>Remember to set your friends as trusted!</li>
 <li>Remember to share! :)</li>
@@ -78,7 +78,7 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
     <td align="center"><i>gvXasCDxVpRvkQ</i></td><td align="center">11/9/12</td>
 </tr>
 <tr>
-    <td align="center"><i>gvXasCDx5hfFQg</i></td><td align="center">10/30/12</td>
+    <td align="center"><i>gvX5WVFXz3Ae2w</i></td><td align="center">12/9/12</td>
 </tr>
 </table></dd>
 
