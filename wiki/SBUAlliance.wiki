@@ -1,11 +1,12 @@
 #summary How to install and connect to SBU Alliance Network
 #labels SBU,SBUAlliance,Setup
 <font color="darkblue">
-<h1>Returning Fall 2012 <i>Quick Guide</i></h1>
+<h1>Returning Winter/Spring 2013 <i>Quick Guide</i></h1>
 <ol>
-<li>Update to the newest Alliance release, a guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
+<li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li> Connect using the latest codes listed below: (8/26/12)</li>
-<ul>  
+<ul>
+<li>wKjLAQx+g4bYSg (1/7/13)</li>
 <li>gvX5WVFX7dQ2Tg (11/9/12)</li>
 <li>gvXasCDxVpRvkQ (11/9/12)</li>
 <li>gvX5WVFXz3Ae2w (12/9/12)</li>
