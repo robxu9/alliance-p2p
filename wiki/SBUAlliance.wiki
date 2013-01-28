@@ -4,7 +4,7 @@
 <h1>Returning Winter/Spring 2013 <i>Quick Guide</i></h1>
 <ol>
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
-<li> Connect using the latest codes listed below: (8/26/12)</li>
+<li> Connect using the latest codes listed below: (1/27/13)</li>
 <ul>
 <li>gvXa8x622s2AuQ (1/27/13)</li>
 </ul>
