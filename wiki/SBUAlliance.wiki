@@ -1,14 +1,13 @@
 #summary How to install and connect to SBU Alliance Network
 #labels SBU,SBUAlliance,Setup
 <font color="darkblue">
-<h1>Returning Winter/Spring 2013 <i>Quick Guide</i></h1>
+<h1>Returning User <i>Quick Guide</i></h1>
 <ol>
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
-<li> Connect using the latest codes listed below: (1/27/13)</li>
+<li> Connect using the latest codes listed below: </li>
 <ul>
 <li>gvXa8x622s2AuQ (1/27/13)</li>
 </ul>
-<li>Remember to set your friends as trusted!</li>
 <li>Remember to share! :)</li>
 </ol>
 <b>Thanks, and have a good semester!</b>
@@ -70,13 +69,7 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
    <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
 </tr>
 <tr>
-    <td align="center"><i>gvX5WVFX7dQ2Tg</i></td><td align="center">11/9/12</td>
-</tr>
-<tr>
-    <td align="center"><i>gvXasCDxVpRvkQ</i></td><td align="center">11/9/12</td>
-</tr>
-<tr>
-    <td align="center"><i>gvX5WVFXz3Ae2w</i></td><td align="center">12/9/12</td>
+    <td align="center"><i>gvXa8x622s2AuQ</i></td><td align="center">1/27/13</td>
 </tr>
 </table></dd>
 
