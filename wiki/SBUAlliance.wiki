@@ -6,9 +6,10 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li> Connect using the latest codes listed below: </li>
 <ul>
+<li>wKjLAQx+7J!FPA (1/27/13)</li>
 <li>gvXa8x622s2AuQ (1/27/13)</li>
-<li>gvXPJ24M5CRfKA (1/28/13)</li>
-<li>gvX5WVFXiVn4tQ (1/28/13)</li>
+<li>gvXPJ24M5CRfKA (1/27/13)</li>
+<li>gvX5WVFXiVn4tQ (1/27/13)</li>
 </ul>
 <li>Remember to share! :)</li>
 </ol>
@@ -67,12 +68,11 @@ Alliance takes the best from BitTorrent, DirectConnect and Waste and creates a d
 <font color="red"><b>Currently the only way to connect is by hardwiring onto the LAN through ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
 
 <dd><table border="1">
-<tr>    
-   <td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td>
-</tr>
-<tr>
-    <td align="center"><i>gvXa8x622s2AuQ</i></td><td align="center">1/27/13</td>
-</tr>
+<tr><td align="center"><b>Friend Connection Code</b></td> <td><b>Date Updated</b></td></tr>
+<tr><td align="center"><i>wKjLAQx+7J!FPA</i></td><td align="center">1/27/13)</td></tr>
+<tr><td align="center"><i>gvXa8x622s2AuQ</i></td><td align="center">1/27/13)</td></tr>
+<tr><td align="center"><i>gvXPJ24M5CRfKA</i></td><td align="center">1/27/13)</td></tr>
+<tr><td align="center"><i>gvX5WVFXiVn4tQ</i></td><td align="center">1/27/13)</td></tr>
 </table></dd>
 
  <img src="http://imgur.com/jIToM.png" alt="Screenshot">
