@@ -6,8 +6,8 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li> Connect using the latest codes listed below: </li>
 <ul>
+<li>gvXa8yPUQBugaQ (1/30/13)</li>
 <li>wKjLAQx+7J!FPA (1/27/13)</li>
-<li>gvXa8x622s2AuQ (1/27/13)</li>
 <li>gvXPJ24M5CRfKA (1/27/13)</li>
 <li>gvX5WVFXiVn4tQ (1/27/13)</li>
 </ul>
