@@ -26,7 +26,7 @@
 
 <h1>Introduction</h1>
 
-Alliance takes the best from BitTorrent, DirectConnect and WASTE and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac OS.
+Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a decentralized and secure P2P network. It is a private and secure environment to share files and communicate with people you know. Alliance works on Windows, Linux and Mac OS.
 
 <b>Scroll to the bottom of this page to enter questions or comments. You can also ask Spiderman directly through Reddit <a href="http://www.reddit.com/message/compose/?to=Spiderman_&subject=SBUAlliance%20Issue">here</a>.</b>
 
