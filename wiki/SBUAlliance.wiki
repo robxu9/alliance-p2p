@@ -42,10 +42,10 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 	<dd>• Mountain Lion users (Mac OS X 10.8+) <b>must</b> read the <a href="http://alliance-p2p.googlecode.com/files/OSX%20-%20README%201.3.0.rtf">README</a> file to load Alliance.</dd>
 	<dd>• For Windows users who receive the error “Unable to access jarfile alliance.tmp”: Navigate to: C:\Program Files\Alliance, right-click alliance.exe and select “Run as administrator”.</dd>
 <li>Once the program loads you’ll be presented with this screen:</li>
-	<dd>Enter a username</dd>
+	<dd>Enter a username.</dd>
 	<img src="http://imgur.com/KczFD.png" alt="Screenshot">
 <li>Then click the “Transfers” tab. You’ll be brought to this screen:</li>
-	<dd>• Here, select a download folder.</dd>
+	<dd>Here, select a download folder.</dd>
 	<img src="http://imgur.com/bGJ55.png" alt="Screenshot">
 <li>Then from the “Tools” menu select “Shares":</li>
 	<img src="http://imgur.com/KJ9Ue.png" alt="Screenshot">
