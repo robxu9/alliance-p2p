@@ -2,7 +2,7 @@
 
 Read through the comments on [http://code.google.com/p/alliancep2pbeta/issues/list issues with the beta] (1.2.0-pre build 1280). Some feature requests and bugfixes were already under development.
 
-Also look through the source code for "ToDo" indicating various bugs and unfinished features.
+Also look through the source code for "!ToDo" indicating various bugs and unfinished features.
 
 If you're working on a feature, claim it here so we don't duplicate work. Once you're done, cross the item out. After we release a version with that feature included, the item can just be deleted.
 
