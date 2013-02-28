@@ -32,7 +32,9 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 
 <h1>Connecting</h1>
 
-<font color="red" size="3"><b>Currently you cannot connect to Alliance on the wireless networks; you must use the LAN through Ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font>
+~~Currently you cannot connect to Alliance on the wireless networks; you must use the LAN through Ethernet. We're trying to solve this issue as quickly as possible, check back for updates.~~
+
+<font color="red"><b>2/28 Update: Alliance now seems to work on the WolfieNet wireless networks, so if WiFi is working for you (it's been erratic lately) Alliance should too.</b></font>
 
 <ol>
 <li><b>First download the program</b> for <a href="http://alliance-p2p.googlecode.com/files/OSX-Alliance-v1.3.1.zip">Mac</a> or
@@ -58,7 +60,6 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 <li>When the window pops up, select “I have a code I received from a friend”:</li>
 	<img src="http://imgur.com/sOTH7.png" alt="Screenshot">
 <li>Enter one of the codes listed below:</li>
-	<dd><font color="red" size="3"><b>Currently you cannot connect to Alliance on the wireless networks; you must use the LAN through Ethernet. We're trying to solve this issue as quickly as possible, check back for updates.</b></font></dd>
 	<dd>
 	<table border="1">
 	<tr><th align="center">Friend Connection Code</th><th>Date Updated</th></tr>
