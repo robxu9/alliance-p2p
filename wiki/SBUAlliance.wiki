@@ -1,6 +1,8 @@
 #summary How to install and connect to SBU Alliance network
 #labels SBU,SBUAlliance,Setup
 
+<font color="red"><b>2/28 Update: Alliance now works on the wireless networks as well as the LAN.</b></font>
+
 <font color="darkblue">
 
 <h1>Returning User Quick Guide</h1>
@@ -31,10 +33,6 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 <b>Scroll to the bottom of this page to enter questions or comments. You can also ask Spiderman directly through Reddit <a href="http://www.reddit.com/message/compose/?to=Spiderman_&subject=SBUAlliance%20Issue">here</a>.</b>
 
 <h1>Connecting</h1>
-
-~~Currently you cannot connect to Alliance on the wireless networks; you must use the LAN through Ethernet. We're trying to solve this issue as quickly as possible, check back for updates.~~
-
-<font color="red"><b>2/28 Update: Alliance now seems to work on the !WolfieNet wireless networks, so if !WiFi is working for you (it's been erratic lately) Alliance should too.</b></font>
 
 <ol>
 <li><b>First download the program</b> for <a href="http://alliance-p2p.googlecode.com/files/OSX-Alliance-v1.3.1.zip">Mac</a> or
