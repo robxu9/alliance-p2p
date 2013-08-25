@@ -11,12 +11,7 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li>Connect using the latest codes listed below: </li>
 	<ul>
-        <li>gvXa8yPUf3ohRA (3/28/13)</li>
-	<li>gvX3dUozzeaveg (2/24/13)</li>
-	<li>gvXa8yPUQBugaQ (1/30/13)</li>
-	<li>wKjLAQx+7J!FPA (1/27/13)</li>
-	<li>gvXPJ24M5CRfKA (1/27/13)</li>
-	<li>gvX5WVFXiVn4tQ (1/27/13)</li>
+        <li>CvXb2ww%y9pSaA (8/25/13)</li>
 	</ul>
 <li>Remember to share! :)</li>
 </ol>
@@ -62,11 +57,7 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 	<dd>
 	<table border="1">
 	<tr><th align="center">Friend Connection Code</th><th>Date Updated</th></tr>
-	<tr><td align="center">gvX3dUozzeaveg</td><td align="center">2/24/13</td></tr>
-	<tr><td align="center">gvXa8yPUQBugaQ</td><td align="center">1/30/13</td></tr>
-	<tr><td align="center">wKjLAQx+7J!FPA</td><td align="center">1/27/13</td></tr>
-	<tr><td align="center">gvXPJ24M5CRfKA</td><td align="center">1/27/13</td></tr>
-	<tr><td align="center">gvX5WVFXiVn4tQ</td><td align="center">1/27/13</td></tr>
+	<tr><td align="center">CvXb2ww%y9pSaA</td><td align="center">8/25/13</td></tr>
 	</table>
 	</dd>
 	<img src="http://imgur.com/jIToM.png" alt="Screenshot">
