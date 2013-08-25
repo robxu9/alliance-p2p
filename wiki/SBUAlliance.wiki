@@ -11,7 +11,7 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li>Connect using the latest codes listed below: </li>
 	<ul>
-        <li>CvXb2ww%y9pSaA (8/25/13)</li>
+        <li>`CvXb2ww%tkzyRg` (8/25/13)</li>
 	</ul>
 <li>Remember to share! :)</li>
 </ol>
@@ -57,7 +57,7 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 	<dd>
 	<table border="1">
 	<tr><th align="center">Friend Connection Code</th><th>Date Updated</th></tr>
-	<tr><td align="center">CvXb2ww%y9pSaA</td><td align="center">8/25/13</td></tr>
+	<tr><td align="center">`CvXb2ww%tkzyRg`</td><td align="center">8/25/13</td></tr>
 	</table>
 	</dd>
 	<img src="http://imgur.com/jIToM.png" alt="Screenshot">
