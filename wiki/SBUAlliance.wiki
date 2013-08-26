@@ -75,7 +75,6 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
 <li>Once in, click the blue circling arrows in the bottom right if your files don't automatically begin to hash.</li>
 <li>Please leave the program running at all times, even if it's minimized in the background.</li>
 <li>Errors or feature requests should be reported <a href="http://code.google.com/p/alliance-p2p/issues/entry">here</a>. Connection issues should be reported in the comments below.</li>
-</ol>
 
 <b>That's it, you're connected! Tell your friends, and share what you download. The link to this post is: <a href="http://code.google.com/p/alliance-p2p/wiki/SBUAlliance">http://code.google.com/p/alliance-p2p/wiki/SBUAlliance</a></b>
 
