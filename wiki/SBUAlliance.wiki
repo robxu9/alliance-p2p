@@ -14,6 +14,8 @@
         <li>`wKi4AXmNCFy+5w` (8/26/13) (connects to Rangi)</li>
         <li>`CvXm8UyA%WgbrA` (8/26/13) (connects to Fiz0r)</li>
         <li>`CvXb2ww%Q+xgFQ` (8/26/13) (connects to !MuttonChops)</li>
+        <li>`fwAAAY?+MsE7wA` (9/18/13) (connects to Konst)</li>
+        <li>`fwAAAWvE3iUU?w` (9/18/13) (connects to Microban)</li>
         </ul>
 <li>Remember to share! :)</li>
 </ol>
@@ -65,6 +67,8 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
         <tr><td align="center">`wKi4AXmNCFy+5w`</td><td align="center">8/26/13</td><td>Rangi</td></tr>
         <tr><td align="center">`CvXm8UyA%WgbrA`</td><td align="center">8/26/13</td><td>Fiz0r</td></tr>
         <tr><td align="center">`CvXb2ww%Q+xgFQ`</td><td align="center">8/26/13</td><td>!MuttonChops</td></tr>
+        <tr><td align="center">`fwAAAY?+MsE7wA`</td><td align="center">9/18/13</td><td>Konst</td></tr>
+        <tr><td align="center">`fwAAAWvE3iUU?w`</td><td align="center">9/18/13</td><td>Microban</td></tr>
         </table>
         </dd>
         <br>
