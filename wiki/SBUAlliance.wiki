@@ -1,7 +1,7 @@
 #summary How to install and connect to SBU Alliance network
 #labels SBU,SBUAlliance,Setup
 
-<font color="red"><b>2/28 Update: Alliance now works on the wireless networks as well as the LAN.</b></font>
+<font color="red"><b>Update: Alliance now works on the wireless networks as well as the LAN.</b></font>
 
 <font color="darkblue">
 
@@ -11,11 +11,7 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li>Connect using the latest codes listed below: </li>
         <ul>
-        <li>`CvXH4yms*4yVxQ` (10/14/13) (connects to Rangi)</li>
-        <li>`CvXm8UyA%WgbrA` (8/26/13) (connects to Fiz0r)</li>
-        <li>`CvXb2ww%Q+xgFQ` (8/26/13) (connects to !MuttonChops)</li>
-        <li>`fwAAAY?+MsE7wA` (9/18/13) (connects to Konst)</li>
-        <li>`fwAAAWvE3iUU?w` (9/18/13) (connects to Microban)</li>
+        <li>`rBmZ*4TFC73Q!Q` (1/28/14) (connects to !MuttonChops)</li>
         </ul>
 <li>Remember to share! :)</li>
 </ol>
@@ -64,11 +60,7 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
         <dd>
         <table border="1">
         <tr><th align="center">Friend Connection Code</th><th>Date Updated</th><th>User</th></tr>
-        <tr><td align="center">`CvXH4yms*4yVxQ`</td><td align="center">10/14/13</td><td>Rangi</td></tr>
-        <tr><td align="center">`CvXm8UyA%WgbrA`</td><td align="center">8/26/13</td><td>Fiz0r</td></tr>
-        <tr><td align="center">`CvXb2ww%Q+xgFQ`</td><td align="center">8/26/13</td><td>!MuttonChops</td></tr>
-        <tr><td align="center">`fwAAAY?+MsE7wA`</td><td align="center">9/18/13</td><td>Konst</td></tr>
-        <tr><td align="center">`fwAAAWvE3iUU?w`</td><td align="center">9/18/13</td><td>Microban</td></tr>
+        <tr><td align="center">`rBmZ*4TFC73Q!Q`</td><td align="center">1/28/13</td><td>!MuttonChops</td></tr>
         </table>
         </dd>
         <br>
