@@ -12,7 +12,8 @@
 <li>Connect using the latest codes listed below: </li>
         <ul>
         <li>`rBmZ*4TFC73Q!Q` (1/28/14) (connects to !MuttonChops)</li>
-        </ul>
+        <li>`CvXC&yDTJusAzA` (1/30/14)</li>
+</ul>
 <li>Remember to share! :)</li>
 </ol>
 
@@ -61,6 +62,7 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
         <table border="1">
         <tr><th align="center">Friend Connection Code</th><th>Date Updated</th><th>User</th></tr>
         <tr><td align="center">`rBmZ*4TFC73Q!Q`</td><td align="center">1/28/13</td><td>!MuttonChops</td></tr>
+        <tr><td align="center">`CvXC&yDTJusAzA`</td><td align="center">1/30/13</td><td>N/A</td></tr>
         </table>
         </dd>
         <br>
