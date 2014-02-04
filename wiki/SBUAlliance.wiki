@@ -13,8 +13,9 @@
         <ul>
         <li>`rBmZ*4TFC73Q!Q` (1/28/14) (connects to !MuttonChops)</li>
         <li>`CvXC&yDTJusAzA` (1/30/14)</li>
-        <li>`CvXF+4gBRCRS7w` (2/2/14)</li>
-</ul>
+        <li>`CvXF+4gBRCRS7w` (2/2/14) (connects to Rooks)</li>
+        <li>`wKi4ASmsXFdDmA` (2/3/14) (connects to Rangi)</li>
+        </ul>
 <li>Remember to share! :)</li>
 </ol>
 
@@ -63,8 +64,9 @@ Alliance takes the best from !BitTorrent, !DirectConnect and WASTE and creates a
         <table border="1">
         <tr><th align="center">Friend Connection Code</th><th>Date Updated</th><th>User</th></tr>
         <tr><td align="center">`rBmZ*4TFC73Q!Q`</td><td align="center">1/28/14</td><td>!MuttonChops</td></tr>
-        <tr><td align="center">`CvXC&yDTJusAzA`</td><td align="center">1/30/14</td><td>N/A</td></tr>
-<tr><td align="center">`CvXF+4gBRCRS7w`</td><td align="center">2/2/14</td><td>Rooks</td></tr>
+        <tr><td align="center">`CvXC&yDTJusAzA`</td><td align="center">1/30/14</td><td></td></tr>
+        <tr><td align="center">`CvXF+4gBRCRS7w`</td><td align="center">2/2/14</td><td>Rooks</td></tr>
+        <tr><td align="center">`wKi4ASmsXFdDmA`</td><td align="center">2/3/14</td><td>Rangi</td></tr>
         </table>
         </dd>
         <br>
