@@ -11,6 +11,7 @@
 <li>Update to the newest Alliance release. A guide is <a href="http://code.google.com/p/alliance-p2p/wiki/Updating">here.</a></li>
 <li>Connect using the latest codes listed below: </li>
         <ul>
+        <li>`CvXC&yDTLDe5pQ` (2/25/14)</li>
         <li>`rBmZ*4TFC73Q!Q` (1/28/14) (connects to !MuttonChops)</li>
         <li>`CvXC&yDTJusAzA` (1/30/14)</li>
         <li>`CvXF+4gBRCRS7w` (2/2/14) (connects to Rooks)</li>
